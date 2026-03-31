@@ -1,4 +1,5 @@
-import api from './api';
+import { auth, githubProvider } from './firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 export const authService = {
   async register(data: { fullName: string; email: string; phone?: string; password: string; role?: string }) {
@@ -35,6 +36,36 @@ export const authService = {
         user: mockUser
       }
     };
+  },
+
+  async loginWithGithub() {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      const user = result.user;
+      
+      const userData = {
+        id: user.uid,
+        fullName: user.displayName || 'Github User',
+        email: user.email,
+        role: 'litigant' // Default role for social logins
+      };
+
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', (user as any).accessToken);
+        localStorage.setItem('user', JSON.stringify(userData));
+      }
+
+      return {
+        success: true,
+        data: {
+          accessToken: (user as any).accessToken,
+          user: userData
+        }
+      };
+    } catch (error: any) {
+      console.error('Github login error:', error);
+      throw error;
+    }
   },
 
   async logout() {

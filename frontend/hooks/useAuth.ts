@@ -48,11 +48,25 @@ export function useAuth() {
     } finally { setLoading(false); }
   }, []);
 
+  const loginWithGithub = useCallback(async () => {
+    setLoading(true);
+    try {
+      const result = await authService.loginWithGithub();
+      const loggedUser = result.data.user;
+      setUser(loggedUser);
+      toast.success(`Welcome back, ${loggedUser.fullName}!`);
+      return result;
+    } catch (err: any) {
+      toast.error('GitHub Login failed. Please check your connection.');
+      throw err;
+    } finally { setLoading(false); }
+  }, []);
+
   const logout = useCallback(async () => {
     await authService.logout();
     setUser(null);
     toast.success('Logged out');
   }, []);
 
-  return { user, loading, register, verifyOTP, login, logout };
+  return { user, loading, register, verifyOTP, login, loginWithGithub, logout };
 }

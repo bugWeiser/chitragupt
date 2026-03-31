@@ -1,30 +1,6 @@
-@import 'tailwindcss';
-
-@theme {
-  --color-navy: #1a365d;
-  --color-navy-dark: #0f2440;
-  --color-navy-light: #2a4a7f;
-  --color-navy-50: #eef3fa;
-  --color-saffron: #f6ad55;
-  --color-saffron-dark: #e8941a;
-  --color-saffron-light: #fbd38d;
-  --color-saffron-50: #fffaf0;
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-destructive: var(--destructive);
-  
-  --font-inter: 'Inter', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
-}
-
-@custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -75,10 +51,13 @@
 
 @layer base {
   * {
-    @apply border-solid border-gray-200 dark:border-gray-800;
+    @apply border-solid border-gray-200;
+  }
+  .dark * {
+    @apply border-gray-800;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -88,6 +67,9 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-white/20 dark:border-slate-800/50 shadow-sm;
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+  .dark .glass {
+    @apply bg-slate-900/70 border-slate-800/50;
   }
 }
