@@ -10,9 +10,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Initialize Firebase only if the API key is present and we're in the browser
+// This prevents build-time crashes when environment variables are missing
+const app = (typeof window !== "undefined" && firebaseConfig.apiKey) 
+  ? (getApps().length > 0 ? getApp() : initializeApp(firebaseConfig))
+  : null;
+
+const auth = app ? getAuth(app) : ({} as any); // Fallback for build time
 const githubProvider = new GithubAuthProvider();
 
 export { auth, githubProvider };
