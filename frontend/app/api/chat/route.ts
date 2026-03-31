@@ -15,17 +15,17 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     // HACKATHON FALLBACK: If no API key is set, use a mock response so the demo doesn't break.
     if (!apiKey) {
       // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const lastMessage = messages[messages.length - 1]?.content.toLowerCase();
+      const lastMessage = messages[messages.length - 1]?.content.toLowerCase() || '';
       
       // Mock logic based on keywords
-      let mockReply = "I am NyayaMitra AI. It seems your API key is not configured yet. However, I am ready to assist you with Tenant Rights, Consumer Disputes, and Police FIRs once activated. How can I help you today?";
+      let mockReply = "I am NyayaMitra AI. It seems your GEMINI_API_KEY is not configured yet in Vercel. However, I am ready to assist you with Tenant Rights, Consumer Disputes, and Police FIRs once activated. How can I help you today?";
       
       if (lastMessage.includes('police') || lastMessage.includes('fir')) {
          mockReply = "If the police are refusing to file an FIR, you have the right to file a 'Zero FIR' at any station. If they still refuse, under Section 154(3) of the CrPC, you can send your complaint in writing via registered post to the Superintendent of Police (SP). Can I help you draft this complaint?\n\n*Disclaimer: This is AI-generated guidance, not formal legal advice.*";
@@ -44,32 +44,37 @@ export async function POST(req: Request) {
       });
     }
 
-    // REAL OPENAI INTEGRATION
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
+    // REAL GEMINI FLASH 1.5 INTEGRATION
+    const geminiPayload = {
+      system_instruction: {
+         parts: { text: SYSTEM_PROMPT }
       },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo', // Can upgrade to gpt-4o for production
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          ...messages
-        ],
-        temperature: 0.3,
-      }),
+      contents: messages.map((m: any) => ({
+         role: m.role === 'assistant' ? 'model' : 'user',
+         parts: [{ text: m.content }]
+      })),
+      generationConfig: {
+         temperature: 0.3,
+      }
+    };
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(geminiPayload),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error?.message || 'Failed to fetch from OpenAI');
+      throw new Error(errorData.error?.message || 'Failed to fetch from Gemini API');
     }
 
     const data = await response.json();
+    const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
+
     return NextResponse.json({
       role: 'assistant',
-      content: data.choices[0].message.content
+      content: botText
     });
 
   } catch (error: any) {
