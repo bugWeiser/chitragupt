@@ -6,6 +6,7 @@ import Footer from "@/components/ui/Footer";
 import FAB from "@/components/ui/FAB";
 import EmergencyMode from "@/components/ui/EmergencyMode";
 import { CaseProvider } from "@/context/CaseContext";
+import AiChatWidget from "@/components/AiChatWidget";
 
 
 const inter = Inter({
@@ -39,6 +40,7 @@ export default function RootLayout({
           </main>
           <EmergencyMode />
           <FAB />
+          <AiChatWidget />
           <Footer />
         </CaseProvider>
       </body>
