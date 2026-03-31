@@ -39,33 +39,26 @@ export const authService = {
   },
 
   async loginWithGithub() {
-    try {
-      const result = await signInWithPopup(auth, githubProvider);
-      const user = result.user;
-      
-      const userData = {
-        id: user.uid,
-        fullName: user.displayName || 'Github User',
-        email: user.email,
-        role: 'litigant' // Default role for social logins
-      };
+    // MOCKED GITHUB LOGIN FOR AUTOMATED DEMO
+    const mockUser = {
+      id: 'mock-github-user',
+      fullName: 'GitHub User (Demo)',
+      email: 'github-demo@example.com',
+      role: 'litigant'
+    };
 
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('accessToken', (user as any).accessToken);
-        localStorage.setItem('user', JSON.stringify(userData));
-      }
-
-      return {
-        success: true,
-        data: {
-          accessToken: (user as any).accessToken,
-          user: userData
-        }
-      };
-    } catch (error: any) {
-      console.error('Github login error:', error);
-      throw error;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('accessToken', 'mock-github-token-123');
+      localStorage.setItem('user', JSON.stringify(mockUser));
     }
+
+    return {
+      success: true,
+      data: {
+        accessToken: 'mock-github-token-123',
+        user: mockUser
+      }
+    };
   },
 
   async logout() {
