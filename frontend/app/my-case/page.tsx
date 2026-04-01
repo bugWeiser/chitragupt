@@ -18,7 +18,10 @@ export default function MyCasePage() {
                <h1 className="text-3xl font-black font-poppins text-navy dark:text-white">Your Case File</h1>
                <p className="text-sm font-medium text-gray-400 mt-2">Continuity guaranteed across sessions.</p>
             </div>
-            <button className="flex items-center justify-center gap-2 px-6 py-3 bg-navy/5 dark:bg-saffron/10 text-navy dark:text-saffron rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy hover:text-white transition-all">
+            <button 
+               onClick={() => window.print()}
+               className="print:hidden flex items-center justify-center gap-2 px-6 py-3 bg-navy/5 dark:bg-saffron/10 text-navy dark:text-saffron rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy hover:text-white transition-all"
+            >
                <Download size={16} />
                <span>Case Summary PDF</span>
             </button>
@@ -87,7 +90,7 @@ export default function MyCasePage() {
             </div>
 
             {/* SIDEBAR */}
-            <div className="space-y-8">
+            <div className="space-y-8 print:hidden">
                <div className="p-8 bg-navy text-white rounded-[32px] shadow-2xl relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-saffron/10 -m-16 rounded-full group-hover:scale-150 transition-transform duration-1000" />
                   <div className="relative z-10 space-y-6">
