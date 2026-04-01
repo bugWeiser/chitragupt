@@ -3,12 +3,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, ShieldCheck, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLang } from '@/context/LanguageContext';
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string };
 
 export default function AiChatWidget() {
-  const { language, t } = useLanguage();
+  const { lang: language, t } = useLang();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -85,7 +85,7 @@ export default function AiChatWidget() {
                  <ShieldCheck size={20} className="text-saffron" />
               </div>
               <div className="leading-tight">
-                 <h3 className="font-bold font-poppins text-lg">NyayaMitra AI</h3>
+                 <h3 className="font-bold font-poppins text-lg">Chitragupt AI</h3>
                  <p className="text-[10px] text-saffron uppercase font-bold tracking-widest flex items-center gap-1">
                    <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" /> {language === 'en' ? 'Legal Expert' : 'कानूनी विशेषज्ञ'}
                  </p>

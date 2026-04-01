@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { AlertTriangle, AlertCircle, Phone, ArrowLeft, ShieldAlert } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 type EmergencyOption = {
   id: string;
@@ -55,16 +56,31 @@ const OPTIONS: EmergencyOption[] = [
 export default function EmergencyMode() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<EmergencyOption | null>(null);
+  const { t } = useLang();
 
   if (!isOpen) {
     return (
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl shadow-red-600/50 hover:scale-105 active:scale-95 transition-all outline-none animate-pulse border-2 border-red-400 group"
-      >
-        <span className="text-xl">🚨</span>
-        <span>Emergency Help</span>
-      </button>
+      <>
+        {/* Desktop floating button */}
+        <button 
+          onClick={() => setIsOpen(true)}
+          className="hidden md:flex fixed bottom-6 left-6 z-50 items-center gap-2 bg-[#561C24] hover:bg-[#6D2932] text-[#F5EDE3] px-5 py-3 rounded-[4px] font-semibold text-[0.8125rem] uppercase tracking-[0.1em] shadow-[0_2px_8px_rgba(86,28,36,0.25)] hover:scale-105 active:scale-95 transition-all outline-none group"
+        >
+          <Phone size={16} />
+          <span>{t ? t("common.nav.emergency") : "Emergency Help"}</span>
+        </button>
+
+        {/* Mobile floating bar */}
+        <a 
+          href="tel:15100"
+          className="md:hidden fixed bottom-0 left-0 w-full z-[900] h-[48px] bg-[#561C24] flex items-center justify-center gap-2 outline-none"
+        >
+          <Phone size={16} color="#F5EDE3" />
+          <span className="text-[0.8125rem] font-semibold text-[#F5EDE3] uppercase tracking-[0.1em]" style={{ fontFamily: "var(--font-sans)" }}>
+            {t ? t("common.nav.emergencyNumber") : "Emergency: 15100"}
+          </span>
+        </a>
+      </>
     );
   }
 

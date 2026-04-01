@@ -1,4 +1,4 @@
-require('express-async-errors');
+// Express 5.x has built-in async error handling, express-async-errors is no longer needed
 require('dotenv').config();
 
 const express   = require('express');

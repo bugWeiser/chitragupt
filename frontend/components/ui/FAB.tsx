@@ -12,7 +12,7 @@ export default function FAB() {
     >
       <MessageCircle size={28} />
       <div className="absolute right-20 bg-gray-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
-        Ask Chitragupta AI
+        Ask Chitragupt AI
       </div>
     </Link>
   );

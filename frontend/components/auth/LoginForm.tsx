@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAuth } from '../../hooks/useAuth';
-import { Github } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, UserCircle } from 'lucide-react';
 
 const schema = z.object({
   email:    z.string().email('Invalid email'),
@@ -18,6 +18,7 @@ type FormData = z.infer<typeof schema>;
 export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) => void }) {
   const { login, loginWithGithub, loading } = useAuth();
   const [showSmsOtp, setShowSmsOtp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -43,59 +44,124 @@ export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        
+        {/* Email Input */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-1">Email</label>
-          <input {...register('email')} type="email"
-            className="mt-1 block w-full p-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-navy dark:focus:ring-saffron outline-none transition-all"
-            placeholder="you@example.com" />
-          {errors.email && <p className="text-red-500 text-xs mt-1 font-bold">{errors.email.message}</p>}
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Mail size={18} className="text-[#8B7B6B]" />
+            </div>
+            <input 
+              {...register('email')} 
+              type="email"
+              className="block w-full pl-12 pr-5 py-3.5 bg-white border border-[#E8D8C4] rounded-full focus:border-[#561C24] focus:ring-1 focus:ring-[#561C24] outline-none transition-all text-[0.9375rem] text-ink placeholder:text-[#8B7B6B]"
+              placeholder="Email" 
+            />
+          </div>
+          {errors.email && <p className="text-[#561C24] text-xs mt-1.5 ml-4 font-medium">{errors.email.message}</p>}
         </div>
 
+        {/* Password Input */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-1">Password</label>
-          <input {...register('password')} type="password"
-            className="mt-1 block w-full p-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-navy dark:focus:ring-saffron outline-none transition-all" />
-          {errors.password && <p className="text-red-500 text-xs mt-1 font-bold">{errors.password.message}</p>}
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Lock size={18} className="text-[#8B7B6B]" />
+            </div>
+            <input 
+              {...register('password')} 
+              type={showPassword ? "text" : "password"}
+              className="block w-full pl-12 pr-12 py-3.5 bg-white border border-[#E8D8C4] rounded-full focus:border-[#561C24] focus:ring-1 focus:ring-[#561C24] outline-none transition-all text-[0.9375rem] text-ink placeholder:text-[#8B7B6B]"
+              placeholder="Password" 
+            />
+            <button 
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-5 flex items-center text-[#8B7B6B] hover:text-[#561C24] transition-colors"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.password && <p className="text-[#561C24] text-xs mt-1.5 ml-4 font-medium">{errors.password.message}</p>}
         </div>
 
+        {/* SMS OTP (if needed) */}
         {showSmsOtp && (
-          <div className="animate-fadeInDown mt-4">
-            <label className="block text-sm font-bold text-navy dark:text-saffron uppercase tracking-widest mb-1">Enter SMS OTP</label>
-            <input {...register('smsOtp')} type="text"
-              className="mt-1 block w-full p-3 bg-blue-50 dark:bg-navy-900/30 border border-navy-200 dark:border-navy-800 rounded-xl font-mono text-center tracking-[1em]"
-              placeholder="000000" maxLength={6} />
+          <div className="animate-fade-up">
+            <div className="relative">
+              <input 
+                {...register('smsOtp')} 
+                type="text"
+                className="block w-full px-5 py-3.5 bg-[#FAF6F1] border border-[#E8D8C4] rounded-full font-mono text-center tracking-[1em] focus:border-[#561C24] focus:ring-1 focus:ring-[#561C24] outline-none transition-all text-[0.9375rem] text-ink placeholder:text-[#8B7B6B]"
+                placeholder="000000" 
+                maxLength={6} 
+              />
+            </div>
           </div>
         )}
 
-        <button type="submit" disabled={loading}
-          className="w-full py-4 px-4 bg-navy dark:bg-saffron text-white dark:text-navy font-black rounded-xl disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95 shadow-xl uppercase tracking-widest">
-          {loading ? 'Processing...' : 'Secure Sign In'}
+        {/* Forgot Password Link */}
+        <div className="text-center pt-1 pb-3">
+          <a href="#" className="text-[0.8125rem] font-medium text-[#6B5A52] hover:text-[#561C24] underline underline-offset-2 transition-colors">
+            Forgot Password?
+          </a>
+        </div>
+
+        {/* Submit Button */}
+        <button 
+          type="submit" 
+          disabled={loading}
+          className="w-full py-3.5 px-4 bg-[#1A2518] hover:bg-black text-white font-semibold rounded-full disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95 text-[1rem] shadow-sm"
+        >
+          {loading ? 'Processing...' : 'Login'}
         </button>
       </form>
 
-      <div className="relative">
+      {/* Separator */}
+      <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
+          <div className="w-full border-t border-[#E8D8C4]"></div>
         </div>
-        <div className="relative flex justify-center text-xs uppercase tracking-widest font-bold">
-          <span className="px-2 bg-white dark:bg-black text-gray-400">Or continue with</span>
+        <div className="relative flex justify-center text-[0.8125rem]">
+          <span className="px-4 bg-white text-[#8B7B6B] font-medium">or</span>
         </div>
       </div>
 
-      <button
-        onClick={handleGithubLogin}
-        disabled={loading}
-        className="w-full py-4 px-4 flex items-center justify-center gap-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-2 border-gray-100 dark:border-gray-800 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all active:scale-95 hover:border-gray-200 dark:hover:border-gray-700 shadow-sm"
-      >
-        <Github size={20} />
-        <span>Continue with GitHub</span>
-      </button>
+      {/* Third Party Login Buttons */}
+      <div className="space-y-3">
+        {/* Google Button */}
+        <button
+          type="button"
+          onClick={handleGithubLogin} // Reused for simplicity in this demo, pretending it's Google
+          disabled={loading}
+          className="w-full py-3.5 px-4 flex items-center justify-center gap-3 bg-[#F5EDE3] hover:bg-[#E8D8C4] text-ink border border-transparent rounded-full font-semibold transition-all hover:scale-[1.01] active:scale-95 text-[0.9375rem]"
+        >
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+          <span>Continue with Google</span>
+        </button>
 
-      <div className="text-center">
-        <a href="#" className="text-xs text-gray-400 hover:text-navy dark:hover:text-saffron underline uppercase tracking-widest font-bold">Forgot Password?</a>
+        {/* Apple Button */}
+        <button
+          type="button"
+          disabled={loading}
+          className="w-full py-3.5 px-4 flex items-center justify-center gap-3 bg-[#A8E6A3] hover:bg-[#97D192] text-ink border border-transparent rounded-full font-semibold transition-all hover:scale-[1.01] active:scale-95 text-[0.9375rem]"
+        >
+          <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" className="w-5 h-5 opacity-90" />
+          <span>Continue with Apple</span>
+        </button>
+
+        {/* Guest Button */}
+        <button
+          type="button"
+          disabled={loading}
+          className="w-full py-3.5 px-4 flex items-center justify-center gap-3 bg-[#F5EDE3] hover:bg-[#E8D8C4] text-ink border border-transparent rounded-full font-semibold transition-all hover:scale-[1.01] active:scale-95 text-[0.9375rem]"
+        >
+          <UserCircle size={20} className="text-[#3B5441]" />
+          <span>Continue As Guest</span>
+        </button>
       </div>
+
     </div>
   );
 }

@@ -1,74 +1,97 @@
+"use client";
+
 import Link from 'next/link';
-import { Scale, Mail, Phone, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
+import { Phone, ExternalLink } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLang();
+
   return (
-    <footer className="bg-navy-dark text-gray-300 py-12 px-4 sm:px-6 lg:px-8 border-t border-navy">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+    <footer className="bg-[#2A1A1E] text-[#D4C4B4] py-16 px-6 lg:px-16 border-t border-[#C7B7A3]/10" role="contentinfo">
+      <div className="max-w-[1120px] mx-auto">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
+
+          {/* ── Brand ── */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center">
-                <Scale size={20} className="text-saffron" />
-              </div>
-              <span className="text-white text-xl font-bold font-poppins">Chitragupta</span>
+            <Link href="/" className="flex items-center flex-shrink-0">
+              <Image 
+                src="/logo.png" 
+                alt={t("common.appName")} 
+                width={44} 
+                height={44} 
+                className="object-contain"
+              />
             </Link>
-            <p className="text-sm leading-relaxed opacity-70">
-              India's first AI-powered Legal First-Response System. Legal aid for every Indian citizen, simplified.
+            <p className="text-[0.8125rem] leading-relaxed text-[#A69485]">
+              {t("common.footer.tagline")}
             </p>
-            <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-               <Phone size={16} className="text-saffron" />
-               <div className="flex flex-col">
-                  <span className="text-[10px] uppercase font-bold opacity-50">Legal Aid Helpline</span>
-                  <span className="text-sm font-bold text-white tracking-widest leading-none">15100</span>
-               </div>
-            </div>
+            <a href="tel:15100" className="flex items-center gap-3 p-3 bg-[rgba(245,237,227,0.05)] rounded-[2px] border border-[rgba(245,237,227,0.1)] hover:bg-[rgba(245,237,227,0.08)] transition-colors">
+              <Phone size={15} className="text-[#E8D8C4] flex-shrink-0" />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-[#8B7B6B]">{t("common.footer.legalAidHelpline")}</span>
+                <span className="text-[1rem] font-bold text-[#F5EDE3] tracking-widest">15100</span>
+              </div>
+            </a>
           </div>
 
-          {/* Get Help */}
+          {/* ── Get Help ── */}
           <div>
-            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-6 opacity-40">Get Help</h4>
-            <ul className="space-y-4 text-sm font-medium">
-              <li><Link href="/get-help" className="hover:text-saffron transition-colors">Landlord Issues</Link></li>
-              <li><Link href="/get-help" className="hover:text-saffron transition-colors">Consumer Rights</Link></li>
-              <li><Link href="/get-help" className="hover:text-saffron transition-colors">Workplace Problems</Link></li>
-              <li><Link href="/get-help" className="hover:text-saffron transition-colors">Police & FIR Help</Link></li>
+            <h4 className="text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-[#8B7B6B] mb-6">
+              {t("common.footer.getHelp")}
+            </h4>
+            <ul className="space-y-3 text-[0.875rem]">
+              <li><Link href="/issues/consumer" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.consumerRights")}</Link></li>
+              <li><Link href="/issues/workplace" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.workplaceProblems")}</Link></li>
+              <li><Link href="/issues/police" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.policeFirHelp")}</Link></li>
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* ── Resources ── */}
           <div>
-            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-6 opacity-40">Resources</h4>
-            <ul className="space-y-4 text-sm font-medium">
-              <li><Link href="/documents" className="hover:text-saffron transition-colors">RTI Generator</Link></li>
-              <li><Link href="/lawyers" className="hover:text-saffron transition-colors">Find a Lawyer</Link></li>
-              <li><Link href="/get-help" className="hover:text-saffron transition-colors">Know Your Rights</Link></li>
-              <li><a href="https://nalsa.gov.in" target="_blank" className="flex items-center gap-1 hover:text-saffron transition-colors">NALSA Website <ExternalLink size={12} /></a></li>
+            <h4 className="text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-[#8B7B6B] mb-6">
+              {t("common.footer.resources")}
+            </h4>
+            <ul className="space-y-3 text-[0.875rem]">
+              <li><Link href="/rti" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.rtiGenerator")}</Link></li>
+              <li><Link href="/lawyers" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.findLawyer")}</Link></li>
+              <li><Link href="/issues" className="text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">{t("common.footer.knowYourRights")}</Link></li>
+              <li>
+                <a href="https://nalsa.gov.in" target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-[#A69485] hover:text-[#E8D8C4] transition-colors duration-200">
+                  NALSA Website <ExternalLink size={11} />
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Build Info */}
+          {/* ── About ── */}
           <div>
-            <h4 className="text-white text-sm font-bold uppercase tracking-widest mb-6 opacity-40">About</h4>
-            <p className="text-sm opacity-70 mb-4">
-              Built at Hack-A-Sprint 2026. Empowering citizens through accessible legal information.
+            <h4 className="text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-[#8B7B6B] mb-6">
+              {t("common.footer.about")}
+            </h4>
+            <p className="text-[0.875rem] text-[#A69485] mb-4 leading-relaxed">
+              {t("common.footer.builtAt")}
             </p>
-            <div className="text-[10px] opacity-40 space-y-1">
-              <p>Powered by Claude AI + Sarvam AI</p>
-              <p>© 2026 Chitragupta. All Rights Reserved.</p>
+            <div className="text-[0.6875rem] text-[#6B5A52] space-y-1" style={{ fontFamily: 'var(--font-mono)' }}>
+              <p>{t("common.footer.poweredBy")}</p>
+              <p>{t("common.footer.copyright")}</p>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] opacity-50 tracking-wide font-medium">
-          <p>⚠️ GENERAL INFORMATION ONLY. NOT LEGAL ADVICE.</p>
+        <div className="h-px bg-[rgba(245,237,227,0.08)] mb-8" />
+
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[0.6875rem] text-[#6B5A52] tracking-wide font-medium uppercase">
+          <p>{t("common.footer.disclaimer")}</p>
           <div className="flex gap-6">
-            <Link href="/" className="hover:underline">Privacy Policy</Link>
-            <Link href="/" className="hover:underline">Terms of Use</Link>
-            <Link href="/" className="hover:underline">Disclaimer</Link>
+            <Link href="/" className="hover:text-[#E8D8C4] transition-colors">{t("common.footer.privacyPolicy")}</Link>
+            <Link href="/" className="hover:text-[#E8D8C4] transition-colors">{t("common.footer.termsOfUse")}</Link>
+            <Link href="/" className="hover:text-[#E8D8C4] transition-colors">{t("common.footer.disclaimerLink")}</Link>
           </div>
         </div>
+
       </div>
     </footer>
   );

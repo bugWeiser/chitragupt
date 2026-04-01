@@ -13,62 +13,117 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          DEFAULT: '#1a365d',
-          dark: '#0f2440',
-          light: '#2a4a7f',
-          50: '#eef3fa',
-          900: '#0c1e3a',
+        /* ── Coffee & Burgundy Core Palette ── */
+        burgundy: {
+          DEFAULT: '#561C24',
+          dark:    '#3D1219',
+          light:   '#6D2932',
+          50:      '#FAF0F1',
         },
-        saffron: {
-          DEFAULT: '#f6ad55',
-          dark: '#e8941a',
-          light: '#fbd38d',
-          50: '#fffaf0',
-          900: '#7b4b00',
-        },
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        maroon:  '#6D2932',
+        taupe:   '#C7B7A3',
+        cream:   '#E8D8C4',
+        ivory:   '#F5EDE3',
+        surface: '#FAF6F1',
+        ink:     '#2A1A1E',
+
+        /* ── Semantic aliases ── */
         primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
-        },
-        secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
+          DEFAULT:    '#561C24',
+          dark:       '#3D1219',
+          light:      '#6D2932',
+          foreground: '#F5EDE3',
         },
         muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
+          DEFAULT:    '#F5EDE3',
+          foreground: '#8B7B6B',
         },
-        accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
+        border: 'rgba(199,183,163,0.4)',
+
+        /* ── State colors — stays in-family ── */
+        error:   '#8B1A1A',
+        success: '#4A6741',
+        warning: '#A67B3D',
+
+        /* ── Dark mode surfaces ── */
+        dark: {
+          bg:      '#1A1215',
+          surface: '#2A1E20',
+          elevated:'#3A2A2E',
+          text:    '#E8D8C4',
+          muted:   '#A69585',
+          border:  'rgba(199,183,163,0.12)',
         },
-        destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground: 'var(--destructive-foreground)',
+
+        /* ── Legacy compat so existing pages don't break ── */
+        navy: {
+          DEFAULT: '#561C24',
+          dark:    '#3D1219',
+          light:   '#6D2932',
+          50:      '#FAF0F1',
         },
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
+        gold: {
+          DEFAULT: '#A67B3D',
+          dark:    '#8B6530',
+          light:   '#C7B7A3',
         },
-        popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)',
-        },
+        parchment: { DEFAULT: '#E8D8C4' },
+        sand:      { DEFAULT: '#F5EDE3', light: '#FAF6F1' },
+        amber:     { DEFAULT: '#A67B3D', dark: '#8B6530' },
+        crimson:   { DEFAULT: '#561C24', dark: '#3D1219', light: '#6D2932' },
+        darkbrown: { DEFAULT: '#2A1A1E', light: '#3D2A2E' },
+        sage:      '#8B7B6B',
+        vermillion:{ DEFAULT: '#8B1A1A', light: '#A32020' },
       },
+
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
+        serif:  ['var(--font-serif)',  '"Instrument Serif"', '"Playfair Display"', 'serif'],
+        sans:   ['var(--font-sans)',   '"DM Sans"', '"Plus Jakarta Sans"', 'sans-serif'],
+        mono:   ['var(--font-mono)',   '"JetBrains Mono"', 'monospace'],
+        /* legacy */
+        inter:  ['var(--font-sans)',   'sans-serif'],
+        poppins:['var(--font-serif)',  'serif'],
       },
+
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        none: '0',
+        sm:   '2px',
+        DEFAULT:'4px',
+        md:   '4px',
+        lg:   '6px',
+        xl:   '8px',
+        /* NO larger radii in this design system */
+        full: '9999px',
+      },
+
+      boxShadow: {
+        /* Two shadow levels only */
+        'resting': '0 1px 4px rgba(42,26,30,0.05)',
+        'hover':   '0 4px 20px rgba(42,26,30,0.08)',
+        'card':    '0 1px 4px rgba(42,26,30,0.04)',
+        'card-hover':'0 4px 20px rgba(42,26,30,0.08)',
+        'modal':   '0 8px 40px rgba(42,26,30,0.16)',
+        'dark':    '0 2px 12px rgba(0,0,0,0.3)',
+      },
+
+      maxWidth: {
+        content: '1200px',
+        prose:   '65ch',
+      },
+
+      backgroundImage: {
+        'hero':     'linear-gradient(135deg, #561C24, #6D2932)',
+        'hero-alt': 'linear-gradient(135deg, #3D1219, #561C24)',
+        'card-sheen': 'linear-gradient(180deg, #FFFFFF, #FAF6F1)',
+        'accent-bar': 'linear-gradient(90deg, #561C24, #6D2932, #561C24)',
+      },
+
+      animation: {
+        'fade-up':    'fadeUp 0.4s ease-out forwards',
+        'fade-in':    'fadeIn 0.4s ease-out forwards',
+        'shimmer':    'shimmer 1.8s ease infinite',
+        'marquee':    'marqueeScroll var(--marquee-duration,30s) linear infinite',
+        'marquee-rev':'marqueeScroll var(--marquee-duration,30s) linear infinite reverse',
       },
     },
   },

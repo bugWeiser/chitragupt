@@ -1,80 +1,74 @@
-'use client';
+"use client";
+import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import en from "@/locales/en.json";
+import hi from "@/locales/hi.json";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+/* ── Translations ── */
+const TRANSLATIONS: Record<string, Record<string, unknown>> = { en, hi };
 
-type Language = 'en' | 'hi';
+export type Lang = "en" | "hi";
 
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+/* ── Deep key access helper ── */
+function getNestedValue(obj: unknown, path: string): string {
+  const keys = path.split(".");
+  let current: unknown = obj;
+  for (const key of keys) {
+    if (current && typeof current === "object" && key in (current as Record<string, unknown>)) {
+      current = (current as Record<string, unknown>)[key];
+    } else {
+      return path; // fallback: return the key itself
+    }
+  }
+  return typeof current === "string" ? current : path;
+}
+
+/* ── Context interface ── */
+interface LangCtx {
+  lang: Lang;
+  setLang: (l: Lang) => void;
   t: (key: string) => string;
 }
 
-const translations: Record<Language, Record<string, string>> = {
-  en: {
-    'nav.get_help': 'Get Help',
-    'nav.lawyers': 'Lawyers',
-    'nav.my_case': 'My Case',
-    'nav.login': 'Sign In',
-    'nav.register': 'Join Free',
-    'nav.admin': 'Shield',
-    'hero.title': 'India\'s Legal First-Response System',
-    'hero.subtitle': 'Get instant clarity. Know your rights. Take action.',
-    'hero.placeholder': 'Describe your legal situation (e.g., "My landlord is not returning my deposit")',
-    'hero.analyze': 'Analyze with AI',
-    'hero.recording': 'Listening to your case...',
-    'chat.greeting': 'Hello! I am NyayaMitra AI, your legal first-responder. How can I help you today?',
-    'chat.placeholder': 'Ask a legal question...',
-  },
-  hi: {
-    'nav.get_help': 'सहायता लें',
-    'nav.lawyers': 'वकील खोजें',
-    'nav.my_case': 'मेरा केस',
-    'nav.login': 'लॉग इन',
-    'nav.register': 'मुफ्त जुड़ें',
-    'nav.admin': 'सुरक्षा',
-    'hero.title': 'भारत का कानूनी प्रथम-प्रतिक्रिया तंत्र',
-    'hero.subtitle': 'तुरंत स्पष्टता प्राप्त करें। अपने अधिकारों को जानें। कार्रवाई करें।',
-    'hero.placeholder': 'अपनी कानूनी स्थिति बताएं (जैसे, "मेरा मकान मालिक मेरी जमा राशि नहीं लौटा रहा है")',
-    'hero.analyze': 'AI से विश्लेषण करें',
-    'hero.recording': 'आपकी बात सुन रहे हैं...',
-    'chat.greeting': 'नमस्ते! मैं न्यायमित्र AI हूँ, आपका कानूनी सहायक। मैं आज आपकी क्या मदद कर सकता हूँ?',
-    'chat.placeholder': 'कानूनी सवाल पूछें...',
-  },
-};
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LangCtx>({
+  lang: "en",
+  setLang: () => {},
+  t: (key: string) => key,
+});
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [lang, setLangState] = useState<Lang>("en");
 
+  // Initialize from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('language') as Language;
-    if (saved && (saved === 'en' || saved === 'hi')) {
-      setLanguage(saved);
+    const saved = localStorage.getItem("chitragupta-lang") as Lang | null;
+    if (saved && (saved === "en" || saved === "hi")) {
+      setLangState(saved);
+      document.documentElement.lang = saved;
+    } else {
+      // Browser detection
+      const browserLang = navigator.language;
+      if (browserLang.startsWith("hi")) {
+        setLangState("hi");
+        document.documentElement.lang = "hi";
+      }
     }
   }, []);
 
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    localStorage.setItem("chitragupta-lang", l);
+    document.documentElement.lang = l;
+  }, []);
 
-  const t = (key: string) => {
-    return translations[language][key] || key;
-  };
+  const t = useCallback((key: string): string => {
+    return getNestedValue(TRANSLATIONS[lang], key);
+  }, [lang]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
       {children}
     </LanguageContext.Provider>
   );
 }
 
-export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
-}
+export const useLang = () => useContext(LanguageContext);

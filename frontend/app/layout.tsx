@@ -1,48 +1,55 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Instrument_Serif, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
-import FAB from "@/components/ui/FAB";
 import EmergencyMode from "@/components/ui/EmergencyMode";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import { CaseProvider } from "@/context/CaseContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import AiChatWidget from "@/components/AiChatWidget";
 
-
-const inter = Inter({
-  variable: "--font-inter",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const dmSans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Chitragupta — India's Legal First-Response System",
-  description: "AI-powered legal aid web app for every Indian citizen. Get instant clarity. Know your rights. Take action — in Hindi or English.",
+  title: "Chitragupt — India's Legal First-Response System",
+  description: "AI-powered legal aid for every Indian citizen. Get instant clarity. Know your rights. Take action.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${poppins.variable} font-inter bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col antialiased`}>
+      <body className={`${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col antialiased`}>
         <LanguageProvider>
           <CaseProvider>
+            <a href="#main-content" className="skip-to-content">Skip to content</a>
             <Navbar />
-            <main className="flex-1 flex flex-col relative overflow-x-hidden">
+            <main id="main-content" role="main" className="flex-1 flex flex-col relative overflow-x-hidden">
               {children}
             </main>
-            <EmergencyMode />
-            <FAB />
             <AiChatWidget />
+            <EmergencyMode />
+            <ScrollToTop />
             <Footer />
           </CaseProvider>
         </LanguageProvider>

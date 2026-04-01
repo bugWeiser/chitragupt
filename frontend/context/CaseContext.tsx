@@ -11,6 +11,7 @@ export type CaseContextType = {
   urgency: string;
   documentsGenerated: { type: string; date: string }[];
   chatHistory: { role: string; content: string }[];
+  guidance: any;
   updateCase: (data: Partial<CaseContextType>) => void;
   addDocument: (type: string) => void;
   addChat: (role: string, content: string) => void;
@@ -25,6 +26,7 @@ const defaultContext: CaseContextType = {
   urgency: "Normal",
   documentsGenerated: [],
   chatHistory: [],
+  guidance: null,
   updateCase: () => {},
   addDocument: () => {},
   addChat: () => {}
@@ -42,12 +44,13 @@ export function CaseProvider({ children }: { children: React.ReactNode }) {
     urgency: "Normal",
     documentsGenerated: [],
     chatHistory: [],
+    guidance: null,
   });
 
   // Load from session storage on mount
   useEffect(() => {
     try {
-      const saved = sessionStorage.getItem("chitragupta_case");
+      const saved = sessionStorage.getItem("chitragupt_case");
       if (saved) {
         setCaseData(JSON.parse(saved));
       }
@@ -56,7 +59,7 @@ export function CaseProvider({ children }: { children: React.ReactNode }) {
 
   // Save to session storage on change
   useEffect(() => {
-    sessionStorage.setItem("chitragupta_case", JSON.stringify(caseData));
+    sessionStorage.setItem("chitragupt_case", JSON.stringify(caseData));
   }, [caseData]);
 
   const updateCase = (data: Partial<typeof caseData>) => {

@@ -1,0 +1,18 @@
+{
+  "act": "Model Tenancy Act / State Rent Control Acts",
+  "act_short": "Rent Control",
+  "sections": [
+    {
+      "section_number": "11",
+      "title": "Security Deposit",
+      "plain_language": "The landlord can only take a maximum of 2 months' rent as security deposit for residential properties.",
+      "what_it_says": "Security deposit shall be refunded by the landlord to the tenant at the time of taking over possession of the premises."
+    },
+    {
+      "section_number": "21",
+      "title": "Eviction of tenant",
+      "plain_language": "A tenant cannot be evicted without a valid reason and proper notice.",
+      "punishment": "Wrongful eviction can be challenged in the Rent Court."
+    }
+  ]
+}

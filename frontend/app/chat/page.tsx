@@ -10,7 +10,7 @@ type Message = { id: string; role: 'user' | 'assistant'; content: string };
 export default function ChatPage() {
   const { currentIssue } = useCase();
   const [messages, setMessages] = useState<Message[]>([
-    { id: 'initial', role: 'assistant', content: 'Hello! I am NyayaMitra AI, your First-Response Legal Assistant. I am restricted to answering questions regarding Indian law, consumer rights, tenant issues, and FIR processes. How can I help you today?' }
+    { id: 'initial', role: 'assistant', content: 'Hello! I am Chitragupt AI, your First-Response Legal Assistant. I am restricted to answering questions regarding Indian law, consumer rights, tenant issues, and FIR processes. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

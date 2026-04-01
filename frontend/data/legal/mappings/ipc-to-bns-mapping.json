@@ -1,0 +1,9 @@
+{
+  "mappings": [
+    { "old_section": "IPC 420", "new_section": "BNS 318", "title": "Cheating" },
+    { "old_section": "IPC 406", "new_section": "BNS 316", "title": "Criminal Breach of Trust" },
+    { "old_section": "IPC 379", "new_section": "BNS 303", "title": "Punishment for Theft" },
+    { "old_section": "IPC 302", "new_section": "BNS 103", "title": "Punishment for Murder" },
+    { "old_section": "IPC 506", "new_section": "BNS 351", "title": "Criminal Intimidation" }
+  ]
+}

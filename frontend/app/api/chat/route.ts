@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const SYSTEM_PROMPT = `
-You are NyayaMitra AI, a highly specialized Legal First-Response Assistant for Indian citizens (First-Generation Litigants).
+You are Chitragupt AI, a highly specialized Legal First-Response Assistant for Indian citizens (First-Generation Litigants).
 
 CRITICAL INSTRUCTIONS:
 1. You MUST ONLY answer questions related to Indian Law, Tenant Rights, Consumer Rights, Workplace Disputes, Filing FIRs, and basic civil/criminal procedures.

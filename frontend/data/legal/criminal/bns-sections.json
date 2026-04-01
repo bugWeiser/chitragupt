@@ -1,0 +1,39 @@
+{
+  "act": "Bharatiya Nyaya Sanhita, 2023",
+  "act_short": "BNS",
+  "replaces": "Indian Penal Code, 1860 (IPC)",
+  "sections": [
+    {
+      "section_number": "318",
+      "old_equivalent": "IPC Section 420",
+      "title": "Cheating and dishonestly inducing delivery of property",
+      "plain_language": "If someone tricks you into giving them money or property by lying or hiding the truth, they can be imprisoned for up to 7 years.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "bailable": false,
+      "cognizable": true,
+      "common_situations": [
+        "Online shopping fraud",
+        "Fake job offers",
+        "Landlord deposit fraud"
+      ],
+      "what_user_should_do": [
+        "Collect evidence",
+        "File FIR at police station",
+        "File complaint on cybercrime.gov.in"
+      ]
+    },
+    {
+      "section_number": "316",
+      "old_equivalent": "IPC Section 406",
+      "title": "Punishment for criminal breach of trust",
+      "plain_language": "If you trust someone with your money or property (like a landlord with a deposit) and they use it for their own gain or refuse to return it dishonestly, they can be imprisoned for up to 5 years.",
+      "punishment": "Imprisonment up to 5 years + fine",
+      "bailable": true,
+      "cognizable": true,
+      "common_situations": [
+        "Landlord refusing to return deposit",
+        "Business partner stealing funds"
+      ]
+    }
+  ]
+}

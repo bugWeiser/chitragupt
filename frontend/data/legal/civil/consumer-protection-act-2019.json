@@ -1,0 +1,27 @@
+{
+  "act": "Consumer Protection Act, 2019",
+  "act_short": "CPA",
+  "replaces": "Consumer Protection Act, 1986",
+  "sections": [
+    {
+      "section_number": "2(6)",
+      "title": "Unfair Trade Practice",
+      "plain_language": "This includes misleading advertisements, false claims about a product, or refusal to issue a bill/receipt.",
+      "punishment": "Compensation order + penalties",
+      "common_situations": [
+        "Fake product delivered",
+        "False advertising",
+        "Refusal to refund if product is defective"
+      ]
+    },
+    {
+      "section_number": "34",
+      "title": "Jurisdiction of District Commission",
+      "plain_language": "You can file a complaint in the District Commission of your area if the value of goods/services is up to ₹50 lakhs.",
+      "what_user_should_do": [
+        "File complaint through e-Daakhil",
+        "Consult consumer helpline 1915"
+      ]
+    }
+  ]
+}

@@ -1,183 +1,218 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Scale, Menu, X, Phone, User, LogOut, ShieldCheck } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useLanguage } from '@/context/LanguageContext';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Menu, X, Phone, User, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useLang } from "@/context/LanguageContext";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
-  const { language, setLanguage, t } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
+  const { user, logout }        = useAuth();
+  const { lang, setLang, t }    = useLang();
+  const [isOpen, setIsOpen]     = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <nav className={`sticky top-0 z-[1000] w-full border-b transition-all duration-200 ${
-        isScrolled ? 'bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border-gray-200 dark:border-gray-800' : 'bg-white dark:bg-black border-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10  h-10 bg-gradient-to-br from-navy to-navy-light rounded-lg flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
-                <Scale size={24} />
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-navy dark:text-saffron text-lg font-bold tracking-tight">Chitragupta</span>
-                <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Your Legal Backup</span>
-              </div>
+      <nav
+        className={`sticky top-0 z-[1000] w-full transition-all duration-300 ${
+          isScrolled
+            ? "bg-[#FAF6F1]/95 backdrop-blur-md shadow-[0_1px_4px_rgba(42,26,30,0.05)] border-b border-[rgba(199,183,163,0.3)]"
+            : "bg-transparent border-b border-[rgba(199,183,163,0.3)]"
+        }`}
+      >
+        <div className="w-full px-5 lg:px-16">
+          <div className="flex justify-between items-center h-[88px] md:h-[110px]">
+
+            {/* ── Logo ─────────────────────────────────────── */}
+            <Link href="/" className="flex items-center flex-shrink-0">
+              <Image 
+                src="/logo.png" 
+                alt="Chitragupt Logo" 
+                width={100} 
+                height={100} 
+                className="object-contain w-[72px] h-[72px] md:w-[100px] md:h-[100px]"
+              />
             </Link>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-1">
-              <NavLink href="/get-help">{t('nav.get_help')}</NavLink>
-              <NavLink href="/documents">RTI Generator</NavLink>
-              <NavLink href="/lawyers">{t('nav.lawyers')}</NavLink>
-              <NavLink href={user ? "/my-case" : "/login"}>{user ? t('nav.my_case') : t('nav.login')}</NavLink>
-              
-              {/* Shield Link for Admins */}
-              <Link href="/admin" className="ml-2 p-2 bg-navy/5 text-navy hover:bg-navy hover:text-white rounded-full transition-all" title="Security Admin">
-                <ShieldCheck size={18} />
-              </Link>
+            {/* ── Desktop Nav Links ─────────────────────────── */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6 ml-6">
+              <NavLink href="/issues" current={pathname}>{t("common.nav.exploreIssues")}</NavLink>
+              <NavLink href="/guide" current={pathname}>{t("nav.guide")}</NavLink>
+              <NavLink href="/directory" current={pathname}>{t("nav.directory")}</NavLink>
+              <NavLink href="/news" current={pathname}>{t("nav.news")}</NavLink>
+              <NavLink href="/rti" current={pathname}>{t("common.nav.rtiGenerator")}</NavLink>
+              <NavLink href="/analyze" current={pathname}>{t("common.nav.aiAnalysis")}</NavLink>
             </div>
 
-            {/* Right side options */}
-            <div className="hidden md:flex items-center gap-4">
-              {/* Language Toggle */}
-              <div className="flex bg-gray-100 dark:bg-gray-800 rounded-md p-1 border border-gray-200 dark:border-gray-700">
-                <button 
-                  onClick={() => setLanguage('en')}
-                  className={`px-3 py-1 text-xs font-semibold rounded shadow-sm transition-all ${language === 'en' ? 'bg-navy text-white' : 'text-gray-500 hover:text-navy'}`}
+            <div className="flex-1" />
+
+            {/* ── Right controls ───────────────────────────── */}
+            <div className="hidden md:flex items-center gap-6">
+
+              {/* ── Language Toggle ───────────────────────── */}
+              <div className="inline-flex border border-[#A69485] rounded-[2px] overflow-hidden" role="radiogroup" aria-label="Select language">
+                <button
+                  onClick={() => setLang("en")}
+                  role="radio"
+                  aria-checked={lang === "en"}
+                  className={`px-3 py-1.5 text-[0.75rem] font-semibold transition-all duration-200 ${
+                    lang === "en" ? "bg-[#561C24] text-[#F5EDE3]" : "bg-transparent text-[#5C4A42] hover:bg-[rgba(86,28,36,0.05)] cursor-pointer"
+                  }`}
                 >
                   EN
                 </button>
-                <button 
-                  onClick={() => setLanguage('hi')}
-                  className={`px-3 py-1 text-xs font-semibold rounded shadow-sm transition-all ${language === 'hi' ? 'bg-navy text-white' : 'text-gray-500 hover:text-navy'}`}
+                <button
+                  onClick={() => setLang("hi")}
+                  role="radio"
+                  aria-checked={lang === "hi"}
+                  className={`px-3 py-1.5 text-[0.75rem] font-semibold transition-all duration-200 ${
+                    lang === "hi" ? "bg-[#561C24] text-[#F5EDE3]" : "bg-transparent text-[#5C4A42] hover:bg-[rgba(86,28,36,0.05)] cursor-pointer"
+                  }`}
                 >
                   हिं
                 </button>
               </div>
-              
+
+              {/* ── User / Auth ───────────────────────────── */}
               {user ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-navy dark:text-saffron flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-navy/10 dark:bg-saffron/10 flex items-center justify-center">
-                      <User size={16} />
-                    </div>
-                    {user.fullName?.split(' ')[0] || 'User'}
-                  </span>
-                  <button onClick={logout} className="p-2 text-gray-500 hover:text-red-500 transition-colors tooltip" title="Logout">
-                    <LogOut size={18} />
+                <div className="flex items-center gap-4">
+                  <Link href="/my-case" className="text-[0.8125rem] font-medium tracking-[0.08em] uppercase text-burgundy dark:text-cream hover:text-maroon transition-colors">
+                    {user.fullName?.split(" ")[0] || "User"}
+                  </Link>
+                  <button onClick={logout} className="text-burgundy/40 dark:text-cream/40 hover:text-burgundy dark:hover:text-cream transition-colors">
+                    <LogOut size={16} />
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
-                  <Link href="/login" className="px-4 py-2 text-sm font-bold text-navy dark:text-saffron hover:bg-navy/5 rounded-lg transition-all">
-                    {t('nav.login')}
-                  </Link>
-                  <Link href="/register" className="px-4 py-2 bg-navy dark:bg-saffron text-white dark:text-navy font-bold rounded-lg shadow-lg hover:scale-105 transition-all text-sm">
-                    {t('nav.register')}
-                  </Link>
-                </div>
+                <Link href="/login" className="text-[0.8125rem] font-medium tracking-[0.08em] uppercase text-burgundy hover:text-maroon transition-colors">
+                  {t("common.nav.signIn")}
+                </Link>
               )}
 
-              <a href="tel:15100" className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-sm font-bold border border-red-100 dark:border-red-900/50 hover:bg-red-600 hover:text-white transition-all shadow-sm">
-                <Phone size={16} />
-                <span>15100</span>
-              </a>
+              {/* ── Emergency ─────────────────────────────── */}
+              <Link
+                href="/emergency"
+                className="flex items-center gap-2 bg-burgundy text-ivory px-4 py-2 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] rounded-sm hover:bg-maroon transition-colors"
+              >
+                <Phone size={14} /> {t("common.nav.emergency")}
+              </Link>
             </div>
 
-            {/* Mobile toggle */}
-            <button 
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-navy dark:text-saffron rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* ── Global Hamburger & Mobile Call ────────────────── */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="tel:15100"
+                className="text-[#561C24] p-2 flex items-center justify-center hover:bg-[#561C24]/5 rounded-sm transition-colors md:hidden"
+                aria-label="Call emergency number 15100"
+              >
+                <Phone size={20} />
+              </Link>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 text-ink hover:bg-burgundy/5 rounded-sm transition-colors flex items-center gap-2"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+              >
+                {isOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+                <span className="hidden lg:block text-[0.8125rem] font-medium tracking-[0.08em] uppercase text-ink">Menu</span>
+              </button>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
-      <div className={`fixed inset-0 z-[2000] md:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-        <div className={`absolute right-0 top-0 h-full w-[300px] bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} p-6 flex flex-col`}>
-          <div className="flex items-center justify-between mb-8">
-             <div className="flex items-center gap-2">
-                <Scale size={20} className="text-navy dark:text-saffron" />
-                <span className="font-bold text-navy dark:text-saffron">Menu</span>
-             </div>
-            <button onClick={() => setIsOpen(false)} className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full"><X size={20} /></button>
+      {/* ── Mobile Overlay Menu ──────────────────────────────── */}
+      <div
+        className={`fixed inset-0 z-[2000] bg-[#561C24] flex flex-col transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        aria-hidden={!isOpen}
+      >
+        <div className="flex justify-between items-center p-4 border-b border-[#E8D8C4]/10">
+          <span className="text-[#E8D8C4] text-[1.125rem] italic" style={{ fontFamily: "var(--font-serif)" }}>{t("common.appName")}</span>
+          <button onClick={() => setIsOpen(false)} className="p-4 text-[#E8D8C4]" aria-label={t("common.nav.closeMenu")}>
+            <X size={24} strokeWidth={1} />
+          </button>
+        </div>
+
+        <nav className="flex flex-col items-center justify-center flex-1 gap-2 px-6 overflow-y-auto py-8">
+          <MobileLink href="/" onClick={() => setIsOpen(false)}>Home</MobileLink>
+          <MobileLink href="/issues" onClick={() => setIsOpen(false)}>{t("common.nav.exploreIssues")}</MobileLink>
+          <MobileLink href="/guide" onClick={() => setIsOpen(false)}>{t("nav.guide")}</MobileLink>
+          <MobileLink href="/directory" onClick={() => setIsOpen(false)}>{t("nav.directory")}</MobileLink>
+          <MobileLink href="/news" onClick={() => setIsOpen(false)}>{t("nav.news")}</MobileLink>
+          <MobileLink href="/rti" onClick={() => setIsOpen(false)}>{t("common.nav.rtiGenerator")}</MobileLink>
+          <MobileLink href="/analyze" onClick={() => setIsOpen(false)}>{t("common.nav.aiAnalysis")}</MobileLink>
+          <MobileLink href="/my-case" onClick={() => setIsOpen(false)}>My Case</MobileLink>
+          
+          <div className="w-12 h-px bg-cream/20 my-2" />
+          
+          {user ? (
+            <button
+              onClick={() => { logout(); setIsOpen(false); }}
+              className="text-[1.5rem] text-cream/70" style={{ fontFamily: "var(--font-serif)" }}
+            >
+              Sign Out
+            </button>
+          ) : (
+            <MobileLink href="/login" onClick={() => setIsOpen(false)}>Sign In</MobileLink>
+          )}
+
+          <div className="flex gap-4 mt-4">
+            <button onClick={() => setLang("en")} className={`text-cream ${lang === "en" ? "font-bold" : "opacity-50"}`}>EN</button>
+            <span className="text-cream/20">|</span>
+            <button onClick={() => setLang("hi")} className={`text-cream ${lang === "hi" ? "font-bold" : "opacity-50"}`}>हिं</button>
           </div>
-          <nav className="flex flex-col gap-2">
-            <MobileNavLink href="/get-help" onClick={() => setIsOpen(false)}>{t('nav.get_help')}</MobileNavLink>
-            <MobileNavLink href="/documents" onClick={() => setIsOpen(false)}>RTI Generator</MobileNavLink>
-            <MobileNavLink href="/lawyers" onClick={() => setIsOpen(false)}>{t('nav.lawyers')}</MobileNavLink>
-            <MobileNavLink href="/admin" onClick={() => setIsOpen(false)}>Security Shell</MobileNavLink>
-            {user ? (
-              <>
-                <MobileNavLink href="/my-case" onClick={() => setIsOpen(false)}>{t('nav.my_case')}</MobileNavLink>
-                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-4 text-left text-base font-semibold text-red-500 border-b border-gray-50 dark:border-gray-800 border-t border-t-gray-50 dark:border-t-gray-800 mt-2 flex items-center gap-2">
-                  <LogOut size={18} /> Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <MobileNavLink href="/login" onClick={() => setIsOpen(false)}>{t('nav.login')}</MobileNavLink>
-                <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>{t('nav.register')}</MobileNavLink>
-              </>
-            )}
-          </nav>
-          <div className="mt-auto space-y-4">
-             <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-full border border-gray-200 dark:border-gray-700">
-                <button 
-                  onClick={() => setLanguage('en')}
-                  className={`flex-1 py-3 text-sm font-bold rounded-md transition-all ${language === 'en' ? 'bg-navy text-white shadow' : 'text-gray-500'}`}
-                >
-                  English
-                </button>
-                <button 
-                  onClick={() => setLanguage('hi')}
-                  className={`flex-1 py-3 text-sm font-bold rounded-md transition-all ${language === 'hi' ? 'bg-navy text-white shadow' : 'text-gray-500'}`}
-                >
-                  हिंदी
-                </button>
-             </div>
-             <a href="tel:15100" className="flex items-center justify-center gap-3 w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-600/20 active:scale-95 transition-transform">
-                <Phone size={20} />
-                <span>🆘 {language === 'en' ? 'Emergency Help' : 'आपातकालीन सहायता'}: 15100</span>
-             </a>
-          </div>
+        </nav>
+
+        <div className="p-6">
+          <Link
+            href="/emergency"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center justify-center gap-3 w-full py-4 bg-error text-ivory rounded-sm font-semibold tracking-widest uppercase text-sm"
+          >
+            <Phone size={18} /> 15100 Emergency Help
+          </Link>
         </div>
       </div>
     </>
   );
 }
 
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function NavLink({ href, children, current }: { href: string; children: React.ReactNode; current: string }) {
+  const isActive = current === href || current.startsWith(`${href}/`);
   return (
-    <Link href={href} className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy dark:hover:text-saffron hover:bg-navy-50 dark:hover:bg-navy-900/30 rounded-lg transition-all">
+    <Link
+      href={href}
+      className={`relative py-2 text-[0.875rem] font-medium tracking-[0.06em] uppercase transition-colors group ${
+        isActive ? "text-burgundy" : "text-[#5C4A42] hover:text-burgundy"
+      }`}
+    >
       {children}
+      <span className={`absolute -bottom-1 left-0 h-[2px] bg-burgundy transition-all duration-250 ease-out ${
+        isActive ? "w-full" : "w-0 group-hover:w-full"
+      }`} />
     </Link>
   );
 }
 
-function MobileNavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: () => void }) {
+function MobileLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: () => void }) {
   return (
-    <Link 
-      href={href} 
+    <Link
+      href={href}
       onClick={onClick}
-      className="px-4 py-4 text-base font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-50 dark:border-gray-800 active:bg-gray-50 dark:active:bg-gray-800 rounded-lg transition-colors"
+      className="text-[#E8D8C4] text-[1.75rem] text-center w-full hover:underline transition-colors block py-2"
+      style={{ fontFamily: "var(--font-serif)", fontWeight: 400 }}
     >
       {children}
     </Link>

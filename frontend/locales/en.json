@@ -1,0 +1,378 @@
+{
+  "common": {
+    "appName": "Chitragupta",
+    "appTagline": "Your Legal Backup",
+    "nav": {
+      "exploreIssues": "Explore Issues",
+      "rtiGenerator": "RTI Generator",
+      "findLawyer": "Find Lawyer",
+      "aiAnalysis": "AI Analysis",
+      "signIn": "Sign In",
+      "emergency": "Emergency",
+      "emergencyNumber": "15100",
+      "closeMenu": "Close menu",
+      "openMenu": "Open menu"
+    },
+    "actions": {
+      "continue": "Continue",
+      "goBack": "Go Back",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "tryAgain": "Try Again",
+      "download": "Download",
+      "copy": "Copy",
+      "share": "Share",
+      "learnMore": "Learn More",
+      "viewAll": "View All",
+      "startNow": "Start Now",
+      "callNow": "Call Now",
+      "close": "Close",
+      "search": "Search",
+      "clearFilters": "Clear All Filters",
+      "copied": "Copied",
+      "loading": "Loading...",
+      "analyzing": "Analyzing...",
+      "browseFiles": "Browse Files",
+      "uploadAnother": "Upload another document",
+      "book": "Book"
+    },
+    "footer": {
+      "tagline": "India's first AI-powered Legal First-Response System. Legal aid for every Indian citizen, simplified.",
+      "legalAidHelpline": "Legal Aid Helpline",
+      "getHelp": "Get Help",
+      "resources": "Resources",
+      "about": "About",
+      "rtiGenerator": "RTI Generator",
+      "findLawyer": "Find a Lawyer",
+      "knowYourRights": "Know Your Rights",
+      "builtAt": "Built at Hack-A-Sprint 2026. Empowering citizens through accessible legal information.",
+      "poweredBy": "Powered by Gemini AI + Sarvam AI",
+      "copyright": "© 2026 Chitragupt. All Rights Reserved.",
+      "disclaimer": "General information only. Not legal advice.",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use",
+      "disclaimerLink": "Disclaimer",
+      "consumerRights": "Consumer Rights",
+      "workplaceProblems": "Workplace Problems",
+      "policeFirHelp": "Police & FIR Help"
+    },
+    "errors": {
+      "pageNotFound": "Page not found",
+      "pageNotFoundDesc": "The page you are looking for does not exist or has been moved.",
+      "somethingWrong": "Something went wrong",
+      "somethingWrongDesc": "We are having trouble loading this page. Please try again in a moment.",
+      "goHome": "Go to homepage",
+      "browseCategories": "Browse legal categories"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "title1": "Don't panic.",
+      "title2": "Tell me what happened.",
+      "subtitle": "Describe your situation in plain language. Get your legal rights, a clear action plan, and necessary documents in 60 seconds.",
+      "inputPlaceholder": "E.g., My employer is withholding my salary...",
+      "exploreRights": "Explore Your Rights",
+      "analyzeCase": "Analyze My Case",
+      "trustedBy": "Trusted by 14000+ citizens across India"
+    },
+    "quickTags": {
+      "salaryNotPaid": "Salary Not Paid",
+      "defectiveProduct": "Defective Product",
+      "firRefusal": "FIR Refusal",
+      "builderDelay": "Builder Delay",
+      "socialMediaHarassment": "Social Media Harassment",
+      "domesticViolence": "Domestic Violence"
+    },
+    "textReveal": "Chitragupt will change the way you interact with Indian laws.",
+    "howItWorks": {
+      "step1Title": "Identify your issue",
+      "step1Desc": "Select from our expert-curated categories covering everything from tenant disputes to consumer rights. No legal jargon required.",
+      "step2Title": "Get your legal roadmap",
+      "step2Desc": "Receive a plain-language breakdown of your rights and a step-by-step strategy to resolve your situation in minutes.",
+      "step3Title": "Deploy formal actions",
+      "step3Desc": "Instantly generate legal notices, file RTI requests, or connect with verified lawyers to take control of your case."
+    },
+    "featured": {
+      "label": "Common Issues",
+      "title": "Start with your problem. We'll handle the law.",
+      "viewAll": "View all 12 categories",
+      "exploreRights": "Explore rights"
+    },
+    "reviews": {
+      "title": "What our citizens say about us"
+    },
+    "aiSection": {
+      "title1": "Upload your documents.",
+      "title2": "Our AI finds your legal leverage.",
+      "desc": "Drag and drop your rent agreement, termination letter, or police complaint. Chitragupt will instantly analyze it against Indian law to determine your strongest course of action.",
+      "cta": "Upload Documents Now"
+    },
+    "credibility": {
+      "text": "Referenced from IPC, CrPC, Consumer Protection Act, IT Act, and 50+ Indian laws"
+    }
+  },
+
+  "issues": {
+    "pageTitle": "What's your situation?",
+    "pageSubtitle": "Choose a category to understand your rights, read the law in plain English, and find step-by-step action plans.",
+    "notSure": "Not sure where to start?",
+    "describeToAi": "Describe your problem to AI",
+    "commonIssues": "Common Issues:",
+    "selectSituation": "Select a situation above to see your rights and next steps",
+    "categories": {
+      "consumer": { "title": "Consumer Rights", "desc": "Protect yourself against defective products and fraud." },
+      "workplace": { "title": "Workplace & Employment", "desc": "Rights related to salary, termination, and workplace environment." },
+      "police": { "title": "Police & FIR", "desc": "Guidelines on police procedures, FIRs, and bail." },
+      "property": { "title": "Property & Real Estate", "desc": "Disputes involving property ownership, builders, and RERA." },
+      "family": { "title": "Family & Matrimonial", "desc": "Laws regarding marriage, divorce, and domestic issues." },
+      "cyber": { "title": "Cyber Crime & Online Fraud", "desc": "Recourse for online scams, hacking, and digital harassment." },
+      "medical": { "title": "Medical Negligence", "desc": "Rights against improper medical treatment and hospital disputes." },
+      "financial": { "title": "Banking & Financial Fraud", "desc": "Issues with loans, credit cards, and banking institutions." },
+      "government": { "title": "Government & Public Services", "desc": "Dealing with government offices, RTI, and public schemes." },
+      "education": { "title": "Education & Student Rights", "desc": "Protection for students against unfair institutional practices." },
+      "traffic": { "title": "Traffic & Motor Vehicle", "desc": "Handling challans, accidents, and insurance claims." }
+    }
+  },
+
+  "rti": {
+    "pageTitle": "RTI Application Generator",
+    "pageSubtitle": "File a Right to Information request in under 5 minutes.",
+    "steps": { "details": "Details", "department": "Department", "questions": "Questions", "preview": "Preview", "download": "Download" },
+    "form": {
+      "applicantDetails": "Applicant Details",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "As per official ID",
+      "address": "Complete Postal Address",
+      "addressPlaceholder": "House no, Street, Landmark...",
+      "city": "City / Town",
+      "cityPlaceholder": "e.g. Pune",
+      "pincode": "Pincode",
+      "pincodePlaceholder": "123456",
+      "continueTo": "Continue to Department"
+    },
+    "placeholderStep": "(Placeholder for Steps 2-5. Redesign focuses purely on layout verification for Step 1.)",
+    "backToStart": "Back to Start"
+  },
+
+  "lawyers": {
+    "pageTitle": "Find Legal Help Near You",
+    "pageSubtitle": "Connect with pro-bono lawyers and legal aid organizations across India. Every citizen has a right to justice.",
+    "searchPlaceholder": "Search by name or city...",
+    "lawyersFound": "Lawyers Found",
+    "noResults": "No lawyers match your filters",
+    "noResultsDesc": "Try expanding your search by changing the practice area or city.",
+    "consultation": "Consultation",
+    "governmentLegalAid": "Government Legal Aid",
+    "governmentLegalAidDesc": "Every Indian citizen has the right to free legal aid under the Legal Services Authorities Act, 1987. If you cannot afford a lawyer, the government will provide one for you.",
+    "dlsa": { "title": "DLSA / SLSA", "desc": "District/State Level Legal Services for SC/ST, women, children, and victims of disaster." },
+    "nalsa": { "title": "NALSA Helpline", "desc": "24/7 National hotline for free legal advice and representation. Call 15100 now." },
+    "hc": { "title": "HC Legal Committee", "desc": "For cases pending in High Courts. Available at every state High Court." },
+    "emergencyHelplines": "Emergency Legal Helplines",
+    "police": "Police",
+    "women": "Women",
+    "child": "Child",
+    "cyber": "Cyber",
+    "legalAid": "Legal Aid"
+  },
+
+  "analyze": {
+    "pageTitle": "AI Case Analysis",
+    "pageSubtitle": "Upload your documents. Our AI reads them and finds your legal leverage against Indian law.",
+    "dragDocuments": "Drag documents here",
+    "orBrowse": "or click to browse from your device",
+    "acceptedFormats": "Accepted: PDF, Images, Text (Max 10MB)",
+    "analyzing": "Analyzing your documents",
+    "analyzeTime": "This usually takes 15-30 seconds",
+    "privacyNote": "Your documents are processed securely and deleted from our servers immediately after analysis.",
+    "analysisComplete": "Analysis Complete",
+    "yourLeverage": "Your Leverage — Simply",
+    "whatToDo": "What You Should Do",
+    "verifiedLegalGrounding": "Verified Legal Grounding"
+  },
+
+  "emergency": {
+    "pageTitle": "Emergency Legal Help",
+    "pageSubtitle": "If you are in immediate danger or facing sudden police action, tap the numbers below.",
+    "call15100": "Call 15100",
+    "nwh": "National Women Helpline (NCW)",
+    "call100": "Call 100 / 112",
+    "policeGeneral": "Police & General Emergency",
+    "call1098": "Call 1098",
+    "childHelpline": "Child Helpline API",
+    "rightsTitle": "Rights during arrest",
+    "dkBasu": "DK Basu Guidelines (Supreme Court):",
+    "dkBasuText": "The police official carrying out the arrest must wear an accurate, visible name tag with their designation.",
+    "rightToInform": "Right to Inform:",
+    "rightToInformText": "You have the absolute right to have one friend, relative, or person known to you informed about your arrest and the location where you are being held.",
+    "twentyFourHour": "24-Hour Rule:",
+    "twentyFourHourText": "You cannot be held in police custody for more than 24 hours without being presented before a Magistrate.",
+    "womensRights": "Women's Rights:",
+    "womensRightsText": "Women cannot be arrested between sunset and sunrise, except in exceptional circumstances and only with written permission from a Magistrate. A female officer must be present."
+  },
+
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "securingAccess": "Securing Access to Justice",
+    "backToHome": "Back to Home",
+    "newToChitragupt": "New to Chitragupt?",
+    "createAccount": "Create Account",
+    "legalSystem": "© 2026 Chitragupt • Legal First-Response System"
+  },
+
+  "documents": {
+    "aiAssistant": "AI Legal Assistant",
+    "title": "Generate Legal Documents",
+    "subtitle": "Professional legal notices in 60 seconds. Download as PDF. Vetted by Indian Advocates. Available in Hindi and English.",
+    "successTitle": "Success! Your Legal Notice is Ready",
+    "successDesc": "Sending this notice is often enough — 68% of disputes are resolved without ever going to court.",
+    "editForm": "Edit Form",
+    "legalNotice": "Legal Notice",
+    "byRegPost": "By Registered Post with Acknowledgment Due (RPAD)",
+    "from": "From:",
+    "to": "To,",
+    "date": "Date:",
+    "subjectPrefix": "Subject: Legal Notice for",
+    "subjectSuffix": "- Demand for Relief.",
+    "sirMadam": "Sir / Madam,",
+    "fact1": "Under the specific instructions of my client, I hereby serve you with this Legal Notice in relation to the following facts:",
+    "fact2": "1. That you and I entered into an agreement on {date} for the purpose of tenancy/service, and my client deposited a sum of ₹{amount} with you for the same.",
+    "fact3": "2. That despite vacating the premises/service on the agreed date and fulfilling all obligations, you have failed to {demand} within the legally stipulated timeline.",
+    "fact4": "3. That such withholding is illegal, arbitrary, and amounts to \"Criminal Breach of Trust\" under the Bharatiya Nyaya Sanhita (formerly IPC) and specific provisions of the Consumer Protection Act.",
+    "fact5": "4. NOW THEREFORE, I hereby demand that you {demand} within {deadline} days from the receipt of this notice.",
+    "fact6": "FAILURE to comply with the above will leave my client with no option but to initiate legal proceedings in the appropriate Court of Law, and you shall be solely liable for all costs and consequences thereof.",
+    "signed": "Signed,",
+    "downloadPdf": "Download PDF",
+    "shareWhatsapp": "Share on WhatsApp",
+    "form": {
+      "step1": "Your Details",
+      "step1Sub": "Who is sending this notice?",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "As on Aadhaar / PAN",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+91 99999 99999",
+      "address": "Your Current Address",
+      "addressPlaceholder": "Full postal address for receiving response",
+      "step2": "Opposite Party",
+      "step2Sub": "Who are you sending this to?",
+      "oppName": "Their Name (Landlord / Company)",
+      "oppNamePlaceholder": "Name of Opponent",
+      "oppAddress": "Their Full Address",
+      "oppAddressPlaceholder": "Physical address for document service",
+      "step3": "Your Situation",
+      "step3Sub": "What happened and what do you want?",
+      "mainIssue": "Main Issue",
+      "amount": "Relevant Amount (₹)",
+      "dateIncident": "Date of Incident / Vacating",
+      "demand": "Your Main Demand",
+      "deadline": "Deadline for Response (Days)",
+      "generateBtn": "Generate My Legal Notice",
+      "warning": "⚠️ Professional legal documents are drafted based on Indian law. Ensure all information is accurate."
+    },
+    "sidebar": {
+      "whyWorks": "Why this works",
+      "evidenceTitle": "Proper Evidence",
+      "evidenceDesc": "A formal notice + speed post receipt is 100% vital proof if you later go to court.",
+      "bilingualTitle": "Bi-Lingual",
+      "bilingualDesc": "Automatically generate the document in your preferred language to avoid confusion.",
+      "accuracyTitle": "Legal Accuracy",
+      "accuracyDesc": "Templates based on CrPC and BNS standards used by Indian High Court lawyers.",
+      "nextSteps": "Recommended Next Steps:",
+      "step1": "Download PDF & Print it",
+      "step2": "Send via Speed Post / Registered Post",
+      "step3": "WhatsApp & Email as backup proof",
+      "step4": "Wait 15 days for formal response",
+      "readyToSend": "Ready to send?",
+      "readyDesc": "Don't forget to keep the postal receipt. It's your most powerful piece of evidence in court.",
+      "readGuide": "Read our guide on Speed Post"
+    },
+    "nav": {
+      "guide": "Legal Guide",
+      "directory": "Legal Directory",
+      "news": "Legal News"
+    }
+  },
+
+  "guide": {
+    "pageTitle": "Legal Guide",
+    "pageSubtitle": "Plain-language articles on your rights, legal processes, and how to protect yourself.",
+    "readArticle": "Read Article",
+    "minRead": "{{count}} min read",
+    "loadMore": "Load more articles",
+    "relatedArticles": "Related Articles",
+    "categories": {
+      "all": "All",
+      "tenantRights": "Tenant Rights",
+      "consumer": "Consumer",
+      "workplace": "Workplace",
+      "policeFir": "Police & FIR",
+      "cyberCrime": "Cyber Crime",
+      "property": "Property",
+      "familyLaw": "Family Law",
+      "rtiGovt": "RTI & Government",
+      "financialFraud": "Financial Fraud",
+      "knowYourRights": "Know Your Rights"
+    },
+    "newsletter": {
+      "title": "Stay informed about your rights",
+      "subtitle": "Get weekly legal awareness articles delivered to your inbox.",
+      "emailPlaceholder": "Enter your email",
+      "subscribe": "Subscribe"
+    }
+  },
+
+  "directory": {
+    "pageTitle": "Local Legal Directory",
+    "pageSubtitle": "Find courts, legal aid offices, government departments, and support organizations near you.",
+    "searchPlaceholder": "Search by name, city, or type...",
+    "state": "State / UT",
+    "city": "City",
+    "type": "Type",
+    "allStates": "All States",
+    "allCities": "All Cities",
+    "allTypes": "All Types",
+    "resultsFound": "{{count}} resources found in {{state}}",
+    "getDirections": "Get Directions →",
+    "call": "Call →",
+    "noResults": "No resources found matching your filters.",
+    "noResultsDesc": "Try broadening your search or selecting a different state.",
+    "suggestListing": "Suggest a listing",
+    "cantFind": "Can't find what you need?",
+    "types": {
+      "all": "All",
+      "districtCourt": "Courts",
+      "legalAid": "Legal Aid",
+      "consumerForum": "Consumer Forum",
+      "policeCyber": "Police / Cyber Cell",
+      "govtOffice": "Government Offices",
+      "lawFirm": "Law Firms",
+      "womensCommission": "Women's Commission",
+      "ngo": "NGOs",
+      "rtiOffice": "RTI Offices",
+      "notaryStamp": "Notary / Stamp"
+    }
+  },
+
+  "news": {
+    "pageTitle": "Legal News & Alerts",
+    "pageSubtitle": "Stay aware. Scam alerts, landmark cases, policy changes, and what they mean for you.",
+    "loadMore": "Load more news",
+    "source": "Source",
+    "relatedNews": "Related News",
+    "quickSafetyTips": "Quick Safety Tips",
+    "categories": {
+      "all": "All",
+      "scamAlert": "Scam Alerts",
+      "courtDecision": "Court Decisions",
+      "policyChange": "Policy Changes",
+      "consumerWarning": "Consumer Warnings",
+      "awareness": "Awareness",
+      "crimeSafety": "Crime & Safety"
+    },
+    "safetyTips": {
+      "tip1": "Never share OTP with anyone, even bank officials",
+      "tip2": "Always verify callers who claim to be from banks or government",
+      "tip3": "Report scams within 24 hours at cybercrime.gov.in"
+    }
+  }
+}
