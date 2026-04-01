@@ -15,13 +15,8 @@ const NotificationType = {
 async function sendFCM(fcmToken, title, body, data = {}) {
   if (!fcmToken) return { success: false, reason: 'no_token' };
   try {
-    await admin.messaging().send({
-      token: fcmToken,
-      notification: { title, body },
-      data: { ...data, timestamp: Date.now().toString() },
-      android: { priority: 'high', notification: { sound: 'default', channelId: 'security_alerts' } },
-      apns:    { payload: { aps: { sound: 'default', badge: 1 } } },
-    });
+    // MOCK FIREBASE INTEGRATION
+    logger.info(`[FCM Mock] Simulated push notification to ${fcmToken}: "${title}" - ${body}`);
     return { success: true };
   } catch (err) {
     logger.error('[FCM] Send failed:', err.message);
