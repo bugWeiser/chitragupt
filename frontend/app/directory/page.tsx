@@ -135,7 +135,7 @@ export default function DirectoryPage() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto no-scrollbar gap-3 pb-2">
+          <div className="flex overflow-x-auto gap-3 pb-4">
             {types.map((type) => (
               <button
                 key={type}

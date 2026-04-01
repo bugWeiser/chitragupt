@@ -39,6 +39,43 @@ export default function RTIGenerator() {
     return true;
   };
 
+  const handleDownloadPDF = async () => {
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      doc.text("APPLICATION FOR INFORMATION UNDER SECTION 6(1) OF THE RTI ACT, 2005", 105, 25, { align: "center" });
+
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.text(`To,`, 20, 45);
+      doc.text(`The Public Information Officer (PIO)`, 20, 52);
+      doc.text(`${formData.department}`, 20, 59);
+
+      doc.text(`1. Name of the Applicant:    ${formData.fullName}`, 20, 75);
+      doc.text(`2. Complete Address:         ${formData.address}, ${formData.city} - ${formData.pincode}`, 20, 85);
+      
+      doc.text(`3. Details of information required:`, 20, 105);
+      
+      doc.setFont("helvetica", "italic");
+      const splitText = doc.splitTextToSize(formData.details || "Not Provided", 170);
+      doc.text(splitText, 20, 115);
+
+      doc.setFont("helvetica", "normal");
+      doc.text(`4. Application Fee: I have enclosed the fee of Rs. 10/- via Postal Order/Demand Draft.`, 20, 220);
+      doc.text(`Date  : ___________________`, 20, 240);
+      doc.text(`Place : ${formData.city || "___________________"}`, 20, 250);
+      doc.text(`Signature of Applicant: _________________`, 110, 250);
+
+      doc.save("RTI_Application.pdf");
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+      alert("Failed to generate PDF. Check browser console.");
+    }
+  };
+
   return (
     <div className="flex flex-col bg-surface min-h-screen pt-[140px] pb-24 px-6 lg:px-16 overflow-x-hidden">
       
@@ -228,7 +265,10 @@ export default function RTIGenerator() {
               <p className="text-[#5C4A42] text-[0.9375rem] max-w-xs mx-auto">
                 Download the generated PDF, sign it, and send it via Speed Post to the department's Public Information Officer (PIO).
               </p>
-              <button className="btn-primary w-full sm:w-auto px-12 py-5 shadow-xl hover:scale-105 transition-transform active:scale-95">
+              <button 
+                onClick={handleDownloadPDF}
+                className="btn-primary w-full sm:w-auto px-12 py-5 shadow-xl hover:scale-105 transition-transform active:scale-95"
+              >
                 Download RTI PDF <ArrowRight className="ml-2 inline" size={18} />
               </button>
               <div className="pt-8 border-t border-border/30">

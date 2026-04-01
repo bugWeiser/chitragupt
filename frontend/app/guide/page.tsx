@@ -49,7 +49,7 @@ export default function GuidePage() {
         </div>
 
         {/* Category Filter */}
-        <div className="flex overflow-x-auto no-scrollbar gap-3 mb-10 pb-2">
+        <div className="flex overflow-x-auto gap-3 mb-10 pb-4">
           {categories.map((cat) => {
             const isActive = activeCategory === cat;
             // Simplified translation mapping

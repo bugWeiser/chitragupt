@@ -10,10 +10,62 @@ export default function AnalyzePage() {
   const [isAnalyzed, setIsAnalyzed]   = useState(false);
   const [scenario, setScenario]       = useState("");
 
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
+
   const handleAnalyze = () => {
     if (!scenario.trim()) return;
     setIsAnalyzing(true);
+    
+    // Process input
+    const input = scenario.toLowerCase();
+    let result = {
+      leverage: [
+        { title: "Notice Period Violation", desc: "Under the Model Tenancy Act and most State laws, the landlord must return the security deposit at the time of handing over possession, or within 30 days if explicitly stated." },
+        { title: "Unfair Deduction Protection", desc: "Landlords cannot deduct for 'ordinary wear and tear' (e.g., standard painting, minor flooring scratches). This is a protected right under Consumer Protection norms." }
+      ],
+      steps: [
+        { title: "Step 01 — Immediate: Draft a formal Legal Notice", desc: "Clearly state the demand for ₹40,000 return within 15 days or you will initiate BNS (formerly IPC) proceedings for Criminal Breach of Trust." },
+        { title: "Step 02 — Secondary: Apply for RTI in Housing Department", desc: "If the landlord owns multiple unregistered flats, a simple RTI about his tax status or registration details often forces a settlement." }
+      ]
+    };
+
+    if (input.includes("domestic violence") || input.includes("husband") || input.includes("beat") || input.includes("abuse")) {
+      result = {
+          leverage: [
+            { title: "Protection under PWDVA, 2005", desc: "You have the right to reside in the shared household, regardless of whether you have right, title, or beneficial interest in it." },
+            { title: "Section 498A BNS (Cruelty)", desc: "Mental and physical cruelty by a husband or his relatives is a non-bailable, cognizable offense." }
+          ],
+          steps: [
+            { title: "Step 01 — Immediate: Call National Women Helpline (1091)", desc: "Immediately seek emergency protection if you are in physical danger or require urgent shelter." },
+            { title: "Step 02 — Secondary: File a Domestic Incident Report (DIR)", desc: "Contact the Protection Officer in your district to officially log the abuse and seek legal injunctions." }
+          ]
+      };
+    } else if (input.includes("salary") || input.includes("employer") || input.includes("job") || input.includes("work")) {
+      result = {
+          leverage: [
+            { title: "Payment of Wages Act Violation", desc: "Employers are legally mandated to pay salaries on time. Withholding salary without due legal process is a strict violation." },
+            { title: "Criminal Breach of Trust (BNS)", desc: "Refusal to pay earned wages can be construed under Indian Penal laws as cheating and breach of trust." }
+          ],
+          steps: [
+            { title: "Step 01 — Immediate: Send a Legal Demand Notice", desc: "Formally demand the pending salary within 15 days via Registered Post. Keep physical proof." },
+            { title: "Step 02 — Secondary: Approach Labour Commissioner", desc: "If the notice is ignored, file a formal complaint under the Industrial Disputes Act or local Shops & Establishments Act." }
+          ]
+      };
+    } else if (input.includes("scam") || input.includes("fraud") || input.includes("fake") || input.includes("money")) {
+       result = {
+          leverage: [
+            { title: "IT Act & BNS Cognizance", desc: "Online financial fraud is a cognizable offense under the Information Technology Act and Bharatiya Nyaya Sanhita." },
+            { title: "RBI Zero Liability Framework", desc: "If reported within 3 days, you have zero liability for unauthorized electronic banking transactions." }
+          ],
+          steps: [
+            { title: "Step 01 — Immediate: Call 1930 Cyber Helpline", desc: "Immediately register the fraudulent transaction to freeze the suspect's bank account." },
+            { title: "Step 02 — Secondary: File at cybercrime.gov.in", desc: "Log a formal FIR online using the national portal with transaction hashes and screenshots." }
+          ]
+      };
+    }
+
     setTimeout(() => {
+      setAnalysisResult(result);
       setIsAnalyzing(false);
       setIsAnalyzed(true);
     }, 2500);
@@ -100,28 +152,19 @@ export default function AnalyzePage() {
               </div>
 
               <div className="bg-white border border-border p-8 rounded-sm shadow-sm space-y-8">
-                <div className="flex items-start gap-5">
-                  <div className="mt-1 bg-burgundy/5 text-burgundy p-1.5 rounded-sm flex-shrink-0">
-                    <ShieldCheck size={20} strokeWidth={2.5} />
+                {analysisResult?.leverage.map((item: any, i: number) => (
+                  <div key={i} className="flex items-start gap-5">
+                    <div className="mt-1 bg-burgundy/5 text-burgundy p-1.5 rounded-sm flex-shrink-0">
+                      <ShieldCheck size={20} strokeWidth={2.5} />
+                    </div>
+                    <div>
+                      <h4 className="text-[1.125rem] font-serif italic text-ink mb-2">{item.title}</h4>
+                      <p className="text-[1.0625rem] text-ink/80 leading-[1.8] max-w-prose">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[1.125rem] font-serif italic text-ink mb-2">Notice Period Violation</h4>
-                    <p className="text-[1.0625rem] text-ink/80 leading-[1.8] max-w-prose">
-                      Under the Model Tenancy Act and most State laws, the landlord must return the security deposit at the time of handing over possession, or within 30 days if explicitly stated.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-5">
-                  <div className="mt-1 bg-burgundy/5 text-burgundy p-1.5 rounded-sm flex-shrink-0">
-                    <ShieldCheck size={20} strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <h4 className="text-[1.125rem] font-serif italic text-ink mb-2">Unfair Deduction Protection</h4>
-                    <p className="text-[1.0625rem] text-ink/80 leading-[1.8] max-w-prose">
-                      Landlords cannot deduct for "ordinary wear and tear" (e.g., standard painting, minor flooring scratches). This is a protected right under Consumer Protection norms.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </section>
 
@@ -131,23 +174,23 @@ export default function AnalyzePage() {
               </h2>
               
               <div className="space-y-6">
-                <div className="bg-ivory border border-border/60 p-6 rounded-sm hover:-translate-y-1 transition-transform cursor-pointer group">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="bg-burgundy text-ivory text-[0.625rem] px-2 py-0.5 font-bold tracking-widest uppercase">Step 01 — Immediate</span>
-                    <ArrowRight className="text-burgundy opacity-0 group-hover:opacity-100 transition-opacity" size={18} />
-                  </div>
-                  <h4 className="text-[1.25rem] text-ink mb-2" style={{ fontFamily: "var(--font-serif)" }}>Draft a formal Legal Notice</h4>
-                  <p className="text-[0.9375rem] text-ink/70">Clearly state the demand for ₹40,000 return within 15 days or you will initiate BNS (formerly IPC) proceedings for Criminal Breach of Trust.</p>
-                </div>
+                {analysisResult?.steps.map((item: any, i: number) => {
+                  const splitTitle = item.title.split(': ');
+                  const stepBadge = splitTitle[0];
+                  const mainTitle = splitTitle[1];
+                  const isPrimary = i === 0;
 
-                <div className="bg-burgundy text-ivory p-6 rounded-sm shadow-lg hover:-translate-y-1 transition-transform cursor-pointer group">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="bg-ivory/20 text-ivory text-[0.625rem] px-2 py-0.5 font-bold tracking-widest uppercase">Step 02 — Secondary</span>
-                    <ArrowRight className="text-ivory opacity-0 group-hover:opacity-100 transition-opacity" size={18} />
-                  </div>
-                  <h4 className="text-[1.25rem] text-ivory mb-2" style={{ fontFamily: "var(--font-serif)" }}>Apply for RTI in Housing Department</h4>
-                  <p className="text-[0.9375rem] text-ivory/80">If the landlord owns multiple unregistered flats, a simple RTI about his tax status or registration details often forces a settlement.</p>
-                </div>
+                  return (
+                    <div key={i} className={`${isPrimary ? 'bg-ivory border border-border/60 text-ink' : 'bg-burgundy text-ivory shadow-lg'} p-6 rounded-sm hover:-translate-y-1 transition-transform cursor-pointer group`}>
+                      <div className="flex justify-between items-start mb-4">
+                        <span className={`${isPrimary ? 'bg-burgundy text-ivory' : 'bg-ivory/20 text-ivory'} text-[0.625rem] px-2 py-0.5 font-bold tracking-widest uppercase`}>{stepBadge}</span>
+                        <ArrowRight className={`${isPrimary ? 'text-burgundy' : 'text-ivory'} opacity-0 group-hover:opacity-100 transition-opacity`} size={18} />
+                      </div>
+                      <h4 className={`text-[1.25rem] mb-2`} style={{ fontFamily: "var(--font-serif)" }}>{mainTitle}</h4>
+                      <p className={`text-[0.9375rem] ${isPrimary ? 'text-ink/70' : 'text-ivory/80'}`}>{item.desc}</p>
+                    </div>
+                  );
+                })}
               </div>
             </section>
 

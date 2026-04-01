@@ -4,6 +4,9 @@
     "appTagline": "Your Legal Backup",
     "nav": {
       "exploreIssues": "Explore Issues",
+      "guide": "Guide",
+      "directory": "Directory",
+      "news": "News",
       "rtiGenerator": "RTI Generator",
       "findLawyer": "Find Lawyer",
       "aiAnalysis": "AI Analysis",
