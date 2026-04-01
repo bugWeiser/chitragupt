@@ -41,7 +41,7 @@ async function sendRegistrationOTP(userId, email, phone) {
   await Promise.allSettled(promises);
   await auditService.log({ userId, eventType: 'otp_sent', eventCategory: 'auth', metadata: { email, hasPhone: !!phone } });
 
-  return true;
+  return otp; // Return OTP explicitly so the demo frontend can show it
 }
 
 async function verifyRegistrationOTP(userId, inputOtp) {

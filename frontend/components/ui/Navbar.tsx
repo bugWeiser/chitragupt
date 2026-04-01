@@ -47,9 +47,9 @@ export default function Navbar() {
             {/* ── Desktop Nav Links ─────────────────────────── */}
             <div className="hidden lg:flex items-center gap-4 xl:gap-6 ml-6">
               <NavLink href="/issues" current={pathname}>{t("common.nav.exploreIssues")}</NavLink>
-              <NavLink href="/guide" current={pathname}>{t("nav.guide")}</NavLink>
-              <NavLink href="/directory" current={pathname}>{t("nav.directory")}</NavLink>
-              <NavLink href="/news" current={pathname}>{t("nav.news")}</NavLink>
+              <NavLink href="/guide" current={pathname}>Guide</NavLink>
+              <NavLink href="/directory" current={pathname}>Directory</NavLink>
+              <NavLink href="/news" current={pathname}>News</NavLink>
               <NavLink href="/rti" current={pathname}>{t("common.nav.rtiGenerator")}</NavLink>
               <NavLink href="/analyze" current={pathname}>{t("common.nav.aiAnalysis")}</NavLink>
             </div>
@@ -148,9 +148,9 @@ export default function Navbar() {
         <nav className="flex flex-col items-center justify-center flex-1 gap-2 px-6 overflow-y-auto py-8">
           <MobileLink href="/" onClick={() => setIsOpen(false)}>Home</MobileLink>
           <MobileLink href="/issues" onClick={() => setIsOpen(false)}>{t("common.nav.exploreIssues")}</MobileLink>
-          <MobileLink href="/guide" onClick={() => setIsOpen(false)}>{t("nav.guide")}</MobileLink>
-          <MobileLink href="/directory" onClick={() => setIsOpen(false)}>{t("nav.directory")}</MobileLink>
-          <MobileLink href="/news" onClick={() => setIsOpen(false)}>{t("nav.news")}</MobileLink>
+          <MobileLink href="/guide" onClick={() => setIsOpen(false)}>Guide</MobileLink>
+          <MobileLink href="/directory" onClick={() => setIsOpen(false)}>Directory</MobileLink>
+          <MobileLink href="/news" onClick={() => setIsOpen(false)}>News</MobileLink>
           <MobileLink href="/rti" onClick={() => setIsOpen(false)}>{t("common.nav.rtiGenerator")}</MobileLink>
           <MobileLink href="/analyze" onClick={() => setIsOpen(false)}>{t("common.nav.aiAnalysis")}</MobileLink>
           <MobileLink href="/my-case" onClick={() => setIsOpen(false)}>My Case</MobileLink>

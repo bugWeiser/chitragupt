@@ -38,13 +38,9 @@ export default function RegisterPage() {
           </h2>
         </div>
         
-        {!userId ? (
+        <div className={`transition-all duration-300 ${userId ? 'opacity-20 pointer-events-none filter blur-sm' : ''}`}>
           <RegisterForm onSuccess={handleRegisterSuccess} />
-        ) : (
-          <OTPVerification userId={userId} onSuccess={handleVerifySuccess} />
-        )}
-
-        {!userId && (
+          
           <div className="mt-8 text-center pt-2">
             <p className="text-[0.875rem] text-[#6B5A52] font-medium">
               Already have an account?{' '}
@@ -52,6 +48,15 @@ export default function RegisterPage() {
                 Login
               </Link>
             </p>
+          </div>
+        </div>
+
+        {/* OTP Modal Dialog overlay */}
+        {userId && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-white/60 backdrop-blur-md rounded-[40px] animate-fade-in">
+             <div className="bg-white border border-[#E8D8C4] rounded-3xl shadow-2xl p-8 w-full relative animate-scale-up">
+                <OTPVerification userId={userId} onSuccess={handleVerifySuccess} />
+             </div>
           </div>
         )}
         

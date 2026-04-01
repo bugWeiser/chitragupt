@@ -25,14 +25,14 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
   };
 
   return (
-    <form onSubmit={handleVerify} className="space-y-6 text-center animate-fadeInUp">
+    <form onSubmit={handleVerify} className="space-y-6 text-center animate-fade-in">
       <div className="space-y-4">
-        <h3 className="text-2xl font-black text-navy dark:text-saffron">Verify Your Account</h3>
-        <p className="text-gray-500 text-sm">We've sent a 6-digit code to your email and phone. Enter it below to secure your identity.</p>
+        <h3 className="text-[1.75xl] font-bold text-[#561C24] tracking-tight">Verify Your Account</h3>
+        <p className="text-[#6B5A52] text-[0.9375rem] leading-relaxed">We've sent a 6-digit code to your email and phone. Enter it below to secure your identity.</p>
       </div>
 
       {error && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-bold animate-shake">
+        <div className="p-3 bg-red-50 border border-red-100/50 rounded-xl text-red-600 text-sm font-medium animate-shake">
           {error}
         </div>
       )}
@@ -44,20 +44,20 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
           onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))} 
           maxLength={6}
           placeholder="000000"
-          className="w-full p-5 bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-navy dark:focus:border-saffron rounded-2xl text-center text-4xl font-black tracking-[0.5em] outline-none transition-all"
+          className="w-full p-5 bg-[#FAF6F1] border border-[#E8D8C4] focus:border-[#561C24] focus:ring-1 focus:ring-[#561C24] rounded-2xl text-center text-[2rem] font-black tracking-[0.5em] text-ink outline-none transition-all placeholder:text-[#D4C4B4]"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading || otp.length !== 6}
-        className="w-full py-4 bg-navy dark:bg-saffron text-white dark:text-navy-dark font-black rounded-xl disabled:opacity-50 transition-all hover:scale-[1.01] active:scale-95 shadow-xl"
+        className="w-full py-4 bg-[#1A2518] hover:bg-black text-white font-semibold rounded-full disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95 shadow-sm"
       >
         {loading ? 'Verifying...' : 'Verify & Continue'}
       </button>
 
-      <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">
-        Didn't receive the code? <button type="button" className="underline hover:text-navy dark:hover:text-saffron">Resend in 60s</button>
+      <p className="text-[0.75rem] text-[#8B7B6B] font-medium tracking-wide">
+        Didn't receive the code? <button type="button" className="underline hover:text-[#561C24] transition-colors ml-1 font-bold">Resend in 60s</button>
       </p>
     </form>
   );

@@ -14,7 +14,11 @@ export function useAuth() {
     setLoading(true);
     try {
       const result = await authService.register(data);
-      toast.success('Check your email and SMS for verification code!');
+      if (result.data?.otp) {
+        toast.success(`Sent! (Demo OTP: ${result.data.otp})`, { duration: 10000, icon: '👨‍⚖️' });
+      } else {
+        toast.success('Check your email and SMS for verification code!');
+      }
       return result;
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Registration failed');

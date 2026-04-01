@@ -22,10 +22,10 @@ async function register({ fullName, email, phone, password, role = 'litigant' })
   );
   const userId = rows[0].id;
 
-  await otpService.sendRegistrationOTP(userId, email, phone);
+  const otp = await otpService.sendRegistrationOTP(userId, email, phone);
   await auditService.log({ userId, eventType: 'user_registered', eventCategory: 'auth', metadata: { email, role } });
 
-  return { userId, message: 'Registration started. Check your email and SMS for OTP.' };
+  return { userId, otp, message: 'Registration started. Check your email and SMS for OTP.' };
 }
 
 async function verifyRegistration(userId, otp) {
