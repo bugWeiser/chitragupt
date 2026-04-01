@@ -16,9 +16,11 @@ const logger = require('./utils/logger');
 // Routes
 const authRoutes         = require('./modules/auth/auth.routes');
 const totpRoutes         = require('./modules/totp/totp.routes');
+const adminRoutes        = require('./modules/admin/admin.routes');
 const auditRoutes        = require('./modules/audit/audit.routes');
 const notificationRoutes = require('./modules/notifications/notification.routes');
 const scannerRoutes      = require('./modules/scanner/scanner.routes');
+
 
 // Jobs
 const { initSecurityScanJob } = require('./jobs/securityScan.job');
@@ -72,9 +74,11 @@ app.use('/api', generalLimiter);
 // ─── ROUTES ───
 app.use('/api/auth',          authRoutes);
 app.use('/api/auth/totp',     totpRoutes);
+app.use('/api/admin',          adminRoutes);
 app.use('/api/admin/logs',    auditRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/admin/scanner', scannerRoutes);
+
 
 
 

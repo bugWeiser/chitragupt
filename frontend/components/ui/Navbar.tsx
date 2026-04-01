@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Scale, Menu, X, Phone, User, LogOut } from 'lucide-react';
+import { Scale, Menu, X, Phone, User, LogOut, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -25,7 +27,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16 sm:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-navy to-navy-light rounded-lg flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
+              <div className="w-10  h-10 bg-gradient-to-br from-navy to-navy-light rounded-lg flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
                 <Scale size={24} />
               </div>
               <div className="flex flex-col leading-none">
@@ -36,17 +38,33 @@ export default function Navbar() {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1">
-              <NavLink href="/get-help">Get Help</NavLink>
+              <NavLink href="/get-help">{t('nav.get_help')}</NavLink>
               <NavLink href="/documents">RTI Generator</NavLink>
-              <NavLink href="/lawyers">Find a Lawyer</NavLink>
-              <NavLink href={user ? "/my-case" : "/login"}>{user ? "My Case" : "Sign In"}</NavLink>
+              <NavLink href="/lawyers">{t('nav.lawyers')}</NavLink>
+              <NavLink href={user ? "/my-case" : "/login"}>{user ? t('nav.my_case') : t('nav.login')}</NavLink>
+              
+              {/* Shield Link for Admins */}
+              <Link href="/admin" className="ml-2 p-2 bg-navy/5 text-navy hover:bg-navy hover:text-white rounded-full transition-all" title="Security Admin">
+                <ShieldCheck size={18} />
+              </Link>
             </div>
 
             {/* Right side options */}
             <div className="hidden md:flex items-center gap-4">
+              {/* Language Toggle */}
               <div className="flex bg-gray-100 dark:bg-gray-800 rounded-md p-1 border border-gray-200 dark:border-gray-700">
-                <button className="px-3 py-1 text-xs font-semibold bg-navy text-white rounded shadow-sm">EN</button>
-                <button className="px-3 py-1 text-xs font-semibold text-gray-500 hover:text-navy dark:hover:text-saffron transition-colors">हिं</button>
+                <button 
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-1 text-xs font-semibold rounded shadow-sm transition-all ${language === 'en' ? 'bg-navy text-white' : 'text-gray-500 hover:text-navy'}`}
+                >
+                  EN
+                </button>
+                <button 
+                  onClick={() => setLanguage('hi')}
+                  className={`px-3 py-1 text-xs font-semibold rounded shadow-sm transition-all ${language === 'hi' ? 'bg-navy text-white' : 'text-gray-500 hover:text-navy'}`}
+                >
+                  हिं
+                </button>
               </div>
               
               {user ? (
@@ -62,16 +80,19 @@ export default function Navbar() {
                   </button>
                 </div>
               ) : (
-                <NavLink href="/register">
-                  <span className="px-4 py-2 bg-navy dark:bg-saffron text-white dark:text-navy font-bold rounded-lg shadow-lg hover:scale-105 transition-all text-sm">
-                    Join Free
-                  </span>
-                </NavLink>
+                <div className="flex items-center gap-2">
+                  <Link href="/login" className="px-4 py-2 text-sm font-bold text-navy dark:text-saffron hover:bg-navy/5 rounded-lg transition-all">
+                    {t('nav.login')}
+                  </Link>
+                  <Link href="/register" className="px-4 py-2 bg-navy dark:bg-saffron text-white dark:text-navy font-bold rounded-lg shadow-lg hover:scale-105 transition-all text-sm">
+                    {t('nav.register')}
+                  </Link>
+                </div>
               )}
 
               <a href="tel:15100" className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-sm font-bold border border-red-100 dark:border-red-900/50 hover:bg-red-600 hover:text-white transition-all shadow-sm">
                 <Phone size={16} />
-                <span>Emergency: 15100</span>
+                <span>15100</span>
               </a>
             </div>
 
@@ -91,33 +112,49 @@ export default function Navbar() {
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
         <div className={`absolute right-0 top-0 h-full w-[300px] bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} p-6 flex flex-col`}>
           <div className="flex items-center justify-between mb-8">
-            <span className="font-bold text-navy dark:text-saffron">Menu</span>
+             <div className="flex items-center gap-2">
+                <Scale size={20} className="text-navy dark:text-saffron" />
+                <span className="font-bold text-navy dark:text-saffron">Menu</span>
+             </div>
             <button onClick={() => setIsOpen(false)} className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full"><X size={20} /></button>
           </div>
           <nav className="flex flex-col gap-2">
-            <MobileNavLink href="/get-help" onClick={() => setIsOpen(false)}>Get Help</MobileNavLink>
+            <MobileNavLink href="/get-help" onClick={() => setIsOpen(false)}>{t('nav.get_help')}</MobileNavLink>
             <MobileNavLink href="/documents" onClick={() => setIsOpen(false)}>RTI Generator</MobileNavLink>
-            <MobileNavLink href="/lawyers" onClick={() => setIsOpen(false)}>Find a Lawyer</MobileNavLink>
+            <MobileNavLink href="/lawyers" onClick={() => setIsOpen(false)}>{t('nav.lawyers')}</MobileNavLink>
+            <MobileNavLink href="/admin" onClick={() => setIsOpen(false)}>Security Shell</MobileNavLink>
             {user ? (
               <>
-                <MobileNavLink href="/my-case" onClick={() => setIsOpen(false)}>Dashboard (My Case)</MobileNavLink>
-                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-4 text-left text-base font-semibold text-red-500 border-b border-gray-50 dark:border-gray-800">Logout</button>
+                <MobileNavLink href="/my-case" onClick={() => setIsOpen(false)}>{t('nav.my_case')}</MobileNavLink>
+                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-4 text-left text-base font-semibold text-red-500 border-b border-gray-50 dark:border-gray-800 border-t border-t-gray-50 dark:border-t-gray-800 mt-2 flex items-center gap-2">
+                  <LogOut size={18} /> Logout
+                </button>
               </>
             ) : (
               <>
-                <MobileNavLink href="/login" onClick={() => setIsOpen(false)}>Sign In</MobileNavLink>
-                <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>Join Free</MobileNavLink>
+                <MobileNavLink href="/login" onClick={() => setIsOpen(false)}>{t('nav.login')}</MobileNavLink>
+                <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>{t('nav.register')}</MobileNavLink>
               </>
             )}
           </nav>
           <div className="mt-auto space-y-4">
-             <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-full">
-                <button className="flex-1 py-3 text-sm font-bold bg-navy text-white rounded-md shadow">English</button>
-                <button className="flex-1 py-3 text-sm font-bold text-gray-500">हिंदी</button>
+             <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-full border border-gray-200 dark:border-gray-700">
+                <button 
+                  onClick={() => setLanguage('en')}
+                  className={`flex-1 py-3 text-sm font-bold rounded-md transition-all ${language === 'en' ? 'bg-navy text-white shadow' : 'text-gray-500'}`}
+                >
+                  English
+                </button>
+                <button 
+                  onClick={() => setLanguage('hi')}
+                  className={`flex-1 py-3 text-sm font-bold rounded-md transition-all ${language === 'hi' ? 'bg-navy text-white shadow' : 'text-gray-500'}`}
+                >
+                  हिंदी
+                </button>
              </div>
              <a href="tel:15100" className="flex items-center justify-center gap-3 w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-600/20 active:scale-95 transition-transform">
                 <Phone size={20} />
-                <span>🆘 Emergency Help: 15100</span>
+                <span>🆘 {language === 'en' ? 'Emergency Help' : 'आपातकालीन सहायता'}: 15100</span>
              </a>
           </div>
         </div>
@@ -125,6 +162,7 @@ export default function Navbar() {
     </>
   );
 }
+
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

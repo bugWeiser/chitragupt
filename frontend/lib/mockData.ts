@@ -104,6 +104,198 @@ export const SITUATIONS: Situation[] = [
     documents: ['fir'],
     checklist: ['Written complaint detailing the incident', 'ID Proof', 'Any evidence (medical report, photos, etc.)'],
     isHighRisk: true
+  },
+  {
+    id: 'property-fraud',
+    emoji: '🏗️',
+    title: 'Property & Real Estate',
+    description: 'Builder delay? Fraud?',
+    category: 'property',
+    rights: [
+      'Builders must deliver possession on the date mentioned in the agreement',
+      'RERA protects buyers from unauthorized changes to building plans',
+      'You have the right to a full refund with interest if the project is delayed'
+    ],
+    lawText: 'RERA Act, 2016:\nMandates transparency and accountability in real estate... developers must deposit 70% funds in escrow.',
+    steps: [
+      { text: 'Verify RERA registration of the project', status: 'done' },
+      { text: 'File a complaint in RERA Authority (e.g., MahaRERA, UP-RERA)', status: 'pending' },
+      { text: 'File for compensation in RERA Adjudicating Officer', status: 'info' }
+    ],
+    successRate: 75,
+    timeline: '6-12 months',
+    cost: '₹1000 - ₹5000',
+    tip: 'Check the "Quarterly Progress Report" on the RERA website for your project.',
+    documents: ['rera-complaint'],
+    checklist: ['Agreement for Sale', 'Payment Receipts', 'Allotment Letter', 'Project Brochure']
+  },
+  {
+    id: 'family-dispute',
+    emoji: '👪',
+    title: 'Family & Matrimonial',
+    description: 'Divorce? Domestic Violence?',
+    category: 'family',
+    rights: [
+      'Women have a right to reside in the matrimonial home under PWDVA',
+      'Maintenance (Alimony) can be claimed even during a pending divorce',
+      'Custody is decided based on the "Welfare of the Child" principle'
+    ],
+    lawText: 'Protection of Women from Domestic Violence Act (2005):\nProvides for protection, residence, and monetary relief for victims.',
+    steps: [
+      { text: 'Seek immediate protection order (if violence involved)', status: 'done' },
+      { text: 'Attempt court-mandated mediation', status: 'pending' },
+      { text: 'File for Maintenance / Custody / Divorce in Family Court', status: 'info' }
+    ],
+    successRate: 65,
+    timeline: '1-3 years',
+    cost: '₹Varies',
+    tip: 'Always try mediation first; it is faster and less traumatic for children.',
+    documents: ['dv-complaint', 'maintenance-petition'],
+    checklist: ['Marriage Certificate', 'Income Proofs', 'Photos/Evidence of abuse', 'Birth certificates of children']
+  },
+  {
+    id: 'cyber-crime',
+    emoji: '💻',
+    title: 'Cyber Crime',
+    description: 'Online scam? Identity theft?',
+    category: 'cyber',
+    rights: [
+      'You have the right to block your accounts/cards immediately after fraud',
+      'Banks are liable for losses if reported within 3 days of unauthorized transaction',
+      'Cyber-stalking and bullying are criminal offenses under IT Act'
+    ],
+    lawText: 'Information Technology (IT) Act, 2000:\nDefines cyber crimes like phishing, identity theft, and data breach.',
+    steps: [
+      { text: 'Report on cybercrime.gov.in and call 1930 immediately', status: 'done' },
+      { text: 'File a formal FIR at your local Cyber Cell', status: 'pending' },
+      { text: 'Apply for compensation before Adjudicating Officer (IT Dept)', status: 'info' }
+    ],
+    successRate: 60,
+    timeline: '15-60 days (for 1930 recovery)',
+    cost: '₹0',
+    tip: 'The first 2 hours (Golden Hour) are critical for blocking transferred funds.',
+    documents: ['cyber-fir'],
+    checklist: ['Bank Statement', 'Screenshots of fraud', 'URL of fake site', 'Phone numbers involved']
+  },
+  {
+    id: 'medical-negligence',
+    emoji: '🏥',
+    title: 'Medical Negligence',
+    description: 'Wrong treatment? Overcharging?',
+    category: 'medical',
+    rights: [
+      'Patients have a right to see their complete medical records',
+      'Hospitals cannot refuse treatment in emergency cases (Golden Hour)',
+      'Consent must be taken before any major surgical procedure'
+    ],
+    lawText: 'Consumer Protection Act & Medical Council Regulations:\nDoctors are liable for "deficiency in service" if standard of care is not met.',
+    steps: [
+      { text: 'Obtain certified copies of all medical records/bills', status: 'done' },
+      { text: 'File complaint with State Medical Council', status: 'pending' },
+      { text: 'File for compensation in Consumer Forum', status: 'info' }
+    ],
+    successRate: 55,
+    timeline: '1-2 years',
+    cost: '₹2000+',
+    tip: 'Get an independent opinion from another expert doctor to prove negligence.',
+    documents: ['medical-complaint'],
+    checklist: ['Discharge Summary', 'Prescriptions', 'Lab reports', 'Invoices for all medicines']
+  },
+  {
+    id: 'banking-fraud',
+    emoji: '🏦',
+    title: 'Banking & Financial Fraud',
+    description: 'Loan harassment? Unauthorized TC?',
+    category: 'banking',
+    rights: [
+      'Recovery agents cannot harass you or call at odd hours (7 AM - 7 PM only)',
+      'Zero liability if bank is at fault for a security breach',
+      'Right to approach Banking Ombudsman if bank doesn\'t resolve issue in 30 days'
+    ],
+    lawText: 'RBI Fair Practices Code:\nProhibits forceful recovery and mandates transparent interest calculations.',
+    steps: [
+      { text: 'File a written grievance with the Bank Manager', status: 'done' },
+      { text: 'Escalate to the Bank\'s Nodal Officer', status: 'pending' },
+      { text: 'File a complaint on RBI CMS portal (Ombudsman)', status: 'info' }
+    ],
+    successRate: 80,
+    timeline: '30-45 days',
+    cost: '₹0',
+    tip: 'Avoid clicking on any links in SMS or giving OTPs; banks never ask for them.',
+    documents: ['banking-ombudsman'],
+    checklist: ['Bank Statement', 'Grievance email copy', 'Loan Agreement', 'Harassment recordings']
+  },
+  {
+    id: 'government-services',
+    emoji: '🏛️',
+    title: 'Gov & Public Services',
+    description: 'Passport delay? Pension not received?',
+    category: 'government',
+    rights: [
+      'Right to Information (RTI) allows you to ask for status of your application',
+      'Citizen Charters define fixed timelines for every govt service',
+      'Bribery is a criminal offense under Prevention of Corruption Act'
+    ],
+    lawText: 'Right to Information (RTI) Act, 2005:\nEmpowers citizens to secure access to information under the control of public authorities.',
+    steps: [
+      { text: 'Submit query/grievance on CPGRAMS portal', status: 'done' },
+      { text: 'File an RTI Application to know status of file', status: 'pending' },
+      { text: 'File First Appeal if RTI is rejected / not answered', status: 'info' }
+    ],
+    successRate: 95,
+    timeline: '30 days (RTI limit)',
+    cost: '₹10 (RTI fee)',
+    tip: 'Always mention specific file numbers and dates in your RTI query.',
+    documents: ['rti-application'],
+    checklist: ['Application receipt', 'Acknowledgment slip', 'Previous correspondence', 'Identity proof']
+  },
+  {
+    id: 'education-rights',
+    emoji: '🎓',
+    title: 'Education & Students',
+    description: 'Fee refund? Admission fraud?',
+    category: 'education',
+    rights: [
+      'Institutions must refund fees if a student withdraws before the session starts',
+      'UGC/AICTE mandates internal grievance committees for harassment',
+      'Educational certificates cannot be withheld by colleges for unpaid fees'
+    ],
+    lawText: 'UGC Fee Refund Policy & AICTE Regulations:\nMandates percentage-based refund based on when withdrawal notice is given.',
+    steps: [
+      { text: 'Submit formal withdrawal/refund request to Principal', status: 'done' },
+      { text: 'File complaint on UGC e-Samadhaan portal', status: 'pending' },
+      { text: 'Approach Consumer Forum for refund of caution money/fees', status: 'info' }
+    ],
+    successRate: 82,
+    timeline: '30-90 days',
+    cost: '₹0 - ₹500',
+    tip: 'Record all dates of submission of your refund request.',
+    documents: ['education-complaint'],
+    checklist: ['Admission letter', 'Fee receipts', 'Prospectus copy', 'Withdrawal request email']
+  },
+  {
+    id: 'traffic-vehicle',
+    emoji: '🚗',
+    title: 'Traffic & Motor Vehicle',
+    description: 'Challan disputes? Accident claims?',
+    category: 'traffic',
+    rights: [
+      'MACT (Tribunal) offers compensation for accident victims or families',
+      'Virtual Courts allow you to contest/pay e-challans online',
+      'Traffic police cannot seize your keys without a valid legal reason'
+    ],
+    lawText: 'Motor Vehicles (Amendment) Act, 2019:\nComprehensive laws for road safety, insurance, and accident compensation.',
+    steps: [
+      { text: 'Submit "Contest" on the Virtual Court portal for challans', status: 'done' },
+      { text: 'File claim in Motor Accident Claims Tribunal (MACT)', status: 'pending' },
+      { text: 'Approach Insurance Ombudsman for claim rejection', status: 'info' }
+    ],
+    successRate: 70,
+    timeline: '6 months - 2 years (for MACT)',
+    cost: '₹Varies',
+    tip: 'Ensure your dashcam or nearby CCTV footage is secured within 24 hours of an accident.',
+    documents: ['mact-petition'],
+    checklist: ['FIR Copy in case of accident', 'Insurance Policy', 'Medical reports', 'Driving License']
   }
 ];
 

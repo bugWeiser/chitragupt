@@ -13,6 +13,12 @@ async function sendRegistrationOTP(userId, email, phone) {
   const otp = generateOTP();
   await redis.setEx(`otp:reg:${userId}`, OTP_TTL, otp);
 
+  // DEBUG LOG FOR HACKATHON DEMO (If keys are missing)
+  console.log('\n' + '★'.repeat(50));
+  console.log(`[CHITRAGUPTA DEBUG] NEW OTP GENERATED: ${otp}`);
+  console.log(`[USER ID: ${userId}] [EMAIL: ${email}]`);
+  console.log('★'.repeat(50) + '\n');
+
   const emailHtml = `
     <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border:1px solid #e0e0e0;border-radius:8px">
       <h2 style="color:#1a365d">Legal Aid Platform — Verify Your Account</h2>
@@ -54,9 +60,17 @@ async function verifyRegistrationOTP(userId, inputOtp) {
 async function sendLoginOTP(userId, phone) {
   const otp = generateOTP();
   await redis.setEx(`otp:login:${userId}`, OTP_TTL, otp);
+  
+  // DEBUG LOG FOR HACKATHON DEMO
+  console.log('\n' + '★'.repeat(50));
+  console.log(`[CHITRAGUPTA DEBUG] LOGIN OTP: ${otp}`);
+  console.log(`[USER ID: ${userId}] [PHONE: ${phone}]`);
+  console.log('★'.repeat(50) + '\n');
+
   await sendSMS(phone, `Legal Aid Platform login code: ${otp}. Expires in 10 minutes.`);
   return true;
 }
+
 
 async function verifyLoginOTP(userId, inputOtp) {
   const stored = await redis.get(`otp:login:${userId}`);

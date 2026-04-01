@@ -3,17 +3,24 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, ShieldCheck, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string };
 
 export default function AiChatWidget() {
+  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 'initial', role: 'assistant', content: 'Hello! I am NyayaMitra AI, your First-Response Legal Assistant. How can I help you today?' }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize greeting on mount or language change
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([{ id: 'initial', role: 'assistant', content: t('chat.greeting') }]);
+    }
+  }, [language, t, messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +43,10 @@ export default function AiChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...messages.map(m => ({ role: m.role, content: m.content })), { role: 'user', content: userMessage.content }] })
+        body: JSON.stringify({ 
+          messages: [...messages.map(m => ({ role: m.role, content: m.content })), { role: 'user', content: userMessage.content }],
+          language: language
+        })
       });
 
       const data = await res.json();
@@ -44,10 +54,10 @@ export default function AiChatWidget() {
       if (res.ok) {
         setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: data.content }]);
       } else {
-        setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "I'm having trouble connecting right now. Please try again later." }]);
+        setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: language === 'en' ? "I'm having trouble connecting right now." : "मैं अभी कनेक्ट नहीं कर पा रहा हूँ।" }]);
       }
     } catch (error) {
-      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "An error occurred. Please try again." }]);
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "An error occurred." }]);
     } finally {
       setLoading(false);
     }
@@ -58,10 +68,10 @@ export default function AiChatWidget() {
       {/* Floating Button */}
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 p-4 bg-navy text-white rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all z-40 flex items-center justify-center ${isOpen ? 'opacity-0 pointer-events-none scale-0' : 'opacity-100'}`}
+        className={`fixed bottom-6 right-6 p-4 bg-navy dark:bg-saffron text-white dark:text-navy rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all z-40 flex items-center justify-center ${isOpen ? 'opacity-0 pointer-events-none scale-0' : 'opacity-100'}`}
       >
         <MessageSquare size={28} />
-        <span className="absolute -top-2 -right-2 w-4 h-4 bg-saffron rounded-full border-2 border-white animate-pulse" />
+        <span className="absolute -top-2 -right-2 w-4 h-4 bg-saffron dark:bg-white rounded-full border-2 border-white dark:border-navy animate-pulse" />
       </button>
 
       {/* Chat Window */}
@@ -77,12 +87,11 @@ export default function AiChatWidget() {
               <div className="leading-tight">
                  <h3 className="font-bold font-poppins text-lg">NyayaMitra AI</h3>
                  <p className="text-[10px] text-saffron uppercase font-bold tracking-widest flex items-center gap-1">
-                   <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" /> Legal Expert
+                   <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" /> {language === 'en' ? 'Legal Expert' : 'कानूनी विशेषज्ञ'}
                  </p>
               </div>
            </div>
            <div className="flex items-center gap-2">
-              <Link href="/chat" className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-widest px-2 py-1 bg-white/10 rounded-md">Expand</Link>
               <button onClick={() => setIsOpen(false)} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white">
                  <X size={18} />
               </button>
@@ -123,7 +132,7 @@ export default function AiChatWidget() {
                 type="text" 
                 value={input}
                 onChange={e => setInput(e.target.value)}
-                placeholder="Ask a legal question..."
+                placeholder={t('chat.placeholder')}
                 className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 text-sm p-4 pr-14 rounded-2xl outline-none focus:ring-2 focus:ring-saffron text-navy dark:text-white transition-all shadow-inner"
               />
               <button 
@@ -139,3 +148,4 @@ export default function AiChatWidget() {
     </>
   );
 }
+

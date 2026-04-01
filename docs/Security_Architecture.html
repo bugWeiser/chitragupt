@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chitragupta — Security Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.7; }
+  
+  .cover { width: 100%; height: 100vh; background: linear-gradient(135deg, #000080 0%, #0c1445 40%, #1a0a3e 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; page-break-after: always; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(255,153,51,0.15), transparent); top: -150px; right: -150px; }
+  .cover::after { content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(255,153,51,0.1), transparent); bottom: -100px; left: -100px; }
+  .cover img { width: 320px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); margin-bottom: 40px; position: relative; z-index: 1; }
+  .cover h1 { font-family: 'Poppins', sans-serif; font-size: 42px; font-weight: 900; color: #fff; position: relative; z-index: 1; }
+  .cover h1 span { color: #FF9933; }
+  .cover p { color: rgba(255,255,255,0.7); font-size: 18px; margin-top: 10px; position: relative; z-index: 1; }
+  .cover .doc-type { color: #FF9933; font-size: 13px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; position: relative; z-index: 1; }
+
+  .page { padding: 50px 65px; max-width: 900px; margin: 0 auto; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  h2 { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; color: #000080; margin: 35px 0 14px; padding-bottom: 6px; border-bottom: 3px solid #FF9933; display: inline-block; }
+  h3 { font-size: 17px; font-weight: 700; color: #000080; margin: 20px 0 8px; }
+  p { margin: 8px 0; font-size: 13.5px; }
+
+  .layer-card { border-radius: 16px; padding: 24px; margin: 14px 0; color: #fff; position: relative; overflow: hidden; }
+  .layer-card::after { content: attr(data-num); position: absolute; top: 10px; right: 20px; font-family: 'Poppins'; font-size: 80px; font-weight: 900; opacity: 0.1; }
+  .layer-card h3 { color: #fff; margin: 0 0 8px; font-size: 18px; }
+  .layer-card p { color: rgba(255,255,255,0.85); font-size: 13px; margin: 0; }
+  .layer-1 { background: linear-gradient(135deg, #164e63, #0d4f52); }
+  .layer-2 { background: linear-gradient(135deg, #0c4a6e, #0a3d72); }
+  .layer-3 { background: linear-gradient(135deg, #1e3a5f, #14305a); }
+  .layer-4 { background: linear-gradient(135deg, #172554, #10204a); }
+  .layer-5 { background: linear-gradient(135deg, #1e1b4b, #2d1b69); }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12.5px; }
+  th { background: #000080; color: #fff; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e8e8f0; }
+  tr:nth-child(even) { background: #f8f8fc; }
+
+  .code-block { background: #0d1117; color: #c9d1d9; padding: 14px 18px; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 11.5px; line-height: 1.5; margin: 12px 0; white-space: pre; overflow-x: auto; }
+
+  .pipeline { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 16px 0; }
+  .pipeline-step { background: #000080; color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .pipeline-step.danger { background: #dc2626; }
+  .pipeline-step.success { background: #16a34a; }
+  .pipeline-arrow { color: #FF9933; font-weight: 900; font-size: 18px; }
+
+  .compliance-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+  .compliance-card { padding: 16px; border: 2px solid #e0e0f0; border-radius: 12px; }
+  .compliance-card h4 { font-size: 13px; color: #000080; font-weight: 800; margin-bottom: 4px; }
+  .compliance-card p { font-size: 12px; color: #555; margin: 0; }
+
+  .footer-bar { text-align: center; padding: 24px; color: #888; font-size: 11px; border-top: 1px solid #eee; margin-top: 30px; }
+
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <img src="assets/security_layers.png" alt="Security Layers">
+  <div class="doc-type">Technical Document</div>
+  <h1>Security <span>Architecture</span></h1>
+  <p>5-Layer Defense-in-Depth System</p>
+</div>
+
+<!-- PAGE 2: OVERVIEW -->
+<div class="page">
+  <h2>Executive Summary</h2>
+  <p>Chitragupta handles sensitive legal data — FIR reports, case files, personal identification, and lawyer-client communications. A breach doesn't just expose data; it puts vulnerable people at risk. Our security architecture reflects this responsibility with <strong>5 distinct layers of protection</strong>.</p>
+
+  <img src="assets/security_layers.png" alt="5-Layer Security" style="width:100%; border-radius: 16px; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,128,0.12);">
+
+  <div class="layer-card layer-1" data-num="1">
+    <h3>🪪 Layer 1 — Registration & Identity</h3>
+    <p>6-digit OTP via Email + SMS on signup • 10-min expiry • Password strength enforcement • Email/phone verification • Account lockout after 5 failed attempts</p>
+  </div>
+
+  <div class="layer-card layer-2" data-num="2">
+    <h3>🔐 Layer 2 — Authentication</h3>
+    <p>JWT access tokens (15 min) + refresh tokens (7 days) with rotation • Admin TOTP 2FA via Google Authenticator • 10 hashed backup recovery codes • Device fingerprinting</p>
+  </div>
+
+  <div class="layer-card layer-3" data-num="3">
+    <h3>🛡️ Layer 3 — Runtime Protection</h3>
+    <p>WAF middleware scanning for XSS, SQLi, path traversal • IP + user rate limiting via Redis • CORS lockdown • Helmet security headers • HPP protection • 10kb body limit</p>
+  </div>
+
+  <div class="layer-card layer-4" data-num="4">
+    <h3>📊 Layer 4 — Activity Monitoring</h3>
+    <p>Winston → PostgreSQL immutable audit logs (append-only) • Push notifications for new device login, document access, suspicious activity • CSV/PDF export</p>
+  </div>
+
+  <div class="layer-card layer-5" data-num="5">
+    <h3>🔍 Layer 5 — Vulnerability Scanner</h3>
+    <p>Automated scheduled self-scan of all endpoints • CVSS scoring (Critical/High/Medium/Low) • AI-generated reports • Admin dashboard visualization</p>
+  </div>
+</div>
+
+<!-- PAGE 3: DETAIL -->
+<div class="page">
+  <h2>Request Processing Pipeline</h2>
+  <div class="pipeline">
+    <span class="pipeline-step">🌐 Request</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">Helmet</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">CORS</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">Body Parser</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">HPP</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step danger">WAF Scan</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step danger">Rate Limit</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">JWT Auth</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step success">Handler</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step">Audit Log</span><span class="pipeline-arrow">→</span>
+    <span class="pipeline-step success">📤 Response</span>
+  </div>
+
+  <h2>Audit Events Tracked</h2>
+  <table>
+    <tr><th>Event</th><th>Severity</th><th>Trigger</th></tr>
+    <tr><td>User Login</td><td>ℹ️ Info</td><td>Successful authentication</td></tr>
+    <tr><td>Failed Login</td><td>⚠️ Warning</td><td>Wrong password</td></tr>
+    <tr><td>New Device Login</td><td>⚠️ Warning</td><td>Unknown device fingerprint</td></tr>
+    <tr><td>Document Accessed</td><td>ℹ️ Info</td><td>Lawyer views case file</td></tr>
+    <tr><td>Settings Changed</td><td>⚠️ Warning</td><td>Admin modifies configuration</td></tr>
+    <tr><td>SQL Injection Attempt</td><td>🚨 Critical</td><td>WAF detects malicious payload</td></tr>
+    <tr><td>Account Locked</td><td>🚨 Critical</td><td>5+ failed login attempts</td></tr>
+    <tr><td>TOTP Verification</td><td>ℹ️ Info</td><td>Admin 2FA check</td></tr>
+  </table>
+
+  <h2>Database Security</h2>
+  <div class="code-block">-- Audit logs are append-only (tamper-evident)
+REVOKE UPDATE, DELETE, TRUNCATE ON audit_logs FROM PUBLIC;
+
+-- Passwords: bcrypt hashed (salt rounds = 12)
+-- Backup codes: bcrypt hashed
+-- Refresh tokens: SHA-256 hashed
+-- 8 production tables with UUID primary keys
+-- Performance indexes on all foreign keys</div>
+
+  <h2>Compliance Alignment</h2>
+  <div class="compliance-grid">
+    <div class="compliance-card"><h4>OWASP Top 10</h4><p>XSS (A7), SQLi (A1), Broken Auth (A2), Security Misconfiguration (A5)</p></div>
+    <div class="compliance-card"><h4>IT Act 2000 (India)</h4><p>Section 43A — Reasonable Security Practices for sensitive personal data</p></div>
+    <div class="compliance-card"><h4>GDPR Principles</h4><p>Data minimization, audit trail, access logging, right to be informed</p></div>
+    <div class="compliance-card"><h4>DISHA (India)</h4><p>Digital health data protection alignment for sensitive legal records</p></div>
+  </div>
+
+  <div class="footer-bar">
+    <strong>Chitragupta Security Architecture</strong> — 5-Layer Defense-in-Depth<br>
+    Team BugWeisers • Confidential Technical Document
+  </div>
+</div>
+
+</body>
+</html>

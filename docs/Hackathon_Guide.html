@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chitragupta — Hackathon Presentation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.7; }
+
+  .cover { width: 100%; height: 100vh; background: linear-gradient(160deg, #FF9933 0%, #e87e1d 30%, #000080 70%, #0c1445 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; page-break-after: always; text-align: center; position: relative; }
+  .cover::before { content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.05); top: -100px; left: -100px; }
+  .cover .doc-type { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 14px; }
+  .cover h1 { font-family: 'Poppins', sans-serif; font-size: 48px; font-weight: 900; color: #fff; }
+  .cover p { color: rgba(255,255,255,0.8); font-size: 18px; margin-top: 10px; max-width: 500px; }
+  .cover .team { margin-top: 60px; color: rgba(255,255,255,0.5); font-size: 14px; }
+
+  .page { padding: 50px 65px; max-width: 900px; margin: 0 auto; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  h2 { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; color: #000080; margin: 35px 0 14px; padding-bottom: 6px; border-bottom: 3px solid #FF9933; display: inline-block; }
+  h3 { font-size: 17px; font-weight: 700; color: #000080; margin: 20px 0 8px; }
+  p { margin: 8px 0; font-size: 13.5px; }
+  blockquote { border-left: 4px solid #FF9933; padding: 14px 20px; margin: 14px 0; background: #FFF8F0; border-radius: 0 8px 8px 0; font-style: italic; color: #333; font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12.5px; }
+  th { background: #000080; color: #fff; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e8e8f0; }
+  tr:nth-child(even) { background: #f8f8fc; }
+
+  .pitch-box { background: linear-gradient(135deg, #000080, #0c1445); color: #fff; padding: 30px; border-radius: 16px; margin: 20px 0; text-align: center; }
+  .pitch-box p { color: rgba(255,255,255,0.9); font-size: 16px; line-height: 1.8; margin: 0; font-style: italic; }
+
+  .demo-step { display: flex; align-items: flex-start; gap: 16px; margin: 14px 0; padding: 16px; border-radius: 12px; background: #fafaff; border: 1px solid #e8e8f0; }
+  .demo-step .step-num { min-width: 36px; height: 36px; background: #000080; color: #FF9933; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; }
+  .demo-step .step-content h4 { font-size: 14px; font-weight: 700; color: #000080; margin-bottom: 3px; }
+  .demo-step .step-content p { font-size: 12.5px; color: #555; margin: 0; }
+
+  .diff-table td:first-child { font-weight: 700; color: #000080; width: 40%; }
+  .diff-table td:last-child { color: #16a34a; font-weight: 600; }
+
+  .qa-block { margin: 14px 0; padding: 18px; border-radius: 12px; border: 1px solid #e8e8f0; }
+  .qa-block .q { font-weight: 800; color: #000080; font-size: 13.5px; margin-bottom: 6px; }
+  .qa-block .a { font-size: 12.5px; color: #444; }
+
+  .stars { color: #FF9933; letter-spacing: 2px; }
+  .link-table td:last-child { font-family: 'Consolas', monospace; font-size: 11px; color: #0c4a6e; }
+
+  .footer-bar { text-align: center; padding: 24px; color: #888; font-size: 11px; border-top: 1px solid #eee; margin-top: 30px; }
+
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="doc-type">Hackathon Submission</div>
+  <h1>Presentation Guide</h1>
+  <p>Demo script, judging criteria alignment, technical differentiators, and Q&A preparation</p>
+  <div class="team">Team BugWeisers • Chitragupta Platform</div>
+</div>
+
+<!-- PAGE 2: PITCH & DEMO -->
+<div class="page">
+  <h2>🎯 One-Line Pitch</h2>
+  <div class="pitch-box">
+    <p>"Chitragupta is India's AI-powered legal first-response system — think <strong>'Google Maps for navigating Indian law'</strong> — built with enterprise-grade 5-layer security."</p>
+  </div>
+
+  <h2>📊 Impact Statistics</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th><th>Source</th></tr>
+    <tr><td>Indians who can't afford a lawyer</td><td><strong>80%</strong></td><td>NALSA Report</td></tr>
+    <tr><td>Pending court cases in India</td><td><strong>4.7 Crore</strong></td><td>National Judicial Data Grid</td></tr>
+    <tr><td>Average cost of basic legal advice</td><td><strong>₹5,000 – ₹50,000</strong></td><td>Market estimate</td></tr>
+    <tr><td>Citizens unaware of their rights</td><td><strong>~60%</strong></td><td>CSDS Survey</td></tr>
+    <tr><td>Chitragupta's cost to the user</td><td><strong>₹0 (Free)</strong></td><td>Our platform</td></tr>
+  </table>
+
+  <h2>🎬 Demo Script (5 Minutes)</h2>
+  
+  <div class="demo-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Act 1 — The Problem (30 sec)</h4>
+      <p>"Meet Ramesh, a daily wage worker in Lucknow. His employer hasn't paid his salary for 3 months. He doesn't know his rights, can't afford a lawyer, and doesn't even know where to start."</p>
+    </div>
+  </div>
+
+  <div class="demo-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Act 2 — The Solution (2 min)</h4>
+      <p>Open the live site → Type "My boss hasn't paid my salary for 3 months" → Show AI categorization → Unpaid Salary route → Step-by-step legal roadmap → RTI Generator → Lawyer Matching</p>
+    </div>
+  </div>
+
+  <div class="demo-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Act 3 — Security Architecture (1.5 min)</h4>
+      <p>Open /admin → Show Command Center → Walk through stat cards → CVSS Scanner (Layer 5) → Immutable Audit Logs (Layer 4) — expand a row to show JSON</p>
+    </div>
+  </div>
+
+  <div class="demo-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Act 4 — Technical Depth (1 min)</h4>
+      <p>"5 security layers: OTP registration → JWT rotation → WAF blocks XSS & SQLi in real-time → Immutable DB audit trail → Automated vulnerability scanning. All containerized with Docker."</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3: DIFFERENTIATORS & JUDGING -->
+<div class="page">
+  <h2>🏗️ Technical Differentiators</h2>
+  <table class="diff-table">
+    <tr><th>Typical Hackathon Project</th><th>Chitragupta ✓</th></tr>
+    <tr><td>Single app.js file</td><td>Modular 7-module backend architecture</td></tr>
+    <tr><td>Plaintext passwords</td><td>bcrypt + TOTP 2FA + hashed backup codes</td></tr>
+    <tr><td>No auth or basic auth</td><td>JWT rotation (15m + 7d) with revocation</td></tr>
+    <tr><td>No security headers</td><td>Helmet + WAF + HPP + CORS + CSP</td></tr>
+    <tr><td>console.log debugging</td><td>Winston structured logging + immutable DB audit</td></tr>
+    <tr><td>No rate limiting</td><td>IP + user rate limiting via Redis</td></tr>
+    <tr><td>Manual deployment</td><td>Docker Compose + Vercel auto-deploy</td></tr>
+    <tr><td>No admin panel</td><td>Glassmorphic Security Command Center</td></tr>
+    <tr><td>English only</td><td>Hindi + English bilingual</td></tr>
+    <tr><td>No emergency features</td><td>One-tap helplines (15100, 112, 181)</td></tr>
+  </table>
+
+  <h2>📋 Judging Criteria Alignment</h2>
+  <table>
+    <tr><th>Criteria</th><th>Rating</th><th>Evidence</th></tr>
+    <tr><td>Innovation & Creativity</td><td class="stars">★★★★★</td><td>First AI legal triage for Indian law; Bilingual NLP; Emergency Mode</td></tr>
+    <tr><td>Technical Complexity</td><td class="stars">★★★★★</td><td>5-layer security; 8-table schema; Real-time push notifications</td></tr>
+    <tr><td>Real-World Impact</td><td class="stars">★★★★★</td><td>Article 39A compliance; Free for citizens; Tier 2/3 focused</td></tr>
+    <tr><td>UI/UX Design</td><td class="stars">★★★★★</td><td>Glassmorphism; Dark mode; Mobile-first; Micro-animations</td></tr>
+    <tr><td>Completeness</td><td class="stars">★★★★★</td><td>Full-stack + Live Deployed + Docker + Docs</td></tr>
+  </table>
+
+  <h2>🗣️ Prepared Q&A</h2>
+  <div class="qa-block">
+    <div class="q">Q: How does the AI categorization work?</div>
+    <div class="a">NLP keyword analysis classifying into 6+ categories. Each maps to curated legal roadmaps with IPC sections. Production version would use a fine-tuned LLM on Indian legal corpus.</div>
+  </div>
+  <div class="qa-block">
+    <div class="q">Q: Why not just use ChatGPT?</div>
+    <div class="a">ChatGPT hallucinates IPC sections. We provide curated, verified guidance plus RTI generation, lawyer matching, encrypted chat, emergency mode, and 5-layer security.</div>
+  </div>
+  <div class="qa-block">
+    <div class="q">Q: How do you handle data privacy?</div>
+    <div class="a">5 layers of security. Encrypted at rest + in transit. Immutable append-only audit logs with REVOKE UPDATE/DELETE. Admin 2FA. Document access triggers push notification to owner.</div>
+  </div>
+  <div class="qa-block">
+    <div class="q">Q: What's the scalability path?</div>
+    <div class="a">Vercel edge (auto-scales). Docker Compose → Kubernetes. Redis distributed rate limiting. PostgreSQL → managed RDS.</div>
+  </div>
+
+  <h2>📎 Quick Links for Judges</h2>
+  <table class="link-table">
+    <tr><th>Resource</th><th>URL</th></tr>
+    <tr><td>Live Application</td><td>https://chitragupt-topaz.vercel.app/</td></tr>
+    <tr><td>Admin Security Panel</td><td>https://chitragupt-topaz.vercel.app/admin</td></tr>
+    <tr><td>GitHub Repository</td><td>https://github.com/bugWeiser/chitragupt</td></tr>
+  </table>
+
+  <div class="footer-bar">
+    <strong>Chitragupta</strong> — Hackathon Presentation Guide<br>
+    Team BugWeisers • Built with ❤️ for justice • Made in 🇮🇳 India
+  </div>
+</div>
+
+</body>
+</html>

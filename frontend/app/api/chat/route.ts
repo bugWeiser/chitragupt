@@ -15,46 +15,35 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
+    if (!messages || messages.length === 0) {
+      return NextResponse.json({ error: "Messages array is empty" }, { status: 400 });
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
 
-    // HACKATHON FALLBACK: If no API key is set, use a mock response so the demo doesn't break.
     if (!apiKey) {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      const lastMessage = messages[messages.length - 1]?.content.toLowerCase() || '';
-      
-      // Mock logic based on keywords
-      let mockReply = "I am NyayaMitra AI. It seems your GEMINI_API_KEY is not configured yet in Vercel. However, I am ready to assist you with Tenant Rights, Consumer Disputes, and Police FIRs once activated. How can I help you today?";
-      
-      if (lastMessage.includes('police') || lastMessage.includes('fir')) {
-         mockReply = "If the police are refusing to file an FIR, you have the right to file a 'Zero FIR' at any station. If they still refuse, under Section 154(3) of the CrPC, you can send your complaint in writing via registered post to the Superintendent of Police (SP). Can I help you draft this complaint?\n\n*Disclaimer: This is AI-generated guidance, not formal legal advice.*";
-      } else if (lastMessage.includes('rent') || lastMessage.includes('deposit') || lastMessage.includes('landlord')) {
-         mockReply = "Your landlord is legally required to return your security deposit, minus actual proven damages. Normal wear and tear cannot be deducted. If they refuse, you can send a formal legal notice. Would you like to use our Document Generator to create one?\n\n*Disclaimer: This is AI-generated guidance, not formal legal advice.*";
-      } else if (lastMessage.includes('hello') || lastMessage.includes('hi')) {
-         mockReply = "Hello! I am NyayaMitra AI, your legal first-responder. Please describe your legal situation (e.g., landlord dispute, defective product, unpaid salary), and I will guide you on your rights.";
-      } else if (lastMessage.includes('code') || lastMessage.includes('math') || lastMessage.includes('weather')) {
-         mockReply = "I specialize strictly in legal first-response and Indian law. I cannot assist with that. Do you have a legal issue I can help you with?";
-      }
-
-      return NextResponse.json({
-        id: "mock-id",
-        role: "assistant",
-        content: mockReply
+      return NextResponse.json({ 
+        role: 'assistant', 
+        content: "I apologize, but my core AI engine is currently in transit. Please contact the administrator to provide the GEMINI_API_KEY in the environment settings. (Demo fallback: I am ready to assist with FIR and Tenant rights once activated!)" 
       });
     }
 
+    const lastMessages = messages.slice(-10); // Keep context small for 1.5 Flash
+
     // REAL GEMINI FLASH 1.5 INTEGRATION
     const geminiPayload = {
-      system_instruction: {
-         parts: { text: SYSTEM_PROMPT }
-      },
-      contents: messages.map((m: any) => ({
+      contents: lastMessages.map((m: any) => ({
          role: m.role === 'assistant' ? 'model' : 'user',
          parts: [{ text: m.content }]
       })),
+      system_instruction: {
+         parts: [{ text: SYSTEM_PROMPT }]
+      },
       generationConfig: {
          temperature: 0.3,
+         topP: 0.8,
+         topK: 40,
+         maxOutputTokens: 1024,
       }
     };
 
@@ -64,12 +53,13 @@ export async function POST(req: Request) {
       body: JSON.stringify(geminiPayload),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error?.message || 'Failed to fetch from Gemini API');
+      console.error('Gemini API Error:', data);
+      throw new Error(data.error?.message || 'Failed to fetch from Gemini API');
     }
 
-    const data = await response.json();
     const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
 
     return NextResponse.json({
@@ -79,6 +69,10 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error('Chat API Error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      role: 'assistant',
+      content: "I'm having trouble connecting to my legal database right now. Please try again in a moment. (Error: " + error.message + ")"
+    });
   }
 }
+

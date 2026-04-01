@@ -6,6 +6,7 @@ import Footer from "@/components/ui/Footer";
 import FAB from "@/components/ui/FAB";
 import EmergencyMode from "@/components/ui/EmergencyMode";
 import { CaseProvider } from "@/context/CaseContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import AiChatWidget from "@/components/AiChatWidget";
 
 
@@ -33,16 +34,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${poppins.variable} font-inter bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col antialiased`}>
-        <CaseProvider>
-          <Navbar />
-          <main className="flex-1 flex flex-col relative overflow-x-hidden">
-            {children}
-          </main>
-          <EmergencyMode />
-          <FAB />
-          <AiChatWidget />
-          <Footer />
-        </CaseProvider>
+        <LanguageProvider>
+          <CaseProvider>
+            <Navbar />
+            <main className="flex-1 flex flex-col relative overflow-x-hidden">
+              {children}
+            </main>
+            <EmergencyMode />
+            <FAB />
+            <AiChatWidget />
+            <Footer />
+          </CaseProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

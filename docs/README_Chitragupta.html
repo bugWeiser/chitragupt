@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chitragupta — README</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.7; }
+  
+  .cover { width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; page-break-after: always; }
+  .cover img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+  .cover-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,128,0.85), rgba(0,0,80,0.7)); z-index: 1; }
+  .cover-content { position: relative; z-index: 2; text-align: center; color: #fff; padding: 40px; }
+  .cover-content h1 { font-family: 'Poppins', sans-serif; font-size: 56px; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+  .cover-content h1 span { color: #FF9933; }
+  .cover-content p { font-size: 20px; color: rgba(255,255,255,0.8); max-width: 500px; margin: 0 auto; }
+  .cover-content .subtitle { font-size: 16px; color: #FF9933; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+  .cover-content .badges { margin-top: 30px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .cover-content .badge { padding: 6px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.2); }
+  .cover-content .team { margin-top: 50px; font-size: 14px; color: rgba(255,255,255,0.6); }
+  .tricolor { height: 4px; display: flex; width: 200px; margin: 24px auto 0; border-radius: 2px; overflow: hidden; }
+  .tricolor div { flex: 1; }
+  .tricolor .saffron { background: #FF9933; }
+  .tricolor .white { background: #fff; }
+  .tricolor .green { background: #138808; }
+
+  .page { padding: 60px 70px; max-width: 900px; margin: 0 auto; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  h2 { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 800; color: #000080; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid #FF9933; display: inline-block; }
+  h3 { font-size: 18px; font-weight: 700; color: #000080; margin: 24px 0 10px; }
+  p { margin: 10px 0; font-size: 14px; }
+  blockquote { border-left: 4px solid #FF9933; padding: 14px 20px; margin: 16px 0; background: #FFF8F0; border-radius: 0 8px 8px 0; font-style: italic; color: #333; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { background: #000080; color: #fff; padding: 10px 14px; text-align: left; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 10px 14px; border-bottom: 1px solid #e8e8f0; }
+  tr:nth-child(even) { background: #f8f8fc; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .stat-card { background: linear-gradient(135deg, #000080, #0c1445); color: #fff; padding: 24px; border-radius: 16px; text-align: center; }
+  .stat-card .number { font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 900; color: #FF9933; }
+  .stat-card .label { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 20px 0; }
+  .feature-card { padding: 18px; border: 1px solid #e0e0f0; border-radius: 12px; background: #fafaff; }
+  .feature-card .icon { font-size: 24px; margin-bottom: 6px; }
+  .feature-card h4 { font-size: 14px; font-weight: 700; color: #000080; margin-bottom: 4px; }
+  .feature-card p { font-size: 12px; color: #666; margin: 0; }
+
+  .arch-img { width: 100%; border-radius: 16px; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,128,0.15); }
+  
+  .code-block { background: #0d1117; color: #c9d1d9; padding: 16px 20px; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 12px; line-height: 1.6; margin: 14px 0; overflow-x: auto; white-space: pre; }
+  
+  .tech-badge { display: inline-block; padding: 4px 12px; border-radius: 16px; font-size: 11px; font-weight: 700; margin: 2px 4px; }
+  .tech-nextjs { background: #000; color: #fff; }
+  .tech-express { background: #333; color: #fff; }
+  .tech-postgres { background: #336791; color: #fff; }
+  .tech-redis { background: #DC382D; color: #fff; }
+  .tech-tailwind { background: #06B6D4; color: #fff; }
+  .tech-docker { background: #2496ED; color: #fff; }
+  .tech-firebase { background: #FFCA28; color: #000; }
+  .tech-vercel { background: #000; color: #fff; }
+
+  .api-method { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; font-family: monospace; margin-right: 6px; }
+  .api-get { background: #22c55e; color: #fff; }
+  .api-post { background: #3b82f6; color: #fff; }
+
+  .footer-bar { text-align: center; padding: 30px; color: #888; font-size: 12px; border-top: 1px solid #eee; margin-top: 40px; }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 40px 50px; }
+    .cover { height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <img src="assets/cover_hero.png" alt="Cover">
+  <div class="cover-overlay"></div>
+  <div class="cover-content">
+    <div class="subtitle">AI-Powered Legal Platform</div>
+    <h1>CHITRA<span>GUPTA</span></h1>
+    <p>India's Legal First-Response System — Get instant clarity. Know your rights. Take action.</p>
+    <div class="tricolor"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
+    <div class="badges">
+      <span class="badge">Next.js 14</span>
+      <span class="badge">Express.js 5</span>
+      <span class="badge">PostgreSQL 15</span>
+      <span class="badge">Redis 7</span>
+      <span class="badge">5-Layer Security</span>
+      <span class="badge">Bilingual AI</span>
+    </div>
+    <div class="team">Team BugWeisers</div>
+  </div>
+</div>
+
+<!-- PAGE 2: PROBLEM & SOLUTION -->
+<div class="page">
+  <h2>🧠 The Problem</h2>
+  <blockquote>80% of Indians cannot afford legal representation. Most don't even know their basic constitutional rights when facing police, landlords, employers, or domestic abuse.</blockquote>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="number">80%</div>
+      <div class="label">Can't Afford a Lawyer</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">4.7Cr</div>
+      <div class="label">Pending Court Cases</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">₹0</div>
+      <div class="label">Our Price to Citizens</div>
+    </div>
+  </div>
+
+  <h2>💡 Our Solution</h2>
+  <p>Chitragupta is a full-stack, AI-powered Legal First-Response Platform that:</p>
+  <table>
+    <tr><th>Step</th><th>Action</th><th>Detail</th></tr>
+    <tr><td>1</td><td><strong>Listens</strong></td><td>Citizen describes their problem in plain Hindi or English</td></tr>
+    <tr><td>2</td><td><strong>Analyzes</strong></td><td>AI categorizes the legal issue (FIR, consumer fraud, family dispute, etc.)</td></tr>
+    <tr><td>3</td><td><strong>Guides</strong></td><td>Step-by-step legal roadmaps with IPC sections &amp; jurisdiction-specific advice</td></tr>
+    <tr><td>4</td><td><strong>Connects</strong></td><td>Matches users with verified lawyers, enables encrypted chat</td></tr>
+    <tr><td>5</td><td><strong>Protects</strong></td><td>Enterprise-grade 5-layer security for all legal data</td></tr>
+  </table>
+
+  <h2>✨ Key Features</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="icon">🤖</div><h4>AI Legal Triage</h4><p>NLP-based categorization across 6+ legal domains</p></div>
+    <div class="feature-card"><div class="icon">📝</div><h4>RTI Document Generator</h4><p>Auto-generate Right to Information applications</p></div>
+    <div class="feature-card"><div class="icon">👨‍⚖️</div><h4>Lawyer Matching</h4><p>Connect with verified lawyers by specialization</p></div>
+    <div class="feature-card"><div class="icon">💬</div><h4>Encrypted Legal Chat</h4><p>Real-time chat with end-to-end encryption</p></div>
+    <div class="feature-card"><div class="icon">🚨</div><h4>Emergency Mode</h4><p>One-tap helplines: 15100, 112, 181</p></div>
+    <div class="feature-card"><div class="icon">🌐</div><h4>Bilingual Support</h4><p>Full Hindi + English language support</p></div>
+    <div class="feature-card"><div class="icon">🔐</div><h4>5-Layer Security</h4><p>WAF, TOTP 2FA, JWT rotation, immutable audit logs</p></div>
+    <div class="feature-card"><div class="icon">📊</div><h4>Admin Command Center</h4><p>Glassmorphic dashboard with CVSS vulnerability scanning</p></div>
+  </div>
+</div>
+
+<!-- PAGE 3: ARCHITECTURE -->
+<div class="page">
+  <h2>📐 System Architecture</h2>
+  <img src="assets/architecture_diagram.png" alt="System Architecture" class="arch-img">
+
+  <h2>🛠️ Tech Stack</h2>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+    <tr><td>Frontend</td><td><span class="tech-badge tech-nextjs">Next.js 14</span></td><td>SSR, App Router, SEO</td></tr>
+    <tr><td>Styling</td><td><span class="tech-badge tech-tailwind">Tailwind CSS v3</span></td><td>Utility-first responsive design</td></tr>
+    <tr><td>Auth</td><td><span class="tech-badge tech-firebase">Firebase Auth</span></td><td>OAuth (GitHub), token mgmt</td></tr>
+    <tr><td>Backend</td><td><span class="tech-badge tech-express">Express.js 5</span></td><td>REST API server</td></tr>
+    <tr><td>Database</td><td><span class="tech-badge tech-postgres">PostgreSQL 15</span></td><td>Relational data, audit logs</td></tr>
+    <tr><td>Cache</td><td><span class="tech-badge tech-redis">Redis 7</span></td><td>Rate limiting, sessions</td></tr>
+    <tr><td>Security</td><td>Helmet, HPP, XSS-Clean</td><td>Request hardening</td></tr>
+    <tr><td>2FA</td><td>Speakeasy (TOTP)</td><td>Google Authenticator</td></tr>
+    <tr><td>Logging</td><td>Winston + Rotate</td><td>Structured audit trail</td></tr>
+    <tr><td>Deploy</td><td><span class="tech-badge tech-vercel">Vercel</span> + <span class="tech-badge tech-docker">Docker</span></td><td>CI/CD + orchestration</td></tr>
+  </table>
+
+  <h2>🔗 API Endpoints</h2>
+  <h3>Authentication (Layer 1 &amp; 2)</h3>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/auth/register</code></td><td>Register with OTP verification</td></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/auth/verify-otp</code></td><td>Verify 6-digit OTP code</td></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/auth/login</code></td><td>Login (returns JWT pair)</td></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/auth/refresh</code></td><td>Rotate JWT tokens</td></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/auth/totp/setup</code></td><td>Generate TOTP QR for 2FA</td></tr>
+  </table>
+  <h3>Admin Security (Layer 4 &amp; 5)</h3>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    <tr><td><span class="api-method api-get">GET</span></td><td><code>/api/admin/logs</code></td><td>Fetch immutable audit logs</td></tr>
+    <tr><td><span class="api-method api-get">GET</span></td><td><code>/api/admin/logs/export/csv</code></td><td>Export logs as CSV</td></tr>
+    <tr><td><span class="api-method api-get">GET</span></td><td><code>/api/admin/logs/export/pdf</code></td><td>Export logs as PDF</td></tr>
+    <tr><td><span class="api-method api-post">POST</span></td><td><code>/api/admin/scanner/run</code></td><td>Trigger vulnerability scan</td></tr>
+    <tr><td><span class="api-method api-get">GET</span></td><td><code>/api/admin/scanner/reports</code></td><td>Fetch scan reports</td></tr>
+  </table>
+</div>
+
+<!-- PAGE 4: PROJECT STRUCTURE -->
+<div class="page">
+  <h2>📂 Project Structure</h2>
+  <div class="code-block">Chitragupt/
+├── frontend/                    # Next.js 14 Application
+│   ├── app/
+│   │   ├── admin/               # 🛡️ Security Admin Dashboard
+│   │   ├── chat/                # 💬 Encrypted Legal Chat
+│   │   ├── dashboard/           # 📊 User Dashboard
+│   │   ├── documents/           # 📝 RTI Generator
+│   │   ├── get-help/            # 🤖 AI Legal Triage
+│   │   ├── lawyers/             # 👨‍⚖️ Lawyer Directory
+│   │   ├── login/               # 🔐 Authentication
+│   │   ├── my-case/             # 📋 Case Management
+│   │   └── register/            # ✍️ Registration
+│   └── components/
+│       ├── admin/               # Admin Panel (AuditLogTable, Scanner)
+│       ├── auth/                # Auth Components
+│       └── ui/                  # Shared UI (Navbar, Footer, FAB)
+│
+├── backend/                     # Express.js 5.x API
+│   └── src/
+│       ├── config/              # DB, Redis, Firebase, Email, Twilio
+│       ├── database/migrations/ # SQL Schema
+│       ├── middleware/          # WAF, Auth, Rate Limit, Audit
+│       ├── modules/
+│       │   ├── auth/            # Register, Login, Logout, Refresh
+│       │   ├── otp/             # 6-digit OTP (Email + SMS)
+│       │   ├── totp/            # TOTP 2FA (Google Authenticator)
+│       │   ├── audit/           # Log Viewer + CSV/PDF Export
+│       │   ├── notifications/   # FCM + Web Push Alerts
+│       │   └── scanner/         # Vulnerability Self-Scanner
+│       └── jobs/                # Scheduled Security Scan
+│
+└── docker-compose.yml           # PostgreSQL 15 + Redis 7</div>
+
+  <h2>🏆 Why Chitragupta Wins</h2>
+  <table>
+    <tr><th>Criteria</th><th>Our Approach</th></tr>
+    <tr><td><strong>Innovation</strong></td><td>First AI-powered legal triage designed specifically for Indian law</td></tr>
+    <tr><td><strong>Impact</strong></td><td>Addresses access-to-justice gap affecting 1B+ citizens</td></tr>
+    <tr><td><strong>Security</strong></td><td>5-layer defense-in-depth — beyond typical hackathon prototypes</td></tr>
+    <tr><td><strong>Completeness</strong></td><td>Full-stack: Frontend + Backend + DB + Auth + Admin + Deployment</td></tr>
+    <tr><td><strong>Scalability</strong></td><td>Containerized with Docker, deployed on Vercel edge network</td></tr>
+    <tr><td><strong>Bilingual</strong></td><td>Native Hindi + English support for true inclusivity</td></tr>
+  </table>
+
+  <div class="footer-bar">
+    <strong>Chitragupta</strong> — India's Legal First-Response System<br>
+    Team BugWeisers • Built with ❤️ for justice • Made in 🇮🇳 India
+  </div>
+</div>
+
+</body>
+</html>

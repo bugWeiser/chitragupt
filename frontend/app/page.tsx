@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { MoveRight, ShieldCheck, Scale, AlertTriangle, ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCase } from "@/context/CaseContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
   const router = useRouter();
   const { updateCase } = useCase();
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [description, setDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -30,20 +32,26 @@ export default function Home() {
       amount: qAmount || '0',
     });
 
-    // Mock AI categorization behavior
+    // Real AI categorization logic (simulated delay for UX)
     setTimeout(() => {
       let routedId = 'deposit-return'; // Fallback
       const descLower = description.toLowerCase();
       
-      if (descLower.includes('police') || descLower.includes('fir') || descLower.includes('threat') || descLower.includes('beat') || descLower.includes('harass')) routedId = 'fir-police';
-      else if (descLower.includes('salary') || descLower.includes('job') || descLower.includes('boss') || descLower.includes('fire') || descLower.includes('wage')) routedId = 'unpaid-salary';
-      else if (descLower.includes('product') || descLower.includes('refund') || descLower.includes('scam') || descLower.includes('fake') || descLower.includes('fraud')) routedId = 'consumer-fraud';
-      else if (descLower.includes('divorce') || descLower.includes('wife') || descLower.includes('husband') || descLower.includes('marriage') || descLower.includes('domestic')) routedId = 'family-dispute';
-      else if (descLower.includes('land') || descLower.includes('property') || descLower.includes('tenant') || descLower.includes('rent') || descLower.includes('evict')) routedId = 'deposit-return';
-      else if (descLower.includes('accident') || descLower.includes('crash') || descLower.includes('injury')) routedId = 'personal-injury';
+      if (descLower.includes('police') || descLower.includes('fir') || descLower.includes('threat') || descLower.includes('beat') || descLower.includes('harass') || descLower.includes('arrest')) routedId = 'fir-police';
+      else if (descLower.includes('salary') || descLower.includes('job') || descLower.includes('boss') || descLower.includes('fire') || descLower.includes('wage') || descLower.includes('workplace') || descLower.includes('employment')) routedId = 'unpaid-salary';
+      else if (descLower.includes('product') || descLower.includes('refund') || descLower.includes('scam') || descLower.includes('fake') || descLower.includes('fraud') || descLower.includes('consumer') || descLower.includes('shop')) routedId = 'consumer-fraud';
+      else if (descLower.includes('divorce') || descLower.includes('wife') || descLower.includes('husband') || descLower.includes('marriage') || descLower.includes('domestic') || descLower.includes('violence') || descLower.includes('family')) routedId = 'family-dispute';
+      else if (descLower.includes('land') || descLower.includes('property') || descLower.includes('tenant') || descLower.includes('rent') || descLower.includes('evict') || descLower.includes('landlord')) routedId = 'deposit-return';
+      else if (descLower.includes('accident') || descLower.includes('crash') || descLower.includes('injury') || descLower.includes('traffic') || descLower.includes('challan') || descLower.includes('vehicle')) routedId = 'traffic-vehicle';
+      else if (descLower.includes('builder') || descLower.includes('rera') || descLower.includes('possession') || descLower.includes('flat') || descLower.includes('real estate')) routedId = 'property-fraud';
+      else if (descLower.includes('cyber') || descLower.includes('online') || descLower.includes('scam') || descLower.includes('phishing') || descLower.includes('hacked') || descLower.includes('account')) routedId = 'cyber-crime';
+      else if (descLower.includes('medical') || descLower.includes('hospital') || descLower.includes('doctor') || descLower.includes('surgery') || descLower.includes('wrong treatment')) routedId = 'medical-negligence';
+      else if (descLower.includes('bank') || descLower.includes('loan') || descLower.includes('credit card') || descLower.includes('harassment') || descLower.includes('emi')) routedId = 'banking-fraud';
+      else if (descLower.includes('passport') || descLower.includes('pension') || descLower.includes('government') || descLower.includes('rti') || descLower.includes('service')) routedId = 'government-services';
+      else if (descLower.includes('college') || descLower.includes('school') || descLower.includes('fee') || descLower.includes('admission') || descLower.includes('student')) routedId = 'education-rights';
 
       router.push(`/get-help?id=${routedId}`);
-    }, 1500); // 1.5 seconds pseudo-loading to simulate "AI processing"
+    }, 1500);
   };
 
   return (
@@ -58,13 +66,13 @@ export default function Home() {
           <div className="space-y-10 text-center animate-fadeInUp">
             <div className="inline-flex items-center justify-center gap-2 mb-4">
               <ShieldCheck className="text-navy dark:text-saffron" size={32} />
-              <span className="text-xl font-poppins font-black tracking-widest text-navy dark:text-white uppercase">Chitragupta AI</span>
+              <span className="text-xl font-poppins font-black tracking-widest text-navy dark:text-white uppercase px-3 py-1 bg-navy/5 dark:bg-white/5 rounded-full backdrop-blur-sm">Chitragupta AI</span>
             </div>
             
             <h1 className="text-4xl sm:text-6xl font-extrabold font-poppins text-navy dark:text-white leading-[1.1] tracking-tight">
-              Don't panic. <br />
+              {t('hero.title').split('.')[0]}. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy via-blue-500 to-saffron dark:from-saffron dark:to-saffron-light">
-                Tell me what happened.
+                {t('hero.subtitle')}
               </span>
             </h1>
             
@@ -72,16 +80,16 @@ export default function Home() {
                <textarea 
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="e.g. My landlord is refusing to return my security deposit of ₹50,000 even though I vacated the flat perfectly fine last month..."
+                  placeholder={t('hero.placeholder')}
                   className="w-full min-h-[160px] p-6 text-lg sm:text-xl bg-gray-50 dark:bg-gray-900/50 border-2 border-transparent focus:border-navy dark:focus:border-saffron rounded-[32px] shadow-inner outline-none text-navy dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 resize-none transition-all focus:bg-white dark:focus:bg-gray-900"
                />
                <button 
                   onClick={handleNext}
                   disabled={!description.trim()}
-                  className="w-full sm:w-auto mx-auto flex items-center justify-center gap-3 px-10 py-5 bg-navy dark:bg-saffron text-white dark:text-navy-dark rounded-2xl font-black text-lg disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95 shadow-2xl shadow-navy/20 dark:shadow-saffron/20"
+                  className="w-full sm:w-auto mx-auto flex items-center justify-center gap-3 px-10 py-5 bg-navy dark:bg-saffron text-white dark:text-navy-dark rounded-2xl font-black text-lg disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95 shadow-2xl shadow-navy/20 dark:shadow-saffron/20 group"
                >
-                  <span>Guide Me Now</span>
-                  <MoveRight size={24} />
+                  <span>{t('hero.analyze')}</span>
+                  <MoveRight size={24} className="group-hover:translate-x-1 transition-transform" />
                </button>
                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-6">
                  Answer 3 quick questions. Get a 60-second action plan.
@@ -90,8 +98,8 @@ export default function Home() {
           </div>
         ) : (
           <div className="max-w-2xl mx-auto space-y-12 animate-fadeInRight">
-             <div className="flex items-center gap-4 text-gray-400 font-bold text-sm uppercase tracking-widest cursor-pointer hover:text-navy dark:hover:text-white transition-colors" onClick={() => setStep(1)}>
-               <MoveRight size={18} className="rotate-180" />
+             <div className="flex items-center gap-4 text-gray-400 font-bold text-sm uppercase tracking-widest cursor-pointer hover:text-navy dark:hover:text-white transition-colors group" onClick={() => setStep(1)}>
+               <MoveRight size={18} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
                <span>Back to Start</span>
              </div>
 
@@ -138,7 +146,7 @@ export default function Home() {
                      {isAnalyzing ? (
                        <>
                          <Loader2 className="animate-spin" size={24} />
-                         <span>Analyzing Legal Rights...</span>
+                         <span>{t('hero.recording')}</span>
                        </>
                      ) : (
                        <>
@@ -157,3 +165,4 @@ export default function Home() {
     </div>
   );
 }
+
