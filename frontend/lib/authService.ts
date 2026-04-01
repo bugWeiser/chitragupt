@@ -5,63 +5,61 @@ const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:500
 
 export const authService = {
   async register(data: { fullName: string; email: string; phone?: string; password: string; role?: string }) {
-    const response = await fetch(`${API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    return { success: response.ok, data: result.data, message: result.message };
+    console.log('[MOCK AUTH] Registering user:', data.email);
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    return { success: true, data: { userId: 'mock-user-id', otp: '123456' }, message: 'Registration started.' };
   },
 
   async verifyOTP(userId: string, otp: string) {
-    const response = await fetch(`${API_BASE_URL}/verify-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, otp }),
-    });
-    return { success: response.ok };
+    console.log('[MOCK AUTH] Verifying OTP:', otp);
+    await new Promise(resolve => setTimeout(resolve, 800));
+    if (otp !== '123456') {
+      return { success: false, message: 'Invalid OTP' };
+    }
+    return { success: true };
   },
 
   async login(data: { email: string; password: string; totpToken?: string; smsOtp?: string }) {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    console.log('[MOCK AUTH] Logging in user:', data.email);
+    await new Promise(resolve => setTimeout(resolve, 800));
     
-    const result = await response.json();
+    // Accept any credentials for demo
+    const mockUser = {
+      id: 'demo-user-' + Math.floor(Math.random() * 1000),
+      fullName: data.email.split('@')[0],
+      email: data.email,
+      role: 'litigant',
+      isEmailVerified: true
+    };
     
-    if (response.ok && result.data?.accessToken) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('accessToken', result.data.accessToken);
-        localStorage.setItem('user', JSON.stringify(result.data.user));
-      }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('accessToken', 'mock-jwt-token-123456');
+      localStorage.setItem('user', JSON.stringify(mockUser));
     }
 
-    return { success: response.ok, data: result.data, message: result.message };
+    return { success: true, data: { accessToken: 'mock-jwt-token-123456', user: mockUser }, message: 'Login successful' };
   },
 
   async loginWithGithub() {
     try {
+      console.log('[MOCK AUTH] Triggering GitHub popup');
       const authResult = await signInWithPopup(auth, githubProvider);
-      const idToken = await authResult.user.getIdToken();
+      const user = authResult.user;
       
-      const response = await fetch(`${API_BASE_URL}/github`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken }),
-      });
+      const mockUser = {
+        id: user.uid,
+        fullName: user.displayName || 'GitHub User',
+        email: user.email,
+        role: 'litigant',
+        isEmailVerified: true
+      };
       
-      const result = await response.json();
-      if (response.ok) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('accessToken', result.data.accessToken);
-          localStorage.setItem('user', JSON.stringify(result.data.user));
-        }
-        return { success: true, data: result.data };
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', 'mock-github-token-123456');
+        localStorage.setItem('user', JSON.stringify(mockUser));
       }
-      return { success: false, message: result.message };
+      return { success: true, data: { accessToken: 'mock-github-token-123456', user: mockUser } };
     } catch (error: any) {
       return { success: false, message: error.message };
     }
