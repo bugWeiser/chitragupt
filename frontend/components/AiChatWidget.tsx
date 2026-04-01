@@ -54,10 +54,14 @@ export default function AiChatWidget() {
       if (res.ok) {
         setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: data.content }]);
       } else {
-        setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: language === 'en' ? "I'm having trouble connecting right now." : "मैं अभी कनेक्ट नहीं कर पा रहा हूँ।" }]);
+        const errorContent = data.content?.includes('GEMINI_API_KEY') 
+          ? (language === 'en' ? "⚠️ AI Engine Offline: GEMINI_API_KEY not found in environment. Please contact administrator." : "⚠️ AI इंजन ऑफ़लाइन: GEMINI_API_KEY नहीं मिला।")
+          : (language === 'en' ? "I'm having trouble connecting right now." : "मैं अभी कनेक्ट नहीं कर पा रहा हूँ।");
+        
+        setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: errorContent }]);
       }
     } catch (error) {
-      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "An error occurred." }]);
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "An error occurred connecting to Chitragupt AI. Please check your internet or server status." }]);
     } finally {
       setLoading(false);
     }

@@ -57,7 +57,7 @@ export default function Navbar() {
             <div className="flex-1" />
 
             {/* ── Right controls ───────────────────────────── */}
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-6">
 
               {/* ── Language Toggle ───────────────────────── */}
               <div className="inline-flex border border-[#A69485] rounded-[2px] overflow-hidden" role="radiogroup" aria-label="Select language">
@@ -112,7 +112,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 href="tel:15100"
-                className="text-[#561C24] p-2 flex items-center justify-center hover:bg-[#561C24]/5 rounded-sm transition-colors md:hidden"
+                className="text-[#561C24] p-2 flex items-center justify-center hover:bg-[#561C24]/5 rounded-sm transition-colors lg:hidden"
                 aria-label="Call emergency number 15100"
               >
                 <Phone size={20} />

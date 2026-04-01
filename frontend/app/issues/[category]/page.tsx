@@ -311,9 +311,9 @@ export default function CategoryPage() {
                         ))}
                       </ul>
                       <div className="border-t border-border pt-[32px]">
-                        <button className="btn-ghost pl-0 hover:bg-transparent text-burgundy gap-2 group text-left w-full sm:w-auto flex items-center">
-                          UPLOAD EVIDENCE FOR ANALYSIS <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                        </button>
+                        <p className="text-[0.875rem] text-ink/60 italic">
+                          Keep your evidence organized. In the next step, you can describe these documents to our AI for a detailed strategy.
+                        </p>
                       </div>
                     </div>
                   </section>

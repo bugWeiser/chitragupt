@@ -6,14 +6,22 @@ import { useAuth } from '../../hooks/useAuth';
 export function OTPVerification({ userId, onSuccess }: { userId: string, onSuccess: () => void }) {
   const { verifyOTP, loading } = useAuth();
   const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (otp.length !== 6) return;
+    setError('');
     try {
-      await verifyOTP(userId, otp);
-      onSuccess();
-    } catch (err) {}
+      const result = await verifyOTP(userId, otp);
+      if (result.success) {
+        onSuccess();
+      } else {
+        setError('Invalid verification code. Please check your email/SMS or the backend console.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Verification failed. Please try again.');
+    }
   };
 
   return (
@@ -22,6 +30,12 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
         <h3 className="text-2xl font-black text-navy dark:text-saffron">Verify Your Account</h3>
         <p className="text-gray-500 text-sm">We've sent a 6-digit code to your email and phone. Enter it below to secure your identity.</p>
       </div>
+
+      {error && (
+        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-bold animate-shake">
+          {error}
+        </div>
+      )}
 
       <div>
         <input 

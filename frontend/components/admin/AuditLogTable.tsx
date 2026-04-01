@@ -15,7 +15,8 @@ export default function AuditLogTable() {
 
   const fetchLogs = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/logs', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/admin/logs`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }

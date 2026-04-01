@@ -289,16 +289,16 @@ export default function Home() {
           </div>
           
           <h2 className="text-heading-2 mb-6 text-balance !text-[#F5EDE3]" style={{ fontFamily: "var(--font-serif)" }}>
-            {t("home.aiSection.title1")} <br/>
-            <span className="italic opacity-80">{t("home.aiSection.title2")}</span>
+            Tell us what happened. <br/>
+            <span className="italic opacity-80">Our AI finds your legal leverage.</span>
           </h2>
           
           <p className="text-[1.125rem] text-[#E8D8C4] mb-10 max-w-[600px] mx-auto font-sans leading-relaxed">
-            {t("home.aiSection.desc")}
+            Describe your situation in plain language. Chitragupt will instantly analyze it against Indian law to determine your strongest course of action.
           </p>
           
           <Link href="/analyze" className="inline-flex items-center justify-center bg-ivory text-burgundy font-semibold text-[0.875rem] uppercase tracking-[0.1em] px-8 py-4 rounded-[2px] hover:bg-white transition-colors">
-            {t("home.aiSection.cta")}
+            Analyze My Case Now
           </Link>
         </div>
       </section>

@@ -15,7 +15,8 @@ export default function AdminOverviewPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/stats', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/admin/stats`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }

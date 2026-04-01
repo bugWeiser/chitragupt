@@ -1,7 +1,7 @@
 import { auth, githubProvider } from './firebase';
 import { signInWithPopup } from 'firebase/auth';
 
-const API_BASE_URL = 'http://localhost:5000/api/auth';
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth`;
 
 export const authService = {
   async register(data: { fullName: string; email: string; phone?: string; password: string; role?: string }) {
