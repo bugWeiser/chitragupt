@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Scale, Menu, X, Phone, Globe } from 'lucide-react';
+import { Scale, Menu, X, Phone, User, LogOut } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -37,8 +39,7 @@ export default function Navbar() {
               <NavLink href="/get-help">Get Help</NavLink>
               <NavLink href="/documents">RTI Generator</NavLink>
               <NavLink href="/lawyers">Find a Lawyer</NavLink>
-              <NavLink href="/my-case">My Case</NavLink>
-              <NavLink href="/login">Sign In</NavLink>
+              <NavLink href={user ? "/my-case" : "/login"}>{user ? "My Case" : "Sign In"}</NavLink>
             </div>
 
             {/* Right side options */}
@@ -47,11 +48,27 @@ export default function Navbar() {
                 <button className="px-3 py-1 text-xs font-semibold bg-navy text-white rounded shadow-sm">EN</button>
                 <button className="px-3 py-1 text-xs font-semibold text-gray-500 hover:text-navy dark:hover:text-saffron transition-colors">हिं</button>
               </div>
-              <NavLink href="/register">
-                <span className="px-4 py-2 bg-navy dark:bg-saffron text-white dark:text-navy font-bold rounded-lg shadow-lg hover:scale-105 transition-all text-sm">
-                  Join Free
-                </span>
-              </NavLink>
+              
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-bold text-navy dark:text-saffron flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-navy/10 dark:bg-saffron/10 flex items-center justify-center">
+                      <User size={16} />
+                    </div>
+                    {user.fullName?.split(' ')[0] || 'User'}
+                  </span>
+                  <button onClick={logout} className="p-2 text-gray-500 hover:text-red-500 transition-colors tooltip" title="Logout">
+                    <LogOut size={18} />
+                  </button>
+                </div>
+              ) : (
+                <NavLink href="/register">
+                  <span className="px-4 py-2 bg-navy dark:bg-saffron text-white dark:text-navy font-bold rounded-lg shadow-lg hover:scale-105 transition-all text-sm">
+                    Join Free
+                  </span>
+                </NavLink>
+              )}
+
               <a href="tel:15100" className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-sm font-bold border border-red-100 dark:border-red-900/50 hover:bg-red-600 hover:text-white transition-all shadow-sm">
                 <Phone size={16} />
                 <span>Emergency: 15100</span>
@@ -81,9 +98,17 @@ export default function Navbar() {
             <MobileNavLink href="/get-help" onClick={() => setIsOpen(false)}>Get Help</MobileNavLink>
             <MobileNavLink href="/documents" onClick={() => setIsOpen(false)}>RTI Generator</MobileNavLink>
             <MobileNavLink href="/lawyers" onClick={() => setIsOpen(false)}>Find a Lawyer</MobileNavLink>
-            <MobileNavLink href="/my-case" onClick={() => setIsOpen(false)}>My Case</MobileNavLink>
-            <MobileNavLink href="/login" onClick={() => setIsOpen(false)}>Sign In</MobileNavLink>
-            <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>Join Free</MobileNavLink>
+            {user ? (
+              <>
+                <MobileNavLink href="/my-case" onClick={() => setIsOpen(false)}>Dashboard (My Case)</MobileNavLink>
+                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-4 text-left text-base font-semibold text-red-500 border-b border-gray-50 dark:border-gray-800">Logout</button>
+              </>
+            ) : (
+              <>
+                <MobileNavLink href="/login" onClick={() => setIsOpen(false)}>Sign In</MobileNavLink>
+                <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>Join Free</MobileNavLink>
+              </>
+            )}
           </nav>
           <div className="mt-auto space-y-4">
              <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-full">

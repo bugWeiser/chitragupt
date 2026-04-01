@@ -25,12 +25,12 @@ export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) 
 
   const onSubmit = async (data: FormData) => {
     try {
-      const result = await login(data);
+      const result: any = await login(data);
       if (result.data?.mfaRequired) {
         setShowSmsOtp(true);
         if (onMfaRequired) onMfaRequired(result.data.userId);
       } else {
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }
     } catch (err) {}
   };
@@ -38,7 +38,7 @@ export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) 
   const handleGithubLogin = async () => {
     try {
       await loginWithGithub();
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     } catch (error) {}
   };
 

@@ -32,15 +32,18 @@ export default function Home() {
 
     // Mock AI categorization behavior
     setTimeout(() => {
-      let routedId = 'deposit-return';
+      let routedId = 'deposit-return'; // Fallback
       const descLower = description.toLowerCase();
       
-      if (descLower.includes('police') || descLower.includes('fir') || descLower.includes('threat')) routedId = 'fir-police';
-      else if (descLower.includes('salary') || descLower.includes('job') || descLower.includes('fire')) routedId = 'unpaid-salary';
-      else if (descLower.includes('product') || descLower.includes('refund') || descLower.includes('scam')) routedId = 'consumer-fraud';
+      if (descLower.includes('police') || descLower.includes('fir') || descLower.includes('threat') || descLower.includes('beat') || descLower.includes('harass')) routedId = 'fir-police';
+      else if (descLower.includes('salary') || descLower.includes('job') || descLower.includes('boss') || descLower.includes('fire') || descLower.includes('wage')) routedId = 'unpaid-salary';
+      else if (descLower.includes('product') || descLower.includes('refund') || descLower.includes('scam') || descLower.includes('fake') || descLower.includes('fraud')) routedId = 'consumer-fraud';
+      else if (descLower.includes('divorce') || descLower.includes('wife') || descLower.includes('husband') || descLower.includes('marriage') || descLower.includes('domestic')) routedId = 'family-dispute';
+      else if (descLower.includes('land') || descLower.includes('property') || descLower.includes('tenant') || descLower.includes('rent') || descLower.includes('evict')) routedId = 'deposit-return';
+      else if (descLower.includes('accident') || descLower.includes('crash') || descLower.includes('injury')) routedId = 'personal-injury';
 
       router.push(`/get-help?id=${routedId}`);
-    }, 1500); // 1.5 seconds pseudo-loading to simulate "AI processing" as requested by user prompt
+    }, 1500); // 1.5 seconds pseudo-loading to simulate "AI processing"
   };
 
   return (
