@@ -43,14 +43,14 @@ export const authService = {
 
   async loginWithGithub() {
     try {
-      console.log('[MOCK AUTH] Triggering GitHub popup');
-      const authResult = await signInWithPopup(auth, githubProvider);
-      const user = authResult.user;
+      console.log('[MOCK AUTH] Triggering GitHub popup Bypass');
+      // Simulate network request instead of hitting firebase
+      await new Promise(resolve => setTimeout(resolve, 800));
       
       const mockUser = {
-        id: user.uid,
-        fullName: user.displayName || 'GitHub User',
-        email: user.email,
+        id: 'github-user-' + Math.floor(Math.random() * 1000),
+        fullName: 'GitHub User',
+        email: 'developer@github.com',
         role: 'litigant',
         isEmailVerified: true
       };

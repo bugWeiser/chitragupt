@@ -41,38 +41,10 @@ export default function RTIGenerator() {
 
   const handleDownloadPDF = async () => {
     try {
-      const { jsPDF } = await import("jspdf");
-      const doc = new jsPDF();
-
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "bold");
-      doc.text("APPLICATION FOR INFORMATION UNDER SECTION 6(1) OF THE RTI ACT, 2005", 105, 25, { align: "center" });
-
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "normal");
-      doc.text(`To,`, 20, 45);
-      doc.text(`The Public Information Officer (PIO)`, 20, 52);
-      doc.text(`${formData.department}`, 20, 59);
-
-      doc.text(`1. Name of the Applicant:    ${formData.fullName}`, 20, 75);
-      doc.text(`2. Complete Address:         ${formData.address}, ${formData.city} - ${formData.pincode}`, 20, 85);
-      
-      doc.text(`3. Details of information required:`, 20, 105);
-      
-      doc.setFont("helvetica", "italic");
-      const splitText = doc.splitTextToSize(formData.details || "Not Provided", 170);
-      doc.text(splitText, 20, 115);
-
-      doc.setFont("helvetica", "normal");
-      doc.text(`4. Application Fee: I have enclosed the fee of Rs. 10/- via Postal Order/Demand Draft.`, 20, 220);
-      doc.text(`Date  : ___________________`, 20, 240);
-      doc.text(`Place : ${formData.city || "___________________"}`, 20, 250);
-      doc.text(`Signature of Applicant: _________________`, 110, 250);
-
-      doc.save("RTI_Application.pdf");
+      window.print();
     } catch (error) {
-      console.error("PDF generation failed:", error);
-      alert("Failed to generate PDF. Check browser console.");
+      console.error("Print failed:", error);
+      alert("Failed to print. Try using Ctrl+P or Cmd+P.");
     }
   };
 

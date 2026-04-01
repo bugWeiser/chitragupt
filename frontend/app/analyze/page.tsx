@@ -12,63 +12,27 @@ export default function AnalyzePage() {
 
   const [analysisResult, setAnalysisResult] = useState<any>(null);
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!scenario.trim()) return;
     setIsAnalyzing(true);
     
-    // Process input
-    const input = scenario.toLowerCase();
-    let result = {
-      leverage: [
-        { title: "Notice Period Violation", desc: "Under the Model Tenancy Act and most State laws, the landlord must return the security deposit at the time of handing over possession, or within 30 days if explicitly stated." },
-        { title: "Unfair Deduction Protection", desc: "Landlords cannot deduct for 'ordinary wear and tear' (e.g., standard painting, minor flooring scratches). This is a protected right under Consumer Protection norms." }
-      ],
-      steps: [
-        { title: "Step 01 — Immediate: Draft a formal Legal Notice", desc: "Clearly state the demand for ₹40,000 return within 15 days or you will initiate BNS (formerly IPC) proceedings for Criminal Breach of Trust." },
-        { title: "Step 02 — Secondary: Apply for RTI in Housing Department", desc: "If the landlord owns multiple unregistered flats, a simple RTI about his tax status or registration details often forces a settlement." }
-      ]
-    };
-
-    if (input.includes("domestic violence") || input.includes("husband") || input.includes("beat") || input.includes("abuse")) {
-      result = {
-          leverage: [
-            { title: "Protection under PWDVA, 2005", desc: "You have the right to reside in the shared household, regardless of whether you have right, title, or beneficial interest in it." },
-            { title: "Section 498A BNS (Cruelty)", desc: "Mental and physical cruelty by a husband or his relatives is a non-bailable, cognizable offense." }
-          ],
-          steps: [
-            { title: "Step 01 — Immediate: Call National Women Helpline (1091)", desc: "Immediately seek emergency protection if you are in physical danger or require urgent shelter." },
-            { title: "Step 02 — Secondary: File a Domestic Incident Report (DIR)", desc: "Contact the Protection Officer in your district to officially log the abuse and seek legal injunctions." }
-          ]
-      };
-    } else if (input.includes("salary") || input.includes("employer") || input.includes("job") || input.includes("work")) {
-      result = {
-          leverage: [
-            { title: "Payment of Wages Act Violation", desc: "Employers are legally mandated to pay salaries on time. Withholding salary without due legal process is a strict violation." },
-            { title: "Criminal Breach of Trust (BNS)", desc: "Refusal to pay earned wages can be construed under Indian Penal laws as cheating and breach of trust." }
-          ],
-          steps: [
-            { title: "Step 01 — Immediate: Send a Legal Demand Notice", desc: "Formally demand the pending salary within 15 days via Registered Post. Keep physical proof." },
-            { title: "Step 02 — Secondary: Approach Labour Commissioner", desc: "If the notice is ignored, file a formal complaint under the Industrial Disputes Act or local Shops & Establishments Act." }
-          ]
-      };
-    } else if (input.includes("scam") || input.includes("fraud") || input.includes("fake") || input.includes("money")) {
-       result = {
-          leverage: [
-            { title: "IT Act & BNS Cognizance", desc: "Online financial fraud is a cognizable offense under the Information Technology Act and Bharatiya Nyaya Sanhita." },
-            { title: "RBI Zero Liability Framework", desc: "If reported within 3 days, you have zero liability for unauthorized electronic banking transactions." }
-          ],
-          steps: [
-            { title: "Step 01 — Immediate: Call 1930 Cyber Helpline", desc: "Immediately register the fraudulent transaction to freeze the suspect's bank account." },
-            { title: "Step 02 — Secondary: File at cybercrime.gov.in", desc: "Log a formal FIR online using the national portal with transaction hashes and screenshots." }
-          ]
-      };
+    try {
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenario })
+      });
+      const data = await res.json();
+      setAnalysisResult(data);
+    } catch (e) {
+      setAnalysisResult({ 
+        leverage: [{title: "Network Error", desc: "Failed to connect to Chitragupt AI server."}], 
+        steps: [{title: "Step 01 - Immediate: Retry", desc: "Refresh the page and try again."}] 
+      });
     }
 
-    setTimeout(() => {
-      setAnalysisResult(result);
-      setIsAnalyzing(false);
-      setIsAnalyzed(true);
-    }, 2500);
+    setIsAnalyzing(false);
+    setIsAnalyzed(true);
   };
 
   return (
