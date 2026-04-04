@@ -259,11 +259,11 @@ export default function Home() {
         </div>
         <Marquee className="[--duration:40s]" pauseOnHover>
           {[
-            { name: "Rahul D.", user: "@rahul_d", text: "I've never seen anything like this before. It's amazing. I love it." },
-            { name: "Sneha P.", user: "@sneha_p", text: "I don't know what to say. I'm speechless. This is amazing." },
-            { name: "Vikram S.", user: "@vikram_s", text: "I'm at a loss for words. This is amazing. I love it." },
+            { name: "Rahul D.", user: "@rahul_d", text: "Finally got my builder to pay the RERA penalty after 2 years of waiting. The AI notice drafter is a life changer." },
+            { name: "Sneha P.", user: "@sneha_p", text: "Helped me file an RTI for my road repair. I actually got a response from the Commissioner in 20 days!" },
+            { name: "Vikram S.", user: "@vikram_s", text: "I was confused about my termination rights. Chitragupt analyzed my contract and found the illegal clause instantly." },
             { name: "Priya M.", user: "@priya_m", text: "Got my deposit back in 15 days thanks to the legal notice drafted here." },
-            { name: "Ananya K.", user: "@ananya_k", text: "The emergency mode saved me when police refused to register my FIR." },
+            { name: "Ananya K.", user: "@ananya_k", text: "The emergency mode saved me when police refused to register my FIR for a domestic issue." },
           ].map((review, i) => (
             <div key={i} className="card-editorial mx-3 w-[300px] flex-shrink-0 cursor-pointer">
               <div className="flex items-center gap-4 mb-4">

@@ -7,6 +7,26 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
   const { verifyOTP, loading } = useAuth();
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  React.useEffect(() => {
+    if (timeLeft <= 0) {
+      setCanResend(true);
+      return;
+    }
+    const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleResend = () => {
+    // In a real app, this would call an API to resend. 
+    // Here we just reset the timer for the demo.
+    setTimeLeft(60);
+    setCanResend(false);
+    setError('');
+    // Optionally: toast.success('New code sent!');
+  };
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,10 +34,10 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
     setError('');
     try {
       const result = await verifyOTP(userId, otp);
-      if (result.success) {
+      if (result.data.success) {
         onSuccess();
       } else {
-        setError('Invalid verification code. Please check your email/SMS or the backend console.');
+        setError(result.data.message || 'Invalid verification code.');
       }
     } catch (err: any) {
       setError(err.message || 'Verification failed. Please try again.');
@@ -56,8 +76,21 @@ export function OTPVerification({ userId, onSuccess }: { userId: string, onSucce
         {loading ? 'Verifying...' : 'Verify & Continue'}
       </button>
 
-      <p className="text-[0.75rem] text-[#8B7B6B] font-medium tracking-wide">
-        Didn't receive the code? <button type="button" className="underline hover:text-[#561C24] transition-colors ml-1 font-bold">Resend in 60s</button>
+      <p className="text-[0.875rem] text-[#8B7B6B] font-medium tracking-wide">
+        {canResend ? (
+          <>
+            Didn't receive the code? 
+            <button 
+              type="button" 
+              onClick={handleResend}
+              className="text-[#561C24] hover:underline ml-1 font-bold"
+            >
+              Resend Code
+            </button>
+          </>
+        ) : (
+          <>Resend in <span className="font-bold text-[#561C24]">{timeLeft}s</span></>
+        )}
       </p>
     </form>
   );

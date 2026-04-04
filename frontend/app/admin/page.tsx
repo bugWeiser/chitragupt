@@ -1,17 +1,25 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import AuditLogTable from '@/components/admin/AuditLogTable';
-import ScannerDashboard from '@/components/admin/ScannerDashboard';
-import { ShieldCheck, Activity, Users, AlertOctagon, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function AdminOverviewPage() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const [stats, setStats] = useState<any>({ totalUsers: 0, anomalies24h: 0, systemStatus: 'Initializing...' });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchStats();
-  }, []);
+    if (!authLoading && user?.role !== 'admin') {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
+
+  useEffect(() => {
+    if (user?.role === 'admin') {
+      fetchStats();
+    }
+  }, [user]);
 
   const fetchStats = async () => {
     try {
@@ -31,6 +39,16 @@ export default function AdminOverviewPage() {
       setLoading(false);
     }
   };
+
+  if (authLoading || (user && user.role !== 'admin')) {
+    return (
+      <div className="min-h-screen bg-surface flex items-center justify-center">
+        <Loader2 className="animate-spin text-burgundy" size={48} />
+      </div>
+    );
+  }
+
+  if (!user) return null;
 
   return (
     <div className="w-full max-w-7xl mx-auto py-8">

@@ -45,7 +45,7 @@ export default function AnalyzePage() {
             AI Case Analysis
           </h1>
           <p className="text-[1rem] md:text-[1.125rem] text-[#5C4A42] max-w-lg mx-auto leading-relaxed">
-            Tell NyayaMitra about your situation. We'll find your legal leverage and provide a step-by-step action plan.
+            Tell Chitragupt AI about your situation. We'll find your legal leverage and provide a step-by-step action plan.
           </p>
         </div>
 

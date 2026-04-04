@@ -13,19 +13,8 @@ export function useAuth() {
   const register = useCallback(async (data: any) => {
     setLoading(true);
     try {
-      // Execute the mock register
-      await authService.register(data);
-      // Force an immediate login to bypass OTP for the hackathon judges magically
-      const result = await authService.login({ email: data.email, password: data.password || 'password' });
-      const loggedUser = result.data?.user;
-      setUser(loggedUser);
-      toast.success(`Account created successfully! Automagically logging in...`, { duration: 4000, icon: '🎉' });
-      
-      // Auto redirect to prevent them from landing on verification screen
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1000);
-
+      const result = await authService.register(data);
+      toast.success('Registration successful. Please verify your OTP!');
       return result;
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Registration failed');
@@ -49,7 +38,7 @@ export function useAuth() {
     setLoading(true);
     try {
       const result = await authService.login(data);
-      const loggedUser = result.data?.user;
+      const loggedUser = result.data.data.user;
       setUser(loggedUser);
       toast.success(`Welcome back, ${loggedUser.fullName}!`);
       
@@ -69,7 +58,7 @@ export function useAuth() {
     setLoading(true);
     try {
       const result = await authService.loginWithGithub();
-      const loggedUser = result.data?.user;
+      const loggedUser = result.data.data.user;
       setUser(loggedUser);
       toast.success(`Welcome back, ${loggedUser?.fullName || 'User'}!`);
       

@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import { CaseProvider } from "@/context/CaseContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import AiChatWidget from "@/components/AiChatWidget";
+import { Toaster } from "react-hot-toast";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col antialiased`}>
         <LanguageProvider>
           <CaseProvider>
+            <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
             <a href="#main-content" className="skip-to-content">Skip to content</a>
             <Navbar />
             <main id="main-content" role="main" className="flex-1 flex flex-col relative overflow-x-hidden">

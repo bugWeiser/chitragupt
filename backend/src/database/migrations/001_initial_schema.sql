@@ -1,11 +1,11 @@
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable UUID extension (Supabase handles this via UI, usually enabled by default)
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ============================================================
 -- USERS TABLE
 -- ============================================================
 CREATE TABLE users (
-  id                    UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   full_name             VARCHAR(255) NOT NULL,
   email                 VARCHAR(255) UNIQUE NOT NULL,
   phone_number          VARCHAR(20),
@@ -32,7 +32,7 @@ CREATE TABLE users (
 -- BACKUP CODES TABLE (for 2FA recovery)
 -- ============================================================
 CREATE TABLE backup_codes (
-  id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id    UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   code_hash  VARCHAR(255) NOT NULL,
   used       BOOLEAN DEFAULT FALSE,
@@ -44,7 +44,7 @@ CREATE TABLE backup_codes (
 -- REFRESH TOKENS TABLE
 -- ============================================================
 CREATE TABLE refresh_tokens (
-  id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id    UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   token_hash VARCHAR(255) NOT NULL UNIQUE,
   device_info JSONB,
@@ -76,13 +76,13 @@ CREATE TABLE audit_logs (
 );
 
 -- Make audit_logs truly append-only
-REVOKE UPDATE, DELETE, TRUNCATE ON audit_logs FROM PUBLIC;
+-- REVOKE UPDATE, DELETE, TRUNCATE ON audit_logs FROM PUBLIC;
 
 -- ============================================================
 -- KNOWN DEVICES TABLE
 -- ============================================================
 CREATE TABLE known_devices (
-  id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id      UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   device_hash  VARCHAR(255) NOT NULL,
   device_name  VARCHAR(255),
@@ -98,7 +98,7 @@ CREATE TABLE known_devices (
 -- SECURITY SCAN REPORTS TABLE
 -- ============================================================
 CREATE TABLE security_reports (
-  id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   report_type  VARCHAR(100) DEFAULT 'vulnerability_scan',
   raw_findings JSONB,
   ai_summary   TEXT,
@@ -116,7 +116,7 @@ CREATE TABLE security_reports (
 -- PUSH NOTIFICATION LOG TABLE
 -- ============================================================
 CREATE TABLE notification_log (
-  id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id      UUID REFERENCES users(id) ON DELETE CASCADE,
   title        VARCHAR(255) NOT NULL,
   body         TEXT NOT NULL,

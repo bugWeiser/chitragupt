@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 const pool = new Pool({
   host:     process.env.DB_HOST,
@@ -9,16 +10,15 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   max:      20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  connectionTimeoutMillis: 5000, // Slightly longer for remote Supabase
 });
 
 pool.on('connect', () => {
-  console.log('[DB] PostgreSQL connected');
+  console.log('[DB] Supabase PostgreSQL connected');
 });
 
 pool.on('error', (err) => {
-  console.error('[DB] Unexpected error:', err);
-  process.exit(-1);
+  console.error('[DB] Unexpected error:', err.message);
 });
 
 module.exports = {

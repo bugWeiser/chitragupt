@@ -38,7 +38,7 @@ export function RegisterForm({ onSuccess }: { onSuccess: (userId: string) => voi
 
   const onSubmit = async (data: FormData) => {
     const result = await authRegister(data);
-    onSuccess(result.data.userId);
+    onSuccess(result.data.data.userId); // result.data is the body, result.data.data is the payload
   };
 
   return (

@@ -62,8 +62,11 @@ app.use(cookieParser());
 app.use(compression());
 app.use(hpp());
 
+const trafficLogger = require('./middleware/logging.middleware');
+
 // ─── LOGGING ───
 app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) } }));
+app.use(trafficLogger);
 
 // ─── WAF MIDDLEWARE ───
 app.use(wafMiddleware);

@@ -52,6 +52,13 @@ export default function Navbar() {
               <NavLink href="/news" current={pathname}>{t("common.nav.news") || "News"}</NavLink>
               <NavLink href="/rti" current={pathname}>{t("common.nav.rtiGenerator")}</NavLink>
               <NavLink href="/analyze" current={pathname}>{t("common.nav.aiAnalysis")}</NavLink>
+              {user?.role === 'admin' && (
+                <NavLink href="/admin" current={pathname}>
+                  <span className="flex items-center gap-1">
+                    Admin Center
+                  </span>
+                </NavLink>
+              )}
             </div>
 
             <div className="flex-1" />
@@ -154,6 +161,13 @@ export default function Navbar() {
           <MobileLink href="/rti" onClick={() => setIsOpen(false)}>{t("common.nav.rtiGenerator")}</MobileLink>
           <MobileLink href="/analyze" onClick={() => setIsOpen(false)}>{t("common.nav.aiAnalysis")}</MobileLink>
           <MobileLink href="/my-case" onClick={() => setIsOpen(false)}>My Case</MobileLink>
+          
+          {user?.role === 'admin' && (
+            <>
+              <div className="w-12 h-px bg-cream/20 my-2" />
+              <MobileLink href="/admin" onClick={() => setIsOpen(false)}>Admin Center</MobileLink>
+            </>
+          )}
           
           <div className="w-12 h-px bg-cream/20 my-2" />
           

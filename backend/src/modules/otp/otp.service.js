@@ -13,11 +13,7 @@ async function sendRegistrationOTP(userId, email, phone) {
   const otp = generateOTP();
   await redis.setEx(`otp:reg:${userId}`, OTP_TTL, otp);
 
-  // DEBUG LOG FOR HACKATHON DEMO (If keys are missing)
-  console.log('\n' + '★'.repeat(50));
-  console.log(`[CHITRAGUPTA DEBUG] NEW OTP GENERATED: ${otp}`);
-  console.log(`[USER ID: ${userId}] [EMAIL: ${email}]`);
-  console.log('★'.repeat(50) + '\n');
+  console.log(`[AUTH] Sending OTP to ${email}${phone ? ' and ' + phone : ''}`);
 
   const emailHtml = `
     <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border:1px solid #e0e0e0;border-radius:8px">
