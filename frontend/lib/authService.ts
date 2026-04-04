@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth`;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth`;
 
 // Configure axios to include cookies for refreshToken
 axios.defaults.withCredentials = true;

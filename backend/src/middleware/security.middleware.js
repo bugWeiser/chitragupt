@@ -69,6 +69,7 @@ function wafMiddleware(req, res, next) {
 function getCorsOptions() {
   const allowedOrigins = [
     process.env.FRONTEND_URL,
+    'https://chitragupt-topaz.vercel.app',
     'http://localhost:3000',
   ].filter(Boolean);
 
