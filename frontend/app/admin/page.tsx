@@ -1,7 +1,11 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import AuditLogTable from '@/components/admin/AuditLogTable';
+import ScannerDashboard from '@/components/admin/ScannerDashboard';
+import { ShieldCheck, Activity, Users, AlertOctagon, Loader2 } from 'lucide-react';
 
 export default function AdminOverviewPage() {
   const { user, loading: authLoading } = useAuth();
