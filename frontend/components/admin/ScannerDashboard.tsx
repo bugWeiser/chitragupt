@@ -1,19 +1,71 @@
 'use client';
 
-import React from 'react';
-import { ShieldAlert, ShieldCheck, Activity, Target, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldAlert, ShieldCheck, Activity, Target, Zap, Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function ScannerDashboard() {
-  const latestScan = {
-    status: 'Completed',
-    duration: '1m 12s',
-    totalIssues: 4,
-    critical: 0,
-    high: 1,
-    medium: 1,
-    low: 2,
-    timestamp: new Date().toLocaleTimeString(),
+  const [loading, setLoading] = useState(false);
+  const [latestScan, setLatestScan] = useState<any>(null);
+
+  useEffect(() => {
+    fetchLatestReport();
+  }, []);
+
+  const fetchLatestReport = async () => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/admin/scanner/reports`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+      });
+      const data = await res.json();
+      if (res.ok && data.data?.[0]) {
+        const report = data.data[0];
+        setLatestScan({
+          status: report.status,
+          duration: `${(report.scan_duration_ms / 1000).toFixed(1)}s`,
+          totalIssues: report.total_issues,
+          critical: report.critical_count,
+          high: report.high_count,
+          medium: report.medium_count,
+          low: report.low_count,
+          timestamp: new Date(report.created_at).toLocaleString(),
+        });
+      }
+    } catch (err) {
+      console.error('Failed to fetch reports:', err);
+    }
   };
+
+  const handleRunScan = async () => {
+    setLoading(true);
+    const toastId = toast.loading('Initiating Cloud-Native Security Orchestration...');
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/admin/scanner/run`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+      });
+      if (res.ok) {
+        toast.success('Security Scan Complete!', { id: toastId });
+        fetchLatestReport();
+      } else {
+        throw new Error('Scan failed');
+      }
+    } catch (err) {
+      toast.error('Cloud Security Scan failed. Check backend logs.', { id: toastId });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!latestScan) return (
+     <div className="bg-white/40 dark:bg-navy/40 backdrop-blur-xl border border-white/50 dark:border-white/10 rounded-2xl p-12 text-center shadow-xl">
+        <Loader2 className="animate-spin mx-auto text-burgundy mb-4" size={48} />
+        <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Initializing Security Monitors...</p>
+        <button onClick={handleRunScan} className="mt-6 bg-navy text-white px-6 py-2 rounded-lg font-bold hover:bg-navy/90 transition-colors">Trigger First Scan</button>
+     </div>
+  );
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
