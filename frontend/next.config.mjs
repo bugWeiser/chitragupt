@@ -10,6 +10,14 @@ const nextConfig = {
     // your project has type errors.
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://chitragupt-backend.onrender.com/api/:path*'
+      }
+    ];
+  }
 };
 
 export default nextConfig;
