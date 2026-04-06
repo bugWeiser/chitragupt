@@ -3,27 +3,23 @@ const dns = require('dns');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
-// Force IPv4 DNS resolution to avoid ENETUNREACH on Render free tier
+// Force IPv4 DNS resolution to avoid ENETUNREACH on platforms without IPv6
 dns.setDefaultResultOrder('ipv4first');
 
-// Use Supabase Connection Pooler if DB_HOST uses direct connection (IPv6 only)
-// The pooler endpoint supports IPv4 which works on all hosting platforms
-let dbHost = process.env.DB_HOST;
-let dbPort = parseInt(process.env.DB_PORT) || 5432;
+// Build connection config
+// If DB_POOLER_HOST is set, use it directly (Supabase Connection Pooler, IPv4-compatible)
+// Otherwise fall back to DB_HOST (direct connection, may be IPv6-only)
+const dbHost = process.env.DB_POOLER_HOST || process.env.DB_HOST;
+const dbPort = parseInt(process.env.DB_POOLER_PORT || process.env.DB_PORT) || 5432;
+const dbUser = process.env.DB_POOLER_USER || process.env.DB_USER;
 
-if (dbHost && dbHost.startsWith('db.') && dbHost.includes('.supabase.co')) {
-  // Convert direct connection to pooler: db.XXXX.supabase.co → XXXX.pooler.supabase.com
-  const projectRef = dbHost.replace('db.', '').replace('.supabase.co', '');
-  dbHost = `${projectRef}.pooler.supabase.com`;
-  dbPort = 6543; // Supabase pooler port (session mode)
-  console.log(`[DB] Using Supabase Connection Pooler: ${dbHost}:${dbPort}`);
-}
+console.log(`[DB] Connecting to ${dbHost}:${dbPort} as ${dbUser}`);
 
 const pool = new Pool({
   host:     dbHost,
   port:     dbPort,
   database: process.env.DB_NAME,
-  user:     process.env.DB_USER,
+  user:     dbUser,
   password: process.env.DB_PASSWORD,
   max:      20,
   idleTimeoutMillis: 30000,
