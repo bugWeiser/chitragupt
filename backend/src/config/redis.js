@@ -2,10 +2,10 @@ const Redis = require('ioredis');
 require('dotenv').config();
 
 const config = {
-  host:     process.env.REDIS_HOST,
+  host:     (process.env.REDIS_HOST || '').trim(),
   port:     parseInt(process.env.REDIS_PORT) || 6379,
-  username: process.env.REDIS_USERNAME || 'default',
-  password: process.env.REDIS_PASSWORD,
+  username: (process.env.REDIS_USERNAME || 'default').trim(),
+  password: (process.env.REDIS_PASSWORD || '').trim(),
   retryStrategy: (times) => Math.min(times * 50, 2000),
 };
 
