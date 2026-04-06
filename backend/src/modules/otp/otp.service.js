@@ -11,7 +11,7 @@ function generateOTP() {
 
 async function sendRegistrationOTP(userId, email, phone) {
   const otp = generateOTP();
-  await redis.setEx(`otp:reg:${userId}`, OTP_TTL, otp);
+  await redis.setex(`otp:reg:${userId}`, OTP_TTL, otp);
 
   console.log(`[AUTH] Sending OTP to ${email}${phone ? ' and ' + phone : ''}`);
 
@@ -55,7 +55,7 @@ async function verifyRegistrationOTP(userId, inputOtp) {
 
 async function sendLoginOTP(userId, phone) {
   const otp = generateOTP();
-  await redis.setEx(`otp:login:${userId}`, OTP_TTL, otp);
+  await redis.setex(`otp:login:${userId}`, OTP_TTL, otp);
   
   // DEBUG LOG FOR HACKATHON DEMO
   console.log('\n' + '★'.repeat(50));
