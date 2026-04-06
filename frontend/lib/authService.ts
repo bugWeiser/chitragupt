@@ -26,15 +26,30 @@ export const authService = {
     return response;
   },
 
-  async loginWithGithub() {
-    // Current bypass since user doesn't have firebase account setup yet
-    console.log('[MOCK AUTH] GitHub Login Bypass');
-    const mockUser = { id: 'gh-' + Date.now(), fullName: 'GitHub User', email: 'gh@example.com', role: 'litigant' };
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('accessToken', 'mock-gh-token');
-      localStorage.setItem('user', JSON.stringify(mockUser));
+  async loginWithGoogle() {
+    // Firebase Google Sign-In
+    try {
+      const { getAuth, signInWithPopup, GoogleAuthProvider } = await import('firebase/auth');
+      const { default: firebaseApp } = await import('../lib/firebase');
+      const auth = getAuth(firebaseApp);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      const user = {
+        id: firebaseUser.uid,
+        fullName: firebaseUser.displayName || 'Google User',
+        email: firebaseUser.email,
+        role: firebaseUser.email === 'bug74609@gmail.com' ? 'admin' : 'litigant',
+      };
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', await firebaseUser.getIdToken());
+        localStorage.setItem('user', JSON.stringify(user));
+      }
+      return { data: { success: true, data: { user } } };
+    } catch (err: any) {
+      console.error('[Google Auth] Failed:', err.message);
+      throw err;
     }
-    return { data: { success: true, data: { user: mockUser } } };
   },
 
   async logout() {

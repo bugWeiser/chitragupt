@@ -1,5 +1,4 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth, GithubAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,7 +15,4 @@ const app = (typeof window !== "undefined" && firebaseConfig.apiKey)
   ? (getApps().length > 0 ? getApp() : initializeApp(firebaseConfig))
   : null;
 
-const auth = app ? getAuth(app) : ({} as any); // Fallback for build time
-const githubProvider = new GithubAuthProvider();
-
-export { auth, githubProvider };
+export default app;

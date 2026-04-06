@@ -54,10 +54,10 @@ export function useAuth() {
     } finally { setLoading(false); }
   }, []);
 
-  const loginWithGithub = useCallback(async () => {
+  const loginWithGoogle = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await authService.loginWithGithub();
+      const result = await authService.loginWithGoogle();
       const loggedUser = result.data.data.user;
       setUser(loggedUser);
       toast.success(`Welcome back, ${loggedUser?.fullName || 'User'}!`);
@@ -68,7 +68,7 @@ export function useAuth() {
 
       return result;
     } catch (err: any) {
-      toast.error('GitHub Login failed. Please check your connection.');
+      toast.error('Google Login failed. Please try again.');
       throw err;
     } finally { setLoading(false); }
   }, []);
@@ -79,5 +79,5 @@ export function useAuth() {
     toast.success('Logged out');
   }, []);
 
-  return { user, loading, register, verifyOTP, login, loginWithGithub, logout };
+  return { user, loading, register, verifyOTP, login, loginWithGoogle, logout };
 }

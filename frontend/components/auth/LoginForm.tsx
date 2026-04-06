@@ -16,7 +16,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) => void }) {
-  const { login, loginWithGithub, loading } = useAuth();
+  const { login, loginWithGoogle, loading } = useAuth();
   const [showSmsOtp, setShowSmsOtp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,10 +36,10 @@ export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) 
     } catch (err) {}
   };
 
-  const handleGithubLogin = async () => {
+  const handleGoogleLogin = async () => {
     try {
-      await loginWithGithub();
-      window.location.href = '/dashboard';
+      await loginWithGoogle();
+      window.location.href = '/';
     } catch (error) {}
   };
 
@@ -133,7 +133,7 @@ export function LoginForm({ onMfaRequired }: { onMfaRequired?: (userId: string) 
         {/* Google Button */}
         <button
           type="button"
-          onClick={handleGithubLogin} // Reused for simplicity in this demo, pretending it's Google
+          onClick={handleGoogleLogin}
           disabled={loading}
           className="w-full py-3.5 px-4 flex items-center justify-center gap-3 bg-[#F5EDE3] hover:bg-[#E8D8C4] text-ink border border-transparent rounded-full font-semibold transition-all hover:scale-[1.01] active:scale-95 text-[0.9375rem]"
         >
