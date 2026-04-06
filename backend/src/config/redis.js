@@ -1,29 +1,57 @@
-const Redis = require('ioredis');
-require('dotenv').config();
+// In-Memory Mock Redis for Hackathon/Demo environment
+// Replaces ioredis due to broken Redis Cloud credentials (WRONGPASS)
 
-const host = (process.env.REDIS_HOST || '').trim();
-const port = parseInt(process.env.REDIS_PORT) || 6379;
-const username = (process.env.REDIS_USERNAME || 'default').trim();
-const password = (process.env.REDIS_PASSWORD || '').trim();
+const store = new Map();
+const expiryTimeouts = new Map();
 
-// temporary hardcode to debug WRONGPASS
-let redisUrl = `redis://default:A4a9b1wcvfyzy32a25plsmz69mvh6zw3yd0oypr5lq3g9lf3qmy@redis-12832.crce284.ap-neast-2-1.ec2.cloud.redislabs.com:12832`;
+const redisMock = {
+  async setex(key, ttlSeconds, value) {
+    store.set(key, String(value));
+    if (expiryTimeouts.has(key)) clearTimeout(expiryTimeouts.get(key));
+    expiryTimeouts.set(key, setTimeout(() => {
+      store.delete(key);
+      expiryTimeouts.delete(key);
+    }, ttlSeconds * 1000));
+    return 'OK';
+  },
 
+  async get(key) {
+    return store.has(key) ? store.get(key) : null;
+  },
 
-const config = {
-  retryStrategy: (times) => Math.min(times * 50, 2000),
-  // TLS can sometimes be required by Redis Cloud depending on the region/configuration
-  // ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+  async del(key) {
+    const existed = store.has(key);
+    store.delete(key);
+    if (expiryTimeouts.has(key)) {
+      clearTimeout(expiryTimeouts.get(key));
+      expiryTimeouts.delete(key);
+    }
+    return existed ? 1 : 0;
+  },
+
+  async incr(key) {
+    const current = store.has(key) ? parseInt(store.get(key), 10) : 0;
+    const next = current + 1;
+    store.set(key, String(next));
+    return next;
+  },
+
+  async expire(key, ttlSeconds) {
+    if (!store.has(key)) return 0;
+    if (expiryTimeouts.has(key)) clearTimeout(expiryTimeouts.get(key));
+    expiryTimeouts.set(key, setTimeout(() => {
+      store.delete(key);
+      expiryTimeouts.delete(key);
+    }, ttlSeconds * 1000));
+    return 1;
+  },
+
+  on(event, cb) {
+    if (event === 'connect') {
+      setTimeout(() => cb(), 10);
+      console.log('[Redis] Mock In-Memory Cache Connected (Bypass WRONGPASS)');
+    }
+  }
 };
 
-let redis;
-if (redisUrl) {
-  redis = new Redis(redisUrl, config);
-} else {
-  redis = new Redis(config);
-}
-
-redis.on('connect', () => console.log('[Redis] Connected'));
-redis.on('error', (err) => console.error('[Redis] Error:', err.message));
-
-module.exports = redis;
+module.exports = redisMock;
