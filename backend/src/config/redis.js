@@ -6,13 +6,9 @@ const port = parseInt(process.env.REDIS_PORT) || 6379;
 const username = (process.env.REDIS_USERNAME || 'default').trim();
 const password = (process.env.REDIS_PASSWORD || '').trim();
 
-// Construct standard Redis URI to ensure ioredis parses the credentials correctly
-let redisUrl = process.env.REDIS_URL;
-if (!redisUrl && host && password) {
-  redisUrl = `redis://${username}:${password}@${host}:${port}`;
-} else if (!redisUrl && host) {
-  redisUrl = `redis://${host}:${port}`;
-}
+// temporary hardcode to debug WRONGPASS
+let redisUrl = `redis://default:A4a9b1wcvfyzy32a25plsmz69mvh6zw3yd0oypr5lq3g9lf3qmy@redis-12832.crce284.ap-neast-2-1.ec2.cloud.redislabs.com:12832`;
+
 
 const config = {
   retryStrategy: (times) => Math.min(times * 50, 2000),
