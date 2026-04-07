@@ -7,6 +7,7 @@ import { z } from 'zod';
 import zxcvbn from 'zxcvbn';
 import { useAuth } from '../../hooks/useAuth';
 import { User, Mail, Phone, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
   fullName: z.string().min(2, 'Name too short'),
@@ -37,8 +38,20 @@ export function RegisterForm({ onSuccess }: { onSuccess: (userId: string) => voi
   }, [password]);
 
   const onSubmit = async (data: FormData) => {
-    const result = await authRegister(data);
-    onSuccess(result.data.data.userId); // result.data is the body, result.data.data is the payload
+    try {
+      const result = await authRegister(data);
+      if (result.data?.data?.otp) {
+        toast.success(`Demo Mode OTP: ${result.data.data.otp}`, { 
+          duration: 10000, 
+          position: 'top-center',
+          icon: '🔑'
+        });
+      }
+      onSuccess(result.data.data.userId);
+    } catch (err: any) {
+      // The auth provider usually handles the error toasts natively
+      console.error(err);
+    }
   };
 
   return (

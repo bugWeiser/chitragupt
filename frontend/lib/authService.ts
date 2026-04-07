@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth`;
 
@@ -33,7 +34,7 @@ export const authService = {
       const { default: firebaseApp } = await import('../lib/firebase');
       
       if (!firebaseApp) {
-        alert("Firebase is not configured in Vercel! Please add 'NEXT_PUBLIC_FIREBASE_API_KEY' to your environment variables.");
+        toast.error("Google SSO is currently disabled in this staging environment. Please use Email/Password.");
         throw new Error("Firebase SDK failed to initialize. Missing API Key.");
       }
 
