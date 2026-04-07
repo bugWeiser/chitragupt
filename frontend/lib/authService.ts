@@ -31,6 +31,12 @@ export const authService = {
     try {
       const { getAuth, signInWithPopup, GoogleAuthProvider } = await import('firebase/auth');
       const { default: firebaseApp } = await import('../lib/firebase');
+      
+      if (!firebaseApp) {
+        alert("Firebase is not configured in Vercel! Please add 'NEXT_PUBLIC_FIREBASE_API_KEY' to your environment variables.");
+        throw new Error("Firebase SDK failed to initialize. Missing API Key.");
+      }
+
       const auth = getAuth(firebaseApp);
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);

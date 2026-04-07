@@ -9,7 +9,8 @@ const registerValidator = [
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
     .custom((value) => {
       const result = zxcvbn(value);
-      if (result.score < 2) throw new Error('Password too weak. Use uppercase, numbers, and symbols.');
+      // Relaxed to score < 1 for easier demo/hackathon onboarding
+      if (result.score < 1) throw new Error('Password is too common or weak. Please add some numbers or symbols.');
       return true;
     }),
   body('role').optional().isIn(['litigant', 'lawyer']).withMessage('Invalid role'),
