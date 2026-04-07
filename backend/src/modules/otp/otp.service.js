@@ -37,7 +37,8 @@ async function sendRegistrationOTP(userId, email, phone) {
   await Promise.allSettled(promises);
   await auditService.log({ userId, eventType: 'otp_sent', eventCategory: 'auth', metadata: { email, hasPhone: !!phone } });
 
-  return otp; // Return OTP explicitly so the demo frontend can show it
+  // STRICT MODE: Do NOT return OTP to frontend API. User MUST use email/SMS.
+  return true;
 }
 
 async function verifyRegistrationOTP(userId, inputOtp) {

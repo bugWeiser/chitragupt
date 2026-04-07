@@ -28,30 +28,34 @@ export const authService = {
   },
 
   async loginWithGoogle() {
-    // 🎭 SEAMLESS DEMO SSO LOGIC
-    // Bypassing Firebase dependency to allow flawless pitches without a paid/configured Google Cloud Project.
+    // REAL CLOUD AUTH LOGIC
     try {
-      const mockUser = {
-        id: 'google-sso-user-' + Math.floor(Math.random() * 10000),
-        fullName: 'Google Authenticated User',
-        email: 'bug74609@gmail.com', // Grants Admin Access
-        role: 'admin',
+      const { getAuth, signInWithPopup, GoogleAuthProvider } = await import('firebase/auth');
+      const { default: firebaseApp } = await import('../lib/firebase');
+      
+      const auth = getAuth(firebaseApp!);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      
+      const user = {
+        id: firebaseUser.uid,
+        fullName: firebaseUser.displayName || 'Google User',
+        email: firebaseUser.email,
+        role: firebaseUser.email === 'bug74609@gmail.com' ? 'admin' : 'litigant',
       };
       
       if (typeof window !== 'undefined') {
-        localStorage.setItem('accessToken', 'mock-google-token');
-        localStorage.setItem('user', JSON.stringify(mockUser));
+        localStorage.setItem('accessToken', await firebaseUser.getIdToken());
+        localStorage.setItem('user', JSON.stringify(user));
       }
       
       toast.success('Successfully Authenticated via Google SSO');
-      // Redirect to the Admin panel to simulate the seamless authentication flow
-      if (typeof window !== 'undefined') {
-         setTimeout(() => { window.location.href = '/admin'; }, 1000);
-      }
+      // No forced timeout/redirect needed here as Login form handles success routing gracefully
       
-      return { data: { success: true, data: { user: mockUser } } };
+      return { data: { success: true, data: { user } } };
     } catch (err: any) {
-      toast.error('SSO Initialization failed.');
+      toast.error('SSO Initialization failed. Please try again.');
       throw err;
     }
   },
